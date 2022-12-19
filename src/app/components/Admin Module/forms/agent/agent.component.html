@@ -1,0 +1,97 @@
+<app-dashboard-sidemenu></app-dashboard-sidemenu>
+
+<!-- Start Main Content Wrapper Area -->
+<div class="main-content d-flex flex-column">
+
+    <app-dashboard-navbar></app-dashboard-navbar>
+
+    <!-- Breadcrumb Area -->
+    <div class="breadcrumb-area" *ngFor="let Content of breadcrumb;">
+        <h1>{{Content.title}}</h1>
+        <ol class="breadcrumb">
+            <li class="item"><a routerLink="/">Home</a></li>
+            <li class="item"><a routerLink="/dashboard">{{Content.subTitle}}</a></li>
+            <li class="item">{{Content.title}}</li>
+        </ol>
+    </div>
+    <!-- End Breadcrumb Area -->
+
+    <!-- Start -->
+    <div class="add-listings-box1">
+    <!-- Start -->
+        <!-- <prime-toast></prime-toast> -->
+    <!-- End -->
+        <form [formGroup]="itemMaster" (ngSubmit)="itemMasterSubmit(itemForm)" #itemForm="ngForm">
+            <div class="row">
+                    <div class="col-lg-3 col-md-12 form-group">
+                        <label for="status">Agent Name<span class="star_class">*</span></label>
+                        <input type="text" class="form-control" formControlName="agentName" placeholder="Enter Part Name" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentName')?.invalid) || (itemMaster.get('agentName').touched && itemMaster.get('agentName')?.invalid)" required>
+                        <div class="invalid-feedback"> Part name is Required </div>
+                    </div>
+                    <!-- <div class="col-lg-3 col-md-12 form-group">
+                        <label for="status">Entry Date<span class="star_class">*</span></label>
+                        <p-calendar formControlName="itemDate" [minDate]="date" [showIcon]="true" placeholder="Select Date" [class.is-invalid]="(itemForm.submitted && itemMaster.get('itemDate')?.invalid) || (itemMaster.get('itemDate').touched && itemMaster.get('itemDate')?.invalid)"></p-calendar>
+                        <div class="invalid-feedback"> Entry Date is Required </div>
+                    </div> -->
+                
+                    <div class="col-lg-3 col-md-12  form-group">
+                        <label for="doc">Agent Type<span class="star_class">*</span></label>
+                        <input type="text" class="form-control" formControlName="agentType" placeholder="Enter Part Description" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentType')?.invalid) || (itemMaster.get('agentType').touched && itemMaster.get('agentType')?.invalid)" required>
+                        <div class="invalid-feedback"> Agent Type is Required </div>
+                    </div>
+                      
+                <div class="add-listings-btn col-lg-4 col-md-6">
+                    <div class="form-group">
+                        <button type="submit" class="submit_btn">{{submitButton}}</button>
+                        <button type="reset" class="mx-3 reset_btn"  (click)="submitButton='Submit'">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- End -->
+
+    <div class="card item-master">
+        <p-table #dt2 [value]="itemMasterTable" [scrollable]="true" dataKey="id" [rows]="10" [scrollable]="true"  [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,20,30,50]"
+            [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [globalFilterFields]="['Agent Name','Agent Type']">
+            <ng-template pTemplate="header" >
+                <tr>
+                    <th style="min-width: 20px;">S.No.</th>
+                    <th style="min-width: 250px;">Agent Name</th> 
+                    <th>Agent Type</th> 
+                    <th>Action</th>
+                </tr>
+                <tr>
+                    <th style="min-width: 20px;"></th>
+                    <th style="min-width: 250px;"><p-columnFilter type="text" field="agentName"></p-columnFilter></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-agent let-i="rowIndex">
+                <tr>
+                    <td style="min-width: 20px;">{{i+1}}</td>
+                    <td style="min-width: 250px;">  
+                        <span class="image-text">{{agent.agentName}}</span>
+                    </td>
+                    <td>
+                        <span class="image-text" style="min-width: 20px;">{{agent.agentType}}</span>
+                    </td>
+                   
+                    <td style="min-width: 20px;">
+                        <button pButton pRipple type="button" icon="bx bx-pencil" class="p-button-rounded p-button-primary p-button-text" (click)="EditItem(agent)"></button>
+                        <button pButton pRipple type="button" icon="bx bx-trash" class="p-button-rounded p-button-danger p-button-text" (click)="confirm1(agent.itemId)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="5">No agents found.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <div class="flex-grow-1"></div>
+    </div> 
+    <app-copyrights></app-copyrights>
+</div>
