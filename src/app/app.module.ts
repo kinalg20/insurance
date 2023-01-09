@@ -12,12 +12,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/Auth/login/login.component';
 // import { AuthGuardGuard } from './AuthGuards/auth-guard.guard';
-import { POFormComponent } from './components/Admin Module/forms/poform/poform.component';
-import { RegisterUserComponent } from './components/Admin Module/forms/register-user/register-user.component';
-import { AssignGroupComponent } from './components/Admin Module/forms/assign-group/assign-group.component';
-import { AssignMenuSubmenuComponent } from './components/Admin Module/forms/assign-menu-submenu/assign-menu-submenu.component';
+import {InputNumberModule} from 'primeng/inputnumber';
 import { ApiService } from './Services/api.service';
-import { CreationGroupComponent } from './components/Admin Module/forms/creation-group/creation-group.component';
 import { DashboardSidemenuComponent } from './components/commonModule/dashboard-sidemenu/dashboard-sidemenu.component';
 import { FooterStyleOneComponent } from './components/commonModule/footer-style-one/footer-style-one.component';
 import { NavbarStyleOneComponent } from './components/commonModule/navbar-style-one/navbar-style-one.component';
@@ -39,6 +35,12 @@ import {InputTextModule} from 'primeng/inputtext';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { AgentComponent } from './components/Admin Module/forms/agent/agent.component';
 import {TableModule} from 'primeng/table';
+import { CompanyComponent } from './components/Admin Module/forms/company/company.component';
+import { InsuranceComponent } from './components/Admin Module/forms/insurance/insurance.component';
+import { PolicyComponent } from './components/Admin Module/forms/policy/policy.component';
+import { PolicyTypeComponent } from './components/Admin Module/forms/policy-type/policy-type.component';
+import { VallageComponent } from './components/Admin Module/forms/vallage/vallage.component';
+import { VehicleTypeComponent } from './components/Admin Module/forms/vehicle-type/vehicle-type.component';
 
 
 @NgModule({
@@ -51,14 +53,15 @@ import {TableModule} from 'primeng/table';
     DashboardSidemenuComponent,
     DashboardNavbarComponent,
     LoginComponent,
-    POFormComponent,
-    RegisterUserComponent,
-    CreationGroupComponent,
-    AssignGroupComponent,
-    AssignMenuSubmenuComponent,
     CopyrightsComponent,
     DashboardMyProfileComponent,
     AgentComponent,
+    CompanyComponent,
+    InsuranceComponent,
+    PolicyComponent,
+    PolicyTypeComponent,
+    VallageComponent,
+    VehicleTypeComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,7 +82,8 @@ import {TableModule} from 'primeng/table';
     RippleModule,
     DialogModule,
     TableModule,
-    InputTextModule
+    InputTextModule,
+    InputNumberModule
   ],
   providers: [ MessageService,ConfirmationService 
     ,{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },],

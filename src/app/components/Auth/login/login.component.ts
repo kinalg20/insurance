@@ -41,7 +41,6 @@ export class LoginComponent implements OnInit {
       this._apiService.GetOTP(signInObject)
         .then((res: any) => {
           console.log(res);  
-          debugger;        
           // this._utility.loader(false);
           if (res.success == false) {
             window.scroll(0, 0);

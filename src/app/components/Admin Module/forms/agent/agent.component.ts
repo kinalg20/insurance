@@ -13,23 +13,24 @@ import { ApiService } from 'src/app/Services/api.service';
 export class AgentComponent implements OnInit {
 
   tax_dropdown: any = [];
-  errorMsg: string = ''
-  date: any;
-  errorMsgCheck: string = ''
+  agent_dropdown : any = [];
+  city_dropdown : any = [];
+  state_dropdown : any = [];
+
+
   itemMasterTable: any = [];
   myDate: any;
-  loading: boolean = false;
-  value : Date;
   msgs: Message[] = [];
   submitButton : string = 'Submit'
-  constructor(private _apiservice: ApiService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig , private _utility : AppUtility) { }
+  constructor(private _apiservice: ApiService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig , public _utility : AppUtility) { }
 
   ngOnInit(): void { 
+    this.getDropdown();
     this.getAllTableData();
     this.primengConfig.ripple = true;
-    this.date = new Date();
-    this.myDate = moment(this.date).format('MM/DD/YYYY');
-    this.itemMaster.controls['itemDate'].setValue(this.myDate);
+    let date = new Date();
+    this.myDate = moment(date).format('MM/DD/YYYY');
+    // this.itemMaster.controls['itemDate'].setValue(this.myDate);
   }
 
   breadcrumb = [
@@ -41,8 +42,16 @@ export class AgentComponent implements OnInit {
 
   itemMaster = new FormGroup({
     agentName: new FormControl('', [Validators.required ]), 
-    agentType: new FormControl('', [Validators.required]) 
-    
+    agentFName: new FormControl('', [Validators.required ]), 
+    agentMobileNo: new FormControl('', [Validators.required ]), 
+    agentAddress: new FormControl('', [Validators.required]),     
+    agentType: new FormControl(null, [Validators.required]),
+    agentPinCode: new FormControl(null, [Validators.required]),
+    stateId : new FormControl(null, [Validators.required]),
+    aadharcard: new FormControl('', [Validators.required , Validators.pattern('^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$')]),
+    panCard: new FormControl('', [Validators.required , Validators.pattern('[A-Z a-z]{5}[0-9]{4}[A-Z a-z]{1}')]),
+    qualification: new FormControl('', [Validators.required]),
+    commission: new FormControl('0', [Validators.required]),     
   })
 
   itemMasterSubmit(itemMaster : FormGroupDirective) {
@@ -54,22 +63,18 @@ export class AgentComponent implements OnInit {
       this._apiservice.addAgentMaster(object).then((res: any) => {
         this._utility.loader(false);
         if (res.success == true) {
-          this.errorMsg = res.message;
           window.scroll(0, 0)
-          this.errorMsgCheck = 'success'
-          this._apiservice.showMessage(this.errorMsg, this.errorMsgCheck);
+          this._apiservice.showMessage(res.message, 'success');
           this.getAllTableData();
           this.itemMaster.reset();
           Object.keys(this.itemMaster.controls).forEach(key => {
             this.itemMaster.controls[key].setErrors(null)
           });
           itemMaster.resetForm();
-          this.itemMaster.controls['itemDate'].setValue(this.myDate);
+          this.itemMaster.controls['commission'].setValue('0');
         }
         else {
-          this.errorMsg = res.message;
-          this.errorMsgCheck = 'error'
-          this._apiservice.showMessage(this.errorMsg, this.errorMsgCheck);
+          this._apiservice.showMessage(res.message, 'error');
           this.getAllTableData();
         }
 
@@ -81,9 +86,7 @@ export class AgentComponent implements OnInit {
       this._apiservice.editAgentMaster(object).then((res:any)=>{
         this._utility.loader(false);
         if (res.success == true) {
-          this.errorMsg = res.message;
-          this.errorMsgCheck = 'success'
-          this._apiservice.showMessage(this.errorMsg, this.errorMsgCheck);
+          this._apiservice.showMessage(res.message, 'success');
           this.getAllTableData();
           this.itemMaster.reset();
           Object.keys(this.itemMaster.controls).forEach(key => {
@@ -95,9 +98,7 @@ export class AgentComponent implements OnInit {
         }
 
         else {
-          this.errorMsg = res.message;
-          this.errorMsgCheck = 'error'
-          this._apiservice.showMessage(this.errorMsg, this.errorMsgCheck);
+          this._apiservice.showMessage(res.message, 'error');
           this.getAllTableData();
         }
       })
@@ -119,11 +120,11 @@ export class AgentComponent implements OnInit {
   confirm1(agentId: any) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
-      header: 'Delete Item Master Record',
+      header: 'Delete Agent Master Record',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.msgs = [{ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' }];
-        this.deleteItem(agentId);
+        this.deleteItem(agentId ?? 1);
       },
       reject: () => {
         this.msgs = [{ severity: 'info', summary: 'Rejected', detail: 'You have rejected' }];
@@ -140,30 +141,18 @@ export class AgentComponent implements OnInit {
     this._apiservice.deleteAgentMaster(agentId).then((res: any) => {
       this._utility.loader(false);
       if (res.success == true) {
-        this.errorMsg = res.message;
         window.scroll(0, 0)
-        this.errorMsgCheck = 'success'
-        this._apiservice.showMessage(this.errorMsg, this.errorMsgCheck);
+        this._apiservice.showMessage(res.message, 'success');
         this.getAllTableData();
       }
 
       else {
-        this.errorMsg = res.message;
         window.scroll(0, 0)
-        this.errorMsgCheck = 'error'
-        this._apiservice.showMessage(this.errorMsg, this.errorMsgCheck); 
+        this._apiservice.showMessage(res.message , 'error'); 
         this.getAllTableData();
       }
 
     })
-
-      // .catch((error: any) => {
-      //   this.errorMsg = error.message;
-      //   window.scroll(0, 0)
-      //   this.errorMsgCheck = 'error'
-      //   this._apiservice.showMessage(this.errorMsg, this.errorMsgCheck);
-      //   this.getAllTableData();
-      // })
   }
 
   editagentId : any;
@@ -175,6 +164,30 @@ export class AgentComponent implements OnInit {
     this.submitButton = 'Update'
     this.editagentId = customer.agentId;
   }
+
+
+  getDropdown(){
+    this._apiservice.dropdowndata('agent').then((res:any)=>{
+      console.log(res);
+      if(res.success){
+        this.agent_dropdown = res.returnValue;
+      }
+    })
+    this._apiservice.dropdowndata('states').then((res:any)=>{
+      console.log(res);
+      if(res.success){
+        this.state_dropdown = res.returnValue;
+      }
+    })
+    this._apiservice.dropdowndata('city').then((res:any)=>{
+      console.log(res);
+      if(res.success){
+        this.city_dropdown = res.returnValue;
+      }
+      
+    })
+  }
+  
 
    
 }

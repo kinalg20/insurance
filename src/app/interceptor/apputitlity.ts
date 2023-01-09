@@ -33,7 +33,7 @@ export class AppUtility {
 
   //validate user mobile number
   inputMobile(event: any){
-    console.log(event.keyCode);
+    console.log(event.target.value);
     if(event.keyCode != 9){
       if(event.keyCode != 8 && event.keyCode != 189 && event.keyCode != 107 && event.keyCode != 16 && event.keyCode != 187 && event.keyCode != 86)  {
         if (!/^[0-9]$/.test(event.key)) {

@@ -25,20 +25,78 @@
             <div class="row">
                     <div class="col-lg-3 col-md-12 form-group">
                         <label for="status">Agent Name<span class="star_class">*</span></label>
-                        <input type="text" class="form-control" formControlName="agentName" placeholder="Enter Part Name" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentName')?.invalid) || (itemMaster.get('agentName').touched && itemMaster.get('agentName')?.invalid)" required>
-                        <div class="invalid-feedback"> Part name is Required </div>
-                    </div>
-                    <!-- <div class="col-lg-3 col-md-12 form-group">
-                        <label for="status">Entry Date<span class="star_class">*</span></label>
-                        <p-calendar formControlName="itemDate" [minDate]="date" [showIcon]="true" placeholder="Select Date" [class.is-invalid]="(itemForm.submitted && itemMaster.get('itemDate')?.invalid) || (itemMaster.get('itemDate').touched && itemMaster.get('itemDate')?.invalid)"></p-calendar>
-                        <div class="invalid-feedback"> Entry Date is Required </div>
-                    </div> -->
-                
+                        <input type="text" class="form-control" formControlName="agentName" placeholder="Enter Agent Name" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentName')?.invalid) || (itemMaster.get('agentName').touched && itemMaster.get('agentName')?.invalid)" required>
+                        <div class="invalid-feedback"> Name is Required </div>
+                    </div>                
+                    <div class="col-lg-3 col-md-12 form-group">
+                        <label for="status">Agent Father Name<span class="star_class">*</span></label>
+                        <input type="text" class="form-control" formControlName="agentFName" placeholder="Enter Agent Father Name" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentFName')?.invalid) || (itemMaster.get('agentFName').touched && itemMaster.get('agentFName')?.invalid)" required>
+                        <div class="invalid-feedback"> Father Name is Required </div>
+                    </div>                
+                    <div class="col-lg-3 col-md-12 form-group">
+                        <label for="status">Agent Mobile Number<span class="star_class">*</span></label>
+                        <input type="text" class="form-control" formControlName="agentMobileNo" maxlength="10" (keydown)="_utility.inputMobile($event)" placeholder="Enter Agent Mobile Number" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentMobileNo')?.invalid) || (itemMaster.get('agentMobileNo').touched && itemMaster.get('agentMobileNo')?.invalid)" required>
+                        <div class="invalid-feedback"> Agent Mobile is Required </div>
+                    </div>                
+                    <div class="col-lg-3 col-md-12 form-group">
+                        <label for="status">Address<span class="star_class">*</span></label>
+                        <textarea name="" id="" class="form-control" formControlName="agentAddress" placeholder="Enter Address" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentAddress')?.invalid) || (itemMaster.get('agentAddress').touched && itemMaster.get('agentAddress')?.invalid)" cols="30" rows="10"></textarea>
+                        <div class="invalid-feedback"> Address is Required </div>
+                    </div>                
                     <div class="col-lg-3 col-md-12  form-group">
                         <label for="doc">Agent Type<span class="star_class">*</span></label>
-                        <input type="text" class="form-control" formControlName="agentType" placeholder="Enter Part Description" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentType')?.invalid) || (itemMaster.get('agentType').touched && itemMaster.get('agentType')?.invalid)" required>
+                        <select name="" id="" class="form-control form-select" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentType')?.invalid) || (itemMaster.get('agentType').touched && itemMaster.get('agentType')?.invalid)" formControlName="agentType">
+                            <option value="null">Select Agent Type</option>
+                            <ng-container  *ngFor="let agent of agent_dropdown">
+                                <option [value]="agent.id">{{agent.value}}</option>
+                            </ng-container>
+                        </select>
                         <div class="invalid-feedback"> Agent Type is Required </div>
                     </div>
+
+                    <div class="col-lg-3 col-md-12 form-group">
+                        <label for="status">Commission<span class="star_class">*</span></label>
+                        <p-inputNumber formControlName="commission"  min="1" suffix="%" [class.is-invalid]="(itemForm.submitted && itemMaster.get('commission')?.invalid) || (itemMaster.get('commission').touched && itemMaster.get('commission')?.invalid)"></p-inputNumber>
+                        <div class="invalid-feedback"> Commission is Required </div>
+                    </div>                
+                    <div class="col-lg-3 col-md-12  form-group">
+                        <label for="doc">State<span class="star_class">*</span></label>
+                        <select name="" id="" class="form-control form-select" formControlName="stateId" [class.is-invalid]="(itemForm.submitted && itemMaster.get('stateId')?.invalid) || (itemMaster.get('stateId').touched && itemMaster.get('stateId')?.invalid)">
+                            <option value="null">Select State</option>
+                            <ng-container  *ngFor="let state of state_dropdown">
+                                <option [value]="state.id">{{state.value}}</option>
+                            </ng-container>
+                        </select>
+                        <div class="invalid-feedback"> State is Required </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-12  form-group">
+                        <label for="doc">City<span class="star_class">*</span></label>
+                        <select name="" id="" class="form-control form-select" formControlName="agentPinCode" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentPinCode')?.invalid) || (itemMaster.get('agentPinCode').touched && itemMaster.get('agentPinCode')?.invalid)">
+                            <option value="null">Select City</option>
+                            <ng-container  *ngFor="let city of city_dropdown">
+                                <option [value]="city.id">{{city.value}}</option>
+                            </ng-container>
+                        </select>
+                        <div class="invalid-feedback"> City is Required </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-12 form-group">
+                        <label for="status">Aadhar Number<span class="star_class">*</span></label>
+                        <input type="text" class="form-control" formControlName="aadharcard" maxlength="12" minlength="12" placeholder="Enter Aadhar Number" [class.is-invalid]="(itemForm.submitted && itemMaster.get('aadharcard')?.invalid) || (itemMaster.get('aadharcard').touched && itemMaster.get('aadharcard')?.invalid)" required>
+                        <div class="invalid-feedback"> Aadhar Number is Required </div>
+                    </div>                
+                    <div class="col-lg-3 col-md-12 form-group">
+                        <label for="status">PAN<span class="star_class">*</span></label>
+                        <input type="text" class="form-control" style="text-transform: uppercase;" maxlength="10" minlength="10" formControlName="panCard" placeholder="Enter PAN" [class.is-invalid]="(itemForm.submitted && itemMaster.get('panCard')?.invalid) || (itemMaster.get('panCard').touched && itemMaster.get('panCard')?.invalid)" required>
+                        <div class="invalid-feedback" *ngIf="itemMaster.get('panCard')?.errors?.required"> PAN is Required </div>
+                        <div class="invalid-feedback" *ngIf="itemMaster.get('panCard')?.errors?.pattern">Invalid PAN Number</div>
+                    </div>  
+                    <div class="col-lg-3 col-md-12 form-group">
+                        <label for="status">Qualification<span class="star_class">*</span></label>
+                        <textarea name="" id="" cols="30" rows="10" formControlName="qualification" placeholder="Enter Qualification" class="form-control" [class.is-invalid]="(itemForm.submitted && itemMaster.get('qualification')?.invalid) || (itemMaster.get('qualification').touched && itemMaster.get('qualification')?.invalid)" required></textarea>
+                        <div class="invalid-feedback"> Qualification is Required </div>
+                    </div>  
                       
                 <div class="add-listings-btn col-lg-4 col-md-6">
                     <div class="form-group">
@@ -58,30 +116,52 @@
             <ng-template pTemplate="header" >
                 <tr>
                     <th style="min-width: 20px;">S.No.</th>
-                    <th style="min-width: 250px;">Agent Name</th> 
-                    <th>Agent Type</th> 
+                    <th style="min-width: 180px;">Agent Name</th> 
+                    <th style="min-width: 180px;">Agent Father Name</th> 
+                    <th style="min-width: 180px;">Agent Mobile Number</th> 
+                    <th style="min-width: 180px;">Agent Address</th> 
+                    <th style="min-width: 180px;">Agent Type</th>
+                    <th style="min-width: 180px;">Commission</th> 
+                    <th >State</th> 
+                    <th>City</th> 
+                    <th style="min-width: 180px;">Aadhar Number</th> 
+                    <th>PAN</th> 
+                    <th>Qualification</th> 
                     <th>Action</th>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <th style="min-width: 20px;"></th>
-                    <th style="min-width: 250px;"><p-columnFilter type="text" field="agentName"></p-columnFilter></th>
+                    <th><p-columnFilter type="text" field="agentName"></p-columnFilter></th>
                     <th></th>
                     <th></th>
-                </tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr> -->
             </ng-template>
             <ng-template pTemplate="body" let-agent let-i="rowIndex">
                 <tr>
-                    <td style="min-width: 20px;">{{i+1}}</td>
-                    <td style="min-width: 250px;">  
-                        <span class="image-text">{{agent.agentName}}</span>
-                    </td>
-                    <td>
-                        <span class="image-text" style="min-width: 20px;">{{agent.agentType}}</span>
-                    </td>
-                   
-                    <td style="min-width: 20px;">
+                    <td>{{i+1}}</td>
+                    <td><span class="image-text">{{agent.agentName}}</span></td>
+                    <td><span class="image-text">{{agent.agentFName}}</span></td>
+                    <td><span class="image-text">{{agent.agentMobileNo}}</span></td>
+                    <td><span class="image-text">{{agent.agentAddress}}</span></td>
+                    <td><span class="image-text">{{agent.agentType}}</span></td>
+                    <td><span class="image-text">{{agent.commission}}</span></td>
+                    <td><span class="image-text">{{agent.stateId}}</span></td>
+                    <td><span class="image-text">{{agent.agentPinCode}}</span></td>
+                    <td><span class="image-text">{{agent.aadharcard}}</span></td>
+                    <td><span class="image-text">{{agent.panCard}}</span></td>
+                    <td><span class="image-text">{{agent.qualification}}</span></td>
+                    <td class="d-flex">
                         <button pButton pRipple type="button" icon="bx bx-pencil" class="p-button-rounded p-button-primary p-button-text" (click)="EditItem(agent)"></button>
-                        <button pButton pRipple type="button" icon="bx bx-trash" class="p-button-rounded p-button-danger p-button-text" (click)="confirm1(agent.itemId)"></button>
+                        <button pButton pRipple type="button" icon="bx bx-trash" class="p-button-rounded p-button-danger p-button-text" (click)="confirm1(i+1)"></button>
                     </td>
                 </tr>
             </ng-template>

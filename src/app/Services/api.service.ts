@@ -47,10 +47,12 @@ export class ApiService {
   showMessage(errorMsg: any, errorMsgCheck: any) {
     this.messageService.add({ severity: errorMsgCheck, summary: errorMsgCheck, detail: errorMsg });
   }
-//Agent
-getAgentMaster(): Promise<any> {
-  return this.http.get(this._baseUrl + 'agent').toPromise()
-}
+
+  
+  //Agent
+  getAgentMaster(): Promise<any> {
+    return this.http.get(this._baseUrl + 'agent').toPromise()
+  }
 
   addAgentMaster(agentData: any): Promise<any> {
     return this.http.post(this._baseUrl + 'agent', agentData).toPromise()
@@ -61,6 +63,90 @@ getAgentMaster(): Promise<any> {
   }
   deleteAgentMaster(id: any): Promise<any> {
     return this.http.delete(this._baseUrl + 'agent/' + id).toPromise()
+  }
+
+  //Company
+  getCompanyMaster(): Promise<any> {
+    return this.http.get(this._baseUrl + 'company').toPromise()
+  }
+
+  addCompanyMaster(agentData: any): Promise<any> {
+    return this.http.post(this._baseUrl + 'company', agentData).toPromise()
+  }
+
+  editCompanyMaster(object: any): Promise<any> {
+    return this.http.put(this._baseUrl + 'company', object).toPromise()
+  }
+  deleteCompanyMaster(id: any): Promise<any> {
+    return this.http.delete(this._baseUrl + 'company/' + id).toPromise()
+  }
+
+
+  //Insurance
+  getInsuranceMaster(): Promise<any> {
+    return this.http.get(this._baseUrl + 'InsuranceType').toPromise()
+  }
+
+  addInsuranceMaster(agentData: any): Promise<any> {
+    return this.http.post(this._baseUrl + 'InsuranceType', agentData).toPromise()
+  }
+
+  editInsuranceMaster(object: any): Promise<any> {
+    return this.http.put(this._baseUrl + 'InsuranceType', object).toPromise()
+  }
+  deleteInsuranceMaster(id: any): Promise<any> {
+    return this.http.delete(this._baseUrl + 'InsuranceType/' + id).toPromise()
+  }
+
+
+  //policy
+  getPolicyMaster(): Promise<any> {
+    return this.http.get(this._baseUrl + 'PolicyType').toPromise()
+  }
+
+  addPolicyMaster(agentData: any): Promise<any> {
+    return this.http.post(this._baseUrl + 'PolicyType', agentData).toPromise()
+  }
+
+  editPolicyMaster(object: any): Promise<any> {
+    return this.http.put(this._baseUrl + 'PolicyType', object).toPromise()
+  }
+  deletePolicyMaster(id: any): Promise<any> {
+    return this.http.delete(this._baseUrl + 'PolicyType/' + id).toPromise()
+  }
+
+
+  //vallage
+  getVallageMaster(): Promise<any> {
+    return this.http.get(this._baseUrl + 'Vallage').toPromise()
+  }
+
+  addVallageMaster(agentData: any): Promise<any> {
+    return this.http.post(this._baseUrl + 'Vallage', agentData).toPromise()
+  }
+
+  editVallageMaster(object: any): Promise<any> {
+    return this.http.put(this._baseUrl + 'Vallage', object).toPromise()
+  }
+  deleteVallageMaster(id: any): Promise<any> {
+    return this.http.delete(this._baseUrl + 'Vallage/' + id).toPromise()
+  }
+
+
+  //vehicle
+  getVehicleTypeMaster(): Promise<any> {
+    return this.http.get(this._baseUrl + 'VechileType').toPromise()
+  }
+
+  addVehicleTypeMaster(agentData: any): Promise<any> {
+    return this.http.post(this._baseUrl + 'VechileType', agentData).toPromise()
+  }
+
+  editVehicleTypeMaster(object: any): Promise<any> {
+    return this.http.put(this._baseUrl + 'VechileType', object).toPromise()
+  }
+  deleteVehicleTypeMaster(id: any): Promise<any> {
+    return this.http.delete(this._baseUrl + 'VechileType/' + id).toPromise()
   }
 
 }

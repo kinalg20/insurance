@@ -19,11 +19,11 @@ export class DashboardSidemenuComponent implements OnInit {
 
   getSideMenus(){
     let userObject = this._utility.getLocalStorageDetails();
-    console.log(userObject.userId);    
-    this._apiService.getMenuSubMenu(userObject.userId).then((res:any)=>{
-      console.log(res);  
-      this.menuList = res.returnValue;    
-    })
+    console.log(userObject?.userId);    
+    // this._apiService.getMenuSubMenu(userObject.userId).then((res:any)=>{
+    //   console.log(res);  
+    //   this.menuList = res.returnValue;    
+    // })
   }
 
 }

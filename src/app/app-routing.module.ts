@@ -3,10 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuardGuard } from './AuthGuards/auth-guard.guard';
 import { AgentComponent } from './components/Admin Module/forms/agent/agent.component';
 // import { AuthGuardGuard } from './AuthGuards/auth-guard.guard';
-import { AssignGroupComponent } from './components/Admin Module/forms/assign-group/assign-group.component';
-import { AssignMenuSubmenuComponent } from './components/Admin Module/forms/assign-menu-submenu/assign-menu-submenu.component';
-import { CreationGroupComponent } from './components/Admin Module/forms/creation-group/creation-group.component';
-import { RegisterUserComponent } from './components/Admin Module/forms/register-user/register-user.component';
+import { CompanyComponent } from './components/Admin Module/forms/company/company.component';
+import { InsuranceComponent } from './components/Admin Module/forms/insurance/insurance.component';
+import { PolicyTypeComponent } from './components/Admin Module/forms/policy-type/policy-type.component';
+import { PolicyComponent } from './components/Admin Module/forms/policy/policy.component';
+import { VallageComponent } from './components/Admin Module/forms/vallage/vallage.component';
+import { VehicleTypeComponent } from './components/Admin Module/forms/vehicle-type/vehicle-type.component';
 import { LoginComponent } from './components/Auth/login/login.component';
 import { DashboardMyProfileComponent } from './components/commonModule/dashboard-my-profile/dashboard-my-profile.component';
 // import { AboutUsComponent } from './components/pages/about-us/about-us.component';
@@ -51,11 +53,12 @@ import { DashboardMyProfileComponent } from './components/commonModule/dashboard
 const routes: Routes = [
     {path: 'dashboard-my-profile', component: DashboardMyProfileComponent, pathMatch: 'full' },
     {path: '', component: LoginComponent, pathMatch: 'full'},
-    {path: 'registerUser', component: RegisterUserComponent, pathMatch: 'full', canActivate : [AuthGuardGuard]},
-    {path: 'groupCreation', component: CreationGroupComponent, pathMatch: 'full'},
-    {path: 'assignGroupUser', component: AssignGroupComponent, pathMatch: 'full'},
-    {path: 'assignMenuSubmenu', component: AssignMenuSubmenuComponent, pathMatch: 'full'},
-    {path: 'agent', component: AgentComponent, pathMatch: 'full'},
+    {path: 'agentMaster', component: AgentComponent, pathMatch: 'full'},
+    {path: 'companyMaster', component: CompanyComponent, pathMatch: 'full'},
+    {path: 'insuranceMaster', component: InsuranceComponent, pathMatch: 'full'},
+    {path: 'policyTypeMaster', component: PolicyTypeComponent, pathMatch: 'full'},
+    {path: 'vehicleTypeMaster', component: VehicleTypeComponent, pathMatch: 'full'},
+    {path: 'vallageMaster', component: VallageComponent, pathMatch: 'full'},
 
 
 
