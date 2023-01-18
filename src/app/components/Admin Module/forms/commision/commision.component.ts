@@ -41,7 +41,7 @@ export class CommisionComponent implements OnInit {
 
   @ViewChild ('dt2') FilteredData:Table;
   commissionMaster = new FormGroup({
-    commissionTypeName: new FormControl('', [Validators.required ]), 
+    commissionName: new FormControl('', [Validators.required ]), 
   })
 
   commissionMasterSubmit(CommissionMaster : FormGroupDirective) {
