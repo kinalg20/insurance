@@ -57,6 +57,7 @@ const routes: Routes = [
     {path: 'companyMaster', component: CompanyComponent, pathMatch: 'full'},
     {path: 'insuranceMaster', component: InsuranceComponent, pathMatch: 'full'},
     {path: 'policyTypeMaster', component: PolicyTypeComponent, pathMatch: 'full'},
+    {path: 'policyMaster', component: PolicyComponent, pathMatch: 'full'},
     {path: 'vehicleTypeMaster', component: VehicleTypeComponent, pathMatch: 'full'},
     {path: 'vallageMaster', component: VallageComponent, pathMatch: 'full'},
 

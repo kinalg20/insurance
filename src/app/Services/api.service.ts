@@ -98,6 +98,22 @@ export class ApiService {
     return this.http.delete(this._baseUrl + 'InsuranceType/' + id).toPromise()
   }
 
+  //Insurance
+  getCommissionMaster(): Promise<any> {
+    return this.http.get(this._baseUrl + 'Commission').toPromise()
+  }
+
+  addCommissionMaster(agentData: any): Promise<any> {
+    return this.http.post(this._baseUrl + 'Commission', agentData).toPromise()
+  }
+
+  editCommissionMaster(object: any): Promise<any> {
+    return this.http.put(this._baseUrl + 'Commission', object).toPromise()
+  }
+  deleteCommissionMaster(id: any): Promise<any> {
+    return this.http.delete(this._baseUrl + 'Commission/' + id).toPromise()
+  }
+
 
   //policy
   getPolicyMaster(): Promise<any> {

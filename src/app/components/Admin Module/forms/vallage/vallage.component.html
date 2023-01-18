@@ -17,37 +17,35 @@
     <!-- End Breadcrumb Area -->
 
     <!-- Start -->
-    <div class="add-listings-box1">
-    <!-- Start -->
-        <!-- <prime-toast></prime-toast> -->
-    <!-- End -->
-        <form [formGroup]="vallageMaster" (ngSubmit)="vallageMasterSubmit(itemForm)" #itemForm="ngForm">
-            <div class="row">
-                    <div class="col-lg-3 col-md-12 form-group">
-                        <label for="status">vallage Name<span class="star_class">*</span></label>
-                        <input type="text" class="form-control" formControlName="vallageName" placeholder="Enter vallage Name" [class.is-invalid]="(itemForm.submitted && vallageMaster.get('vallageName')?.invalid) || (vallageMaster.get('vallageName').touched && vallageMaster.get('vallageName')?.invalid)" required>
-                        <div class="invalid-feedback"> vallage Name is Required </div>
+    <div class="card item-master">
+        <p-table #dt2 [value]="vallageMasterTable" [scrollable]="true"
+            dataKey="id" [rows]="10" [scrollable]="true"
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,20,30,50]"
+            [paginator]="true" currentPageReportTemplate="Showing {first} to
+            {last} of {totalRecords} entries"
+            [globalFilterFields]="['vallageName']">
+            <ng-template pTemplate="caption">
+                <div class="d-flex" style="justify-content: space-between;
+                    align-items: center;">
+                    <span class="p-input-icon-left d-flex align-items-center">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" style="height: 35px;"
+                            (input)="dt2.filterGlobal($event.target.value,'contains')"
+                            placeholder="Global Search" [(ngModel)]="filterval"
+                            />
+                        <p-button type="button" class="mx-2"
+                            (click)="reset(dt2)"
+                            icon="bx bx-reset"></p-button>
+                    </span>
+                    <div class="add-listings-btn">
+                        <button class="submit_btn mt-0" (click)="openModel()">+Add</button>
                     </div>
-                      
-                    <div class="add-listings-btn col-lg-4 col-md-6">
-                        <div class="form-group">
-                            <button type="submit" class="submit_btn">{{submitButton}}</button>
-                            <button type="reset" class="mx-3 reset_btn"  (click)="submitButton='Submit'">Reset</button>
-                        </div>
-                    </div>
-            </div>
-        </form>
-    </div>
-    <!-- End -->
-
-    <div class="card item-master" *ngIf="vallageMasterTable.length > 0">
-        <p-table #dt2 [value]="vallageMasterTable" [scrollable]="true" dataKey="id" [rows]="10" [scrollable]="true"  [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,20,30,50]"
-            [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [globalFilterFields]="['Agent Name','Agent Type']">
-            <ng-template pTemplate="header" >
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
                 <tr>
                     <th style="min-width: 20px;">S.No.</th>
-                    <th style="min-width: 180px;">Agent Name</th>
+                    <th style="min-width: 180px;">Village Name</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-agent let-i="rowIndex">
@@ -55,8 +53,11 @@
                     <td>{{i+1}}</td>
                     <td><span class="image-text">{{agent.vallageName}}</span></td>
                     <td class="d-flex">
-                        <button pButton pRipple type="button" icon="bx bx-pencil" class="p-button-rounded p-button-primary p-button-text" (click)="EditItem(agent)"></button>
-                        <button pButton pRipple type="button" icon="bx bx-trash" class="p-button-rounded p-button-danger p-button-text" (click)="confirm1(agent)"></button>
+                        <button pButton pRipple type="button" icon="bx bx-pencil" class="p-button-rounded p-button-primary
+                            p-button-text" (click)="EditItem(agent)"></button>
+                        <button pButton pRipple type="button" icon="bx bx-trash"
+                            class="p-button-rounded p-button-danger
+                            p-button-text" (click)="confirm1(agent)"></button>
                     </td>
                 </tr>
             </ng-template>
@@ -67,6 +68,45 @@
             </ng-template>
         </p-table>
         <div class="flex-grow-1"></div>
-    </div> 
+    </div>
     <app-copyrights></app-copyrights>
 </div>
+
+
+
+<p-dialog [(visible)]="display" [draggable]="false" [header]="header"
+    [style]="{width: '50vw'}" [modal]="true">
+    <div class="add-listings-box1">
+        <!-- Start -->
+        <div class="add-listings-box1">
+
+            <form [formGroup]="vallageMaster"
+                (ngSubmit)="vallageMasterSubmit(itemForm)" #itemForm="ngForm">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 form-group">
+                        <label for="status">Village Name<span
+                                class="star_class">*</span></label>
+                        <input type="text" class="form-control"
+                            formControlName="vallageName" placeholder="Enter Village Name"
+                            [class.is-invalid]="(itemForm.submitted &&
+                            vallageMaster.get('vallageName')?.invalid) ||
+                            (vallageMaster.get('vallageName').touched &&
+                            vallageMaster.get('vallageName')?.invalid)"
+                            required>
+                        <div class="invalid-feedback"> vallage Name is Required
+                        </div>
+                    </div>
+
+                    <div class="add-listings-btn col-lg-4 col-md-6">
+                        <div class="form-group d-flex">
+                            <button type="submit" class="submit_btn">{{submitButton}}</button>
+                            <button type="reset" class="mx-3 reset_btn"
+                                (click)="submitButton='Submit'">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- End -->
+    </div>
+</p-dialog>

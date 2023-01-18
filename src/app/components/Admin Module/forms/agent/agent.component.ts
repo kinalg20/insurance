@@ -12,14 +12,14 @@ import { ApiService } from 'src/app/Services/api.service';
 })
 export class AgentComponent implements OnInit {
 
-  tax_dropdown: any = [];
   agent_dropdown : any = [];
-  city_dropdown : any = [];
-  state_dropdown : any = [];
-
+  // city_dropdown : any = [];
+  // state_dropdown : any = [];
+  header : string = 'Add Master'
 
   itemMasterTable: any = [];
   myDate: any;
+  display: any;
   msgs: Message[] = [];
   submitButton : string = 'Submit'
   constructor(private _apiservice: ApiService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig , public _utility : AppUtility) { }
@@ -40,18 +40,33 @@ export class AgentComponent implements OnInit {
     }
   ]
 
+  state_dropdown : any = [
+    {id : 1 , value : 'demo1'},
+    {id : 2 , value : 'demo2'},
+    {id : 3 , value : 'demo3'},
+    {id : 4 , value : 'demo4'}
+  ]
+
+
+  city_dropdown : any = [
+    {id : 1 , value : 'demo1'},
+    {id : 2 , value : 'demo2'},
+    {id : 3 , value : 'demo3'},
+    {id : 4 , value : 'demo4'}
+  ]
+
   itemMaster = new FormGroup({
     agentName: new FormControl('', [Validators.required ]), 
     agentFName: new FormControl('', [Validators.required ]), 
     agentMobileNo: new FormControl('', [Validators.required ]), 
     agentAddress: new FormControl('', [Validators.required]),     
-    agentType: new FormControl(null, [Validators.required]),
-    agentPinCode: new FormControl(null, [Validators.required]),
-    stateId : new FormControl(null, [Validators.required]),
+    agentType: new FormControl("2", [Validators.required]),
+    agentPinCode: new FormControl("", [Validators.required]),
+    stateId : new FormControl(""),
     aadharcard: new FormControl('', [Validators.required , Validators.pattern('^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$')]),
     panCard: new FormControl('', [Validators.required , Validators.pattern('[A-Z a-z]{5}[0-9]{4}[A-Z a-z]{1}')]),
     qualification: new FormControl('', [Validators.required]),
-    commission: new FormControl('0', [Validators.required]),     
+    emailAddress: new FormControl('', [Validators.required, Validators.pattern('[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}')]),     
   })
 
   itemMasterSubmit(itemMaster : FormGroupDirective) {
@@ -63,6 +78,7 @@ export class AgentComponent implements OnInit {
       this._apiservice.addAgentMaster(object).then((res: any) => {
         this._utility.loader(false);
         if (res.success == true) {
+          this.display = false;
           window.scroll(0, 0)
           this._apiservice.showMessage(res.message, 'success');
           this.getAllTableData();
@@ -86,6 +102,7 @@ export class AgentComponent implements OnInit {
       this._apiservice.editAgentMaster(object).then((res:any)=>{
         this._utility.loader(false);
         if (res.success == true) {
+          this.display = false;
           this._apiservice.showMessage(res.message, 'success');
           this.getAllTableData();
           this.itemMaster.reset();
@@ -159,10 +176,13 @@ export class AgentComponent implements OnInit {
   EditItem(customer : any){
     console.log(customer);
     Object.keys(this.itemMaster.controls).forEach(key => { 
+      console.log(key , this.itemMaster.controls)
       this.itemMaster.controls[key].setValue(customer[key]);
     });   
+
     this.submitButton = 'Update'
     this.editagentId = customer.agentId;
+    this.display = true;
   }
 
 
@@ -173,7 +193,7 @@ export class AgentComponent implements OnInit {
         this.agent_dropdown = res.returnValue;
       }
     })
-    this._apiservice.dropdowndata('states').then((res:any)=>{
+    this._apiservice.dropdowndata('state').then((res:any)=>{
       console.log(res);
       if(res.success){
         this.state_dropdown = res.returnValue;
@@ -186,6 +206,25 @@ export class AgentComponent implements OnInit {
       }
       
     })
+  }
+
+
+  filterval: string;
+  dateFilterVal: string;
+  reset(dt2) {
+    dt2.reset();
+    this.filterval = '';
+    this.dateFilterVal = ''
+  }
+
+
+  openModel(){
+    Object.keys(this.itemMaster.controls).forEach(key => {
+      this.itemMaster.controls[key].setValue('');
+    });
+    this.header = 'Add Agent';
+    this.submitButton = 'Submit';
+    this.display = true;
   }
   
 

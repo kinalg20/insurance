@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import { ConfirmationService, Message, PrimeNGConfig } from 'primeng/api';
 import { AppUtility } from 'src/app/interceptor/apputitlity';
 import { ApiService } from 'src/app/Services/api.service';
+import { CommonFunction } from 'src/app/Utility/commonFunction';
 
 @Component({
   selector: 'app-policy',
@@ -27,6 +28,7 @@ export class PolicyComponent implements OnInit {
 
   ngOnInit(): void { 
     this.getAllTableData();
+    this.getDropdowns();
     this.primengConfig.ripple = true;
     let date = new Date();
     this.myDate = moment(date).format('MM/DD/YYYY');
@@ -40,11 +42,34 @@ export class PolicyComponent implements OnInit {
   ]
 
   policyMaster = new FormGroup({
-    policyTypeName: new FormControl('', [Validators.required ]), 
+    policyId: new FormControl('', [Validators.required ]), 
+    policyNumber: new FormControl('', [Validators.required ]), 
+    policyIssueDate: new FormControl('', [Validators.required ]), 
+    policyExpiryDate: new FormControl('', [Validators.required ]), 
+    customerName: new FormControl('', [Validators.required ]), 
+    customerFName: new FormControl('', [Validators.required ]), 
+    vallageId: new FormControl('', [Validators.required ]), 
+    insuranceTypeId: new FormControl('', [Validators.required ]), 
+    vechileTypeId: new FormControl('', [Validators.required ]), 
+    registrationNumber: new FormControl('', [Validators.required ]),
+    mobileNumber: new FormControl('', [Validators.required , Validators.minLength(10) , Validators.maxLength(10)]),
+    fMobileNumber: new FormControl('', [Validators.required ]),
+    premiumAmount: new FormControl('', [Validators.required ]),
+    netPremiumAmount: new FormControl('', [Validators.required ]),
+    commissionPer: new FormControl('', [Validators.required ]),
+    commissionAmount: new FormControl('', [Validators.required ]),
+    stateId: new FormControl('', [Validators.required ]),
+    companyId: new FormControl('', [Validators.required ]),
+    commissionId: new FormControl('', [Validators.required ]),
+    countryId: new FormControl('', [Validators.required ]),
+    policyUpload: new FormControl('', [Validators.required ]),
+    oldpolicyUpload: new FormControl('', [Validators.required ]),
+    rcUpload: new FormControl('', [Validators.required ]),
+    documentUpload: new FormControl('', [Validators.required ]),
   })
 
   policyMasterSubmit(policyMaster : FormGroupDirective) {
-    console.log(this.policyMaster.value);
+    console.log(this.policyMaster.value , this.policyMaster.valid);
     if (this.policyMaster.valid) {
       let object = this.policyMaster.value;
       if(this.submitButton == 'Submit'){
@@ -152,5 +177,98 @@ export class PolicyComponent implements OnInit {
     this.editagentId = customer.policyTypeId;
   } 
 
+
+  // filterval: string;
+  // dateFilterVal: string;
+  // reset(dt2) {
+  //   dt2.reset();
+  //   this.filterval = '';
+  //   this.dateFilterVal = ''
+  // }
+
+
+  // header : string = 'Add Insurance';
+  // display : boolean = false;
+  // openModel(){
+  //   Object.keys(this.insuranceMaster.controls).forEach(key => {
+  //     this.insuranceMaster.controls[key].setValue('');
+  //   });
+  //   this.header = 'Add Insurance';
+  //   this.submitButton = 'Submit';
+  //   this.display = true;
+  // }
+
+
+  policyDropdown : any = [];
+  vallageDropdown : any = [];
+  companyDropdown : any = [];
+  insuranceDropdown : any = [];
+  vehicleTypeDropdown : any = [];
+  country_dropdown : any = [];
+  getDropdowns(){
+    this._apiservice.getPolicyMaster().then((res:any)=>{
+      console.log(res);
+      if(res.success){
+        this.policyDropdown = res.returnValue;
+      }
+    })
+    this._apiservice.getVallageMaster().then((res:any)=>{
+      console.log(res);
+      if(res.success){
+        this.vallageDropdown = res.returnValue;
+      }
+    })
+    this._apiservice.getInsuranceMaster().then((res:any)=>{
+      console.log(res);
+      if(res.success){
+        this.insuranceDropdown = res.returnValue;
+      }
+    })
+    this._apiservice.getVehicleTypeMaster().then((res:any)=>{
+      console.log(res);
+      if(res.success){
+        this.vehicleTypeDropdown = res.returnValue;
+      }
+    })
+    this._apiservice.dropdowndata('state').then((res:any)=>{
+      console.log(res);
+      if(res.success){
+        this.state_dropdown = res.returnValue;
+      }
+    })
+    this._apiservice.dropdowndata('country').then((res:any)=>{
+      console.log(res);
+      if(res.success){
+        this.country_dropdown = res.returnValue;
+      }
+    })
+    this._apiservice.getCompanyMaster().then((res:any)=>{
+      console.log(res);
+      if(res.success){
+        this.companyDropdown = res.returnValue;
+      }
+    })
+  }
+
+
+  // files : any = {};
+  uploadedFile(event:any , string:any){
+    let file = this._utility.onFileChange(event);
+    if(file != false){
+      if(string == 'policy'){
+        this.policyMaster.controls['policyUpload'].setValue(file);
+      }
+
+      else if(string == 'oldpolicy'){
+        this.policyMaster.controls['oldpolicyUpload'].setValue(file);
+      }
+      else if(string == 'rcUpload'){
+        this.policyMaster.controls['rcUpload'].setValue(file);
+      }
+      else if(string == 'documentUpload'){
+        this.policyMaster.controls['documentUpload'].setValue(file);
+      }
+    }
+  }
    
 }

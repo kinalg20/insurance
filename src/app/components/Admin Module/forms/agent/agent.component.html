@@ -16,103 +16,27 @@
     </div>
     <!-- End Breadcrumb Area -->
 
-    <!-- Start -->
-    <div class="add-listings-box1">
-    <!-- Start -->
-        <!-- <prime-toast></prime-toast> -->
-    <!-- End -->
-        <form [formGroup]="itemMaster" (ngSubmit)="itemMasterSubmit(itemForm)" #itemForm="ngForm">
-            <div class="row">
-                    <div class="col-lg-3 col-md-12 form-group">
-                        <label for="status">Agent Name<span class="star_class">*</span></label>
-                        <input type="text" class="form-control" formControlName="agentName" placeholder="Enter Agent Name" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentName')?.invalid) || (itemMaster.get('agentName').touched && itemMaster.get('agentName')?.invalid)" required>
-                        <div class="invalid-feedback"> Name is Required </div>
-                    </div>                
-                    <div class="col-lg-3 col-md-12 form-group">
-                        <label for="status">Agent Father Name<span class="star_class">*</span></label>
-                        <input type="text" class="form-control" formControlName="agentFName" placeholder="Enter Agent Father Name" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentFName')?.invalid) || (itemMaster.get('agentFName').touched && itemMaster.get('agentFName')?.invalid)" required>
-                        <div class="invalid-feedback"> Father Name is Required </div>
-                    </div>                
-                    <div class="col-lg-3 col-md-12 form-group">
-                        <label for="status">Agent Mobile Number<span class="star_class">*</span></label>
-                        <input type="text" class="form-control" formControlName="agentMobileNo" maxlength="10" (keydown)="_utility.inputMobile($event)" placeholder="Enter Agent Mobile Number" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentMobileNo')?.invalid) || (itemMaster.get('agentMobileNo').touched && itemMaster.get('agentMobileNo')?.invalid)" required>
-                        <div class="invalid-feedback"> Agent Mobile is Required </div>
-                    </div>                
-                    <div class="col-lg-3 col-md-12 form-group">
-                        <label for="status">Address<span class="star_class">*</span></label>
-                        <textarea name="" id="" class="form-control" formControlName="agentAddress" placeholder="Enter Address" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentAddress')?.invalid) || (itemMaster.get('agentAddress').touched && itemMaster.get('agentAddress')?.invalid)" cols="30" rows="10"></textarea>
-                        <div class="invalid-feedback"> Address is Required </div>
-                    </div>                
-                    <div class="col-lg-3 col-md-12  form-group">
-                        <label for="doc">Agent Type<span class="star_class">*</span></label>
-                        <select name="" id="" class="form-control form-select" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentType')?.invalid) || (itemMaster.get('agentType').touched && itemMaster.get('agentType')?.invalid)" formControlName="agentType">
-                            <option value="null">Select Agent Type</option>
-                            <ng-container  *ngFor="let agent of agent_dropdown">
-                                <option [value]="agent.id">{{agent.value}}</option>
-                            </ng-container>
-                        </select>
-                        <div class="invalid-feedback"> Agent Type is Required </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-12 form-group">
-                        <label for="status">Commission<span class="star_class">*</span></label>
-                        <p-inputNumber formControlName="commission"  min="1" suffix="%" [class.is-invalid]="(itemForm.submitted && itemMaster.get('commission')?.invalid) || (itemMaster.get('commission').touched && itemMaster.get('commission')?.invalid)"></p-inputNumber>
-                        <div class="invalid-feedback"> Commission is Required </div>
-                    </div>                
-                    <div class="col-lg-3 col-md-12  form-group">
-                        <label for="doc">State<span class="star_class">*</span></label>
-                        <select name="" id="" class="form-control form-select" formControlName="stateId" [class.is-invalid]="(itemForm.submitted && itemMaster.get('stateId')?.invalid) || (itemMaster.get('stateId').touched && itemMaster.get('stateId')?.invalid)">
-                            <option value="null">Select State</option>
-                            <ng-container  *ngFor="let state of state_dropdown">
-                                <option [value]="state.id">{{state.value}}</option>
-                            </ng-container>
-                        </select>
-                        <div class="invalid-feedback"> State is Required </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-12  form-group">
-                        <label for="doc">City<span class="star_class">*</span></label>
-                        <select name="" id="" class="form-control form-select" formControlName="agentPinCode" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentPinCode')?.invalid) || (itemMaster.get('agentPinCode').touched && itemMaster.get('agentPinCode')?.invalid)">
-                            <option value="null">Select City</option>
-                            <ng-container  *ngFor="let city of city_dropdown">
-                                <option [value]="city.id">{{city.value}}</option>
-                            </ng-container>
-                        </select>
-                        <div class="invalid-feedback"> City is Required </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-12 form-group">
-                        <label for="status">Aadhar Number<span class="star_class">*</span></label>
-                        <input type="text" class="form-control" formControlName="aadharcard" maxlength="12" minlength="12" placeholder="Enter Aadhar Number" [class.is-invalid]="(itemForm.submitted && itemMaster.get('aadharcard')?.invalid) || (itemMaster.get('aadharcard').touched && itemMaster.get('aadharcard')?.invalid)" required>
-                        <div class="invalid-feedback"> Aadhar Number is Required </div>
-                    </div>                
-                    <div class="col-lg-3 col-md-12 form-group">
-                        <label for="status">PAN<span class="star_class">*</span></label>
-                        <input type="text" class="form-control" style="text-transform: uppercase;" maxlength="10" minlength="10" formControlName="panCard" placeholder="Enter PAN" [class.is-invalid]="(itemForm.submitted && itemMaster.get('panCard')?.invalid) || (itemMaster.get('panCard').touched && itemMaster.get('panCard')?.invalid)" required>
-                        <div class="invalid-feedback" *ngIf="itemMaster.get('panCard')?.errors?.required"> PAN is Required </div>
-                        <div class="invalid-feedback" *ngIf="itemMaster.get('panCard')?.errors?.pattern">Invalid PAN Number</div>
-                    </div>  
-                    <div class="col-lg-3 col-md-12 form-group">
-                        <label for="status">Qualification<span class="star_class">*</span></label>
-                        <textarea name="" id="" cols="30" rows="10" formControlName="qualification" placeholder="Enter Qualification" class="form-control" [class.is-invalid]="(itemForm.submitted && itemMaster.get('qualification')?.invalid) || (itemMaster.get('qualification').touched && itemMaster.get('qualification')?.invalid)" required></textarea>
-                        <div class="invalid-feedback"> Qualification is Required </div>
-                    </div>  
-                      
-                <div class="add-listings-btn col-lg-4 col-md-6">
-                    <div class="form-group">
-                        <button type="submit" class="submit_btn">{{submitButton}}</button>
-                        <button type="reset" class="mx-3 reset_btn"  (click)="submitButton='Submit'">Reset</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-    <!-- End -->
-
     <div class="card item-master">
         <p-table #dt2 [value]="itemMasterTable" [scrollable]="true" dataKey="id" [rows]="10" [scrollable]="true"  [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,20,30,50]"
             [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [globalFilterFields]="['Agent Name','Agent Type']">
+            [globalFilterFields]="['agentName','agentFName' , 'agentMobileNo' , 'agentAddress' , 'agentType', 'stateId', 'aadharcard', 'panCard', 'qualification']">
+            <ng-template pTemplate="caption">
+                <div class="d-flex" style="justify-content: space-between;
+                    align-items: center;">
+                    <span class="p-input-icon-left d-flex align-items-center">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" style="height: 35px;"
+                            (input)="dt2.filterGlobal($event.target.value,'contains')"
+                            placeholder="Global Search" [(ngModel)]="filterval"
+                            />
+                        <p-button type="button" class="mx-2" (click)="reset(dt2)"
+                            icon="bx bx-reset"></p-button>
+                    </span>
+                    <div class="add-listings-btn">
+                        <button class="submit_btn mt-0" (click)="openModel()">+Add</button>
+                    </div>
+                </div>
+            </ng-template>
             <ng-template pTemplate="header" >
                 <tr>
                     <th style="min-width: 20px;">S.No.</th>
@@ -121,29 +45,13 @@
                     <th style="min-width: 180px;">Agent Mobile Number</th> 
                     <th style="min-width: 180px;">Agent Address</th> 
                     <th style="min-width: 180px;">Agent Type</th>
-                    <th style="min-width: 180px;">Commission</th> 
-                    <th >State</th> 
+                    <th>State</th> 
                     <th>City</th> 
                     <th style="min-width: 180px;">Aadhar Number</th> 
                     <th>PAN</th> 
                     <th>Qualification</th> 
                     <th>Action</th>
                 </tr>
-                <!-- <tr>
-                    <th style="min-width: 20px;"></th>
-                    <th><p-columnFilter type="text" field="agentName"></p-columnFilter></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr> -->
             </ng-template>
             <ng-template pTemplate="body" let-agent let-i="rowIndex">
                 <tr>
@@ -153,7 +61,6 @@
                     <td><span class="image-text">{{agent.agentMobileNo}}</span></td>
                     <td><span class="image-text">{{agent.agentAddress}}</span></td>
                     <td><span class="image-text">{{agent.agentType}}</span></td>
-                    <td><span class="image-text">{{agent.commission}}</span></td>
                     <td><span class="image-text">{{agent.stateId}}</span></td>
                     <td><span class="image-text">{{agent.agentPinCode}}</span></td>
                     <td><span class="image-text">{{agent.aadharcard}}</span></td>
@@ -175,3 +82,113 @@
     </div> 
     <app-copyrights></app-copyrights>
 </div>
+
+
+<p-dialog [(visible)]="display" [draggable]="false" [header]="header"
+[style]="{width: '50vw'}" [modal]="true">
+    <!-- Start -->
+    <div class="add-listings-box1">
+        <form [formGroup]="itemMaster" (ngSubmit)="itemMasterSubmit(itemForm)" #itemForm="ngForm">
+            <div class="row">
+                    <div class="col-lg-6 col-md-12 form-group">
+                        <label for="status">Agent Name<span class="star_class">*</span></label>
+                        <input type="text" class="form-control" formControlName="agentName" placeholder="Enter Agent Name" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentName')?.invalid) || (itemMaster.get('agentName').touched && itemMaster.get('agentName')?.invalid)" required>
+                        <div class="invalid-feedback"> Name is Required </div>
+                    </div>                
+                    <div class="col-lg-6 col-md-12 form-group">
+                        <label for="status">Agent Father Name<span class="star_class">*</span></label>
+                        <input type="text" class="form-control" formControlName="agentFName" placeholder="Enter Agent Father Name" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentFName')?.invalid) || (itemMaster.get('agentFName').touched && itemMaster.get('agentFName')?.invalid)" required>
+                        <div class="invalid-feedback"> Father Name is Required </div>
+                    </div>                
+                    <div class="col-lg-6 col-md-12 form-group">
+                        <label for="status">Agent Mobile Number<span class="star_class">*</span></label>
+                        <input type="text" class="form-control" formControlName="agentMobileNo" maxlength="10" (keydown)="_utility.inputMobile($event)" placeholder="Enter Agent Mobile Number" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentMobileNo')?.invalid) || (itemMaster.get('agentMobileNo').touched && itemMaster.get('agentMobileNo')?.invalid)" required>
+                        <div class="invalid-feedback"> Agent Mobile is Required </div>
+                    </div>                
+                    <div class="col-lg-6 col-md-12 form-group">
+                        <label for="status">Address<span class="star_class">*</span></label>
+                        <textarea name="" id="" class="form-control" formControlName="agentAddress" placeholder="Enter Address" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentAddress')?.invalid) || (itemMaster.get('agentAddress').touched && itemMaster.get('agentAddress')?.invalid)" cols="30" rows="10"></textarea>
+                        <div class="invalid-feedback"> Address is Required </div>
+                    </div>                
+                    <div class="col-lg-6 col-md-12  form-group">
+                        <label for="doc">Agent Type<span class="star_class">*</span></label>
+                        <select name="" id="" class="form-control form-select" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentType')?.invalid) || (itemMaster.get('agentType').touched && itemMaster.get('agentType')?.invalid)" formControlName="agentType">
+                            <option value="">Select Agent Type</option>
+                            <ng-container  *ngFor="let agent of agent_dropdown">
+                                <option [value]="agent.id">{{agent.value}}</option>
+                            </ng-container>
+                        </select>
+                        <div class="invalid-feedback"> Agent Type is Required </div>
+                    </div>
+                    
+                    <div class="col-lg-6 col-md-12 form-group">
+                    <label for="" class="inner-director">Email
+                        Address<span class="star_class">*</span></label>
+                    <input class="form-control" type="text"
+                        formControlName="emailAddress"
+                        [class.is-invalid]="(itemForm.submitted &&
+                        this.itemMaster.controls['emailAddress'].invalid)
+                        || (
+                            this.itemMaster.controls['emailAddress'].touched
+                            &&
+                            this.itemMaster.controls['emailAddress'].invalid)"
+                        placeholder="Enter emailAddress"
+                        autocomplete="off" />
+                    <div class="invalid-feedback"
+                        *ngIf="this.itemMaster.controls['emailAddress'].errors?.required">
+                        Enter Email Address </div>
+                    <div class="invalid-feedback"
+                        *ngIf="this.itemMaster.controls['emailAddress'].errors?.pattern">
+                        Enter Valid Email Address </div>
+                </div>
+
+                    <div class="col-lg-6 col-md-12  form-group">
+                        <label for="doc">State<span class="star_class">*</span></label>
+                        <select name="" id="" class="form-control form-select" formControlName="stateId" [class.is-invalid]="(itemForm.submitted && itemMaster.get('stateId')?.invalid) || (itemMaster.get('stateId').touched && itemMaster.get('stateId')?.invalid)">
+                            <option value="">Select State</option>
+                            <ng-container *ngFor="let state of state_dropdown">
+                                <option [value]="state.id">{{state.value}}</option>
+                            </ng-container>
+                        </select>
+                        <div class="invalid-feedback"> State is Required </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-12  form-group">
+                        <label for="doc">City<span class="star_class">*</span></label>
+                        <select name="" id="" class="form-control form-select" formControlName="agentPinCode" [class.is-invalid]="(itemForm.submitted && itemMaster.get('agentPinCode')?.invalid) || (itemMaster.get('agentPinCode').touched && itemMaster.get('agentPinCode')?.invalid)">
+                            <option value="">Select City</option>
+                            <ng-container  *ngFor="let city of city_dropdown">
+                                <option [value]="city.id">{{city.value}}</option>
+                            </ng-container>
+                        </select>
+                        <div class="invalid-feedback"> City is Required </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-12 form-group">
+                        <label for="status">Aadhar Number<span class="star_class">*</span></label>
+                        <input type="text" class="form-control" formControlName="aadharcard" maxlength="12" minlength="12" placeholder="Enter Aadhar Number" [class.is-invalid]="(itemForm.submitted && itemMaster.get('aadharcard')?.invalid) || (itemMaster.get('aadharcard').touched && itemMaster.get('aadharcard')?.invalid)" required>
+                        <div class="invalid-feedback"> Aadhar Number is Required </div>
+                    </div>                
+                    <div class="col-lg-6 col-md-12 form-group">
+                        <label for="status">PAN<span class="star_class">*</span></label>
+                        <input type="text" class="form-control" style="text-transform: uppercase;" maxlength="10" minlength="10" formControlName="panCard" placeholder="Enter PAN" [class.is-invalid]="(itemForm.submitted && itemMaster.get('panCard')?.invalid) || (itemMaster.get('panCard').touched && itemMaster.get('panCard')?.invalid)" required>
+                        <div class="invalid-feedback" *ngIf="itemMaster.get('panCard')?.errors?.required"> PAN is Required </div>
+                        <div class="invalid-feedback" *ngIf="itemMaster.get('panCard')?.errors?.pattern">Invalid PAN Number</div>
+                    </div>  
+                    <div class="col-lg-6 col-md-12 form-group">
+                        <label for="status">Qualification<span class="star_class">*</span></label>
+                        <textarea name="" id="" cols="30" rows="10" formControlName="qualification" placeholder="Enter Qualification" class="form-control" [class.is-invalid]="(itemForm.submitted && itemMaster.get('qualification')?.invalid) || (itemMaster.get('qualification').touched && itemMaster.get('qualification')?.invalid)" required></textarea>
+                        <div class="invalid-feedback"> Qualification is Required </div>
+                    </div>  
+                      
+                <div class="add-listings-btn col-lg-4 col-md-6">
+                    <div class="form-group d-flex">
+                        <button type="submit" class="submit_btn">{{submitButton}}</button>
+                        <button type="reset" class="mx-3 reset_btn"  (click)="submitButton='Submit'">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- End -->
+</p-dialog>

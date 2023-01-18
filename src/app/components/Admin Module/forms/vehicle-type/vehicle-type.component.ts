@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ConfirmationService, Message, PrimeNGConfig } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { AppUtility } from 'src/app/interceptor/apputitlity';
 import { ApiService } from 'src/app/Services/api.service';
 
@@ -23,6 +24,10 @@ export class VehicleTypeComponent implements OnInit {
   myDate: any;
   msgs: Message[] = [];
   submitButton : string = 'Submit'
+
+  @ViewChild ('dt2') FilteredData:Table;
+
+
   constructor(private _apiservice: ApiService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig , public _utility : AppUtility) { }
 
   ngOnInit(): void { 
@@ -52,6 +57,7 @@ export class VehicleTypeComponent implements OnInit {
       this._apiservice.addVehicleTypeMaster(object).then((res: any) => {
         this._utility.loader(false);
         if (res.success == true) {
+          this.display = false;
           window.scroll(0, 0)
           this._apiservice.showMessage(res.message, 'success');
           this.getAllTableData();
@@ -69,7 +75,8 @@ export class VehicleTypeComponent implements OnInit {
       })
      }
      else {  
-      object['vechileTypeId'] = this.editagentId;   
+      object['vechileTypeId'] = this.editagentId; 
+      this.display = false;
       console.log(object);      
       this._apiservice.editVehicleTypeMaster(object).then((res:any)=>{
         this._utility.loader(false);
@@ -105,13 +112,14 @@ export class VehicleTypeComponent implements OnInit {
   }
 
   confirm1(vehicle: any) {
+    console.log(vehicle);
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Delete Agent Master Record',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.msgs = [{ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' }];
-        this.deleteItem(vehicle.vehicleId ?? 1);
+        this.deleteItem(vehicle.vechileTypeId ?? 1);
       },
       reject: () => {
         this.msgs = [{ severity: 'info', summary: 'Rejected', detail: 'You have rejected' }];
@@ -149,8 +157,31 @@ export class VehicleTypeComponent implements OnInit {
       this.vehicleMaster.controls[key].setValue(customer[key]);
     });   
     this.submitButton = 'Update'
+    this.display = true;
     this.editagentId = customer.vechileTypeId;
   } 
+
+
+
+  filterval: string;
+  dateFilterVal: string;
+  reset(dt2) {
+    dt2.reset();
+    this.filterval = '';
+    this.dateFilterVal = ''
+  }
+
+
+  header : string = 'Add Vehicle Type';
+  display : boolean = false;
+  openModel(){
+    Object.keys(this.vehicleMaster.controls).forEach(key => {
+      this.vehicleMaster.controls[key].setValue('');
+    });
+    this.header = 'Add Vehicle Type';
+    this.submitButton = 'Submit';
+    this.display = true;
+  }
 
    
 }

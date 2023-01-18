@@ -14,40 +14,37 @@
             <li class="item">{{Content.title}}</li>
         </ol>
     </div>
+
+    
     <!-- End Breadcrumb Area -->
 
-    <!-- Start -->
-    <div class="add-listings-box1">
-    <!-- Start -->
-        <!-- <prime-toast></prime-toast> -->
-    <!-- End -->
-        <form [formGroup]="vehicleMaster" (ngSubmit)="vehicleMasterSubmit(itemForm)" #itemForm="ngForm">
-            <div class="row">
-                    <div class="col-lg-3 col-md-12 form-group">
-                        <label for="status">vehicle Name<span class="star_class">*</span></label>
-                        <input type="text" class="form-control" formControlName="vechileTypeName" placeholder="Enter vehicle Name" [class.is-invalid]="(itemForm.submitted && vehicleMaster.get('vechileTypeName')?.invalid) || (vehicleMaster.get('vechileTypeName').touched && vehicleMaster.get('vechileTypeName')?.invalid)" required>
-                        <div class="invalid-feedback"> vehicle Name is Required </div>
-                    </div>
-                      
-                    <div class="add-listings-btn col-lg-4 col-md-6">
-                        <div class="form-group">
-                            <button type="submit" class="submit_btn">{{submitButton}}</button>
-                            <button type="reset" class="mx-3 reset_btn"  (click)="submitButton='Submit'">Reset</button>
-                        </div>
-                    </div>
-            </div>
-        </form>
-    </div>
-    <!-- End -->
-
-    <div class="card item-master" *ngIf="vehicleMasterTable.length > 0">
+    <div class="card item-master">
         <p-table #dt2 [value]="vehicleMasterTable" [scrollable]="true" dataKey="id" [rows]="10" [scrollable]="true"  [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,20,30,50]"
             [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [globalFilterFields]="['Agent Name','Agent Type']">
+            [globalFilterFields]="['vechileTypeName']">
+            <ng-template pTemplate="caption">
+                <div class="d-flex" style="justify-content: space-between;
+                    align-items: center;">
+                    <span class="p-input-icon-left d-flex align-items-center">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" style="height: 35px;"
+                            (input)="dt2.filterGlobal($event.target.value,'contains')"
+                            placeholder="Global Search" [(ngModel)]="filterval"
+                            />
+                        <p-button type="button" class="mx-2"
+                            (click)="reset(dt2)"
+                            icon="bx bx-reset"></p-button>
+                    </span>
+                    <div class="add-listings-btn">
+                        <button class="submit_btn mt-0" (click)="openModel()">+Add</button>
+                    </div>
+                </div>
+            </ng-template>
+
             <ng-template pTemplate="header" >
                 <tr>
                     <th style="min-width: 20px;">S.No.</th>
-                    <th style="min-width: 180px;">Agent Name</th>
+                    <th style="min-width: 180px;">Vehicle Name</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-agent let-i="rowIndex">
@@ -70,3 +67,46 @@
     </div> 
     <app-copyrights></app-copyrights>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p-dialog [(visible)]="display" [draggable]="false" [header]="header"
+    [style]="{width: '50vw'}" [modal]="true">
+    <div class="add-listings-box1">
+        <!-- Start -->
+        <div class="add-listings-box1">
+
+            <form [formGroup]="vehicleMaster" (ngSubmit)="vehicleMasterSubmit(itemForm)" #itemForm="ngForm">
+                <div class="row">
+                        <div class="col-lg-6 col-md-12 form-group">
+                            <label for="status">vehicle Name<span class="star_class">*</span></label>
+                            <input type="text" class="form-control" formControlName="vechileTypeName" placeholder="Enter vehicle Name" [class.is-invalid]="(itemForm.submitted && vehicleMaster.get('vechileTypeName')?.invalid) || (vehicleMaster.get('vechileTypeName').touched && vehicleMaster.get('vechileTypeName')?.invalid)" required>
+                            <div class="invalid-feedback"> vehicle Name is Required </div>
+                        </div>
+                          
+                        <div class="add-listings-btn col-lg-4 col-md-6">
+                            <div class="form-group d-flex">
+                                <button type="submit" class="submit_btn">{{submitButton}}</button>
+                                <button type="reset" class="mx-3 reset_btn"  (click)="submitButton='Submit'">Reset</button>
+                            </div>
+                        </div>
+                </div>
+            </form>
+        </div>
+        <!-- End -->
+    </div>
+</p-dialog>

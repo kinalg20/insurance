@@ -1,7 +1,7 @@
 @import "../../../commonModule/dashboard/dashboard.component.scss";
 
 .add-listings-box1 {
-    margin-bottom: 30px;
+    margin-bottom: 0;
     background-color: var(--whiteColor);
     box-shadow: 1px 5px 24px 0 rgba(68, 102, 242, .05);
     border-radius: 5px;
@@ -237,6 +237,9 @@
 
     .p-inputnumber-input{
         background-color: #f9f9f9 !important;
+    }
+    .p-column-filter-clear-button{
+        display: none!important;
     }
 }
 

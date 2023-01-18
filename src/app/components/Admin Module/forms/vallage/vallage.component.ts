@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ConfirmationService, Message, PrimeNGConfig } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { AppUtility } from 'src/app/interceptor/apputitlity';
 import { ApiService } from 'src/app/Services/api.service';
 
@@ -23,6 +24,8 @@ export class VallageComponent implements OnInit {
   myDate: any;
   msgs: Message[] = [];
   submitButton : string = 'Submit'
+  @ViewChild ('dt2') FilteredData:Table;
+
   constructor(private _apiservice: ApiService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig , public _utility : AppUtility) { }
 
   ngOnInit(): void { 
@@ -49,6 +52,7 @@ export class VallageComponent implements OnInit {
       let object = this.vallageMaster.value;
       if(this.submitButton == 'Submit'){
       this._utility.loader(true); 
+      this.display = false;
       this._apiservice.addVallageMaster(object).then((res: any) => {
         this._utility.loader(false);
         if (res.success == true) {
@@ -70,7 +74,8 @@ export class VallageComponent implements OnInit {
      }
      else {  
       object['vallageId'] = this.editagentId;   
-      console.log(object);      
+      console.log(object);    
+      this.display = false;
       this._apiservice.editVallageMaster(object).then((res:any)=>{
         this._utility.loader(false);
         if (res.success == true) {
@@ -149,8 +154,31 @@ export class VallageComponent implements OnInit {
       this.vallageMaster.controls[key].setValue(customer[key]);
     });   
     this.submitButton = 'Update'
+    this.display = true;
+    this.header = 'Update Village Name'
     this.editagentId = customer.vallageId;
   } 
+
+
+  filterval: string;
+  dateFilterVal: string;
+  reset(dt2) {
+    dt2.reset();
+    this.filterval = '';
+    this.dateFilterVal = ''
+  }
+
+
+  header : string = 'Add Village';
+  display : boolean = false;
+  openModel(){
+    Object.keys(this.vallageMaster.controls).forEach(key => {
+      this.vallageMaster.controls[key].setValue('');
+    });
+    this.header = 'Add Village';
+    this.submitButton = 'Submit';
+    this.display = true;
+  }
 
    
 }

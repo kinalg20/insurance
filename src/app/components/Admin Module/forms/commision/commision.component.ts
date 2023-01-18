@@ -7,12 +7,11 @@ import { AppUtility } from 'src/app/interceptor/apputitlity';
 import { ApiService } from 'src/app/Services/api.service';
 
 @Component({
-  selector: 'app-policy-type',
-  templateUrl: './policy-type.component.html',
-  styleUrls: ['./policy-type.component.scss']
+  selector: 'app-commision',
+  templateUrl: './commision.component.html',
+  styleUrls: ['./commision.component.scss']
 })
-
-export class PolicyTypeComponent implements OnInit {
+export class CommisionComponent implements OnInit {
 
   tax_dropdown: any = [];
   agent_dropdown : any = [];
@@ -20,12 +19,10 @@ export class PolicyTypeComponent implements OnInit {
   state_dropdown : any = [];
 
 
-  policyMasterTable: any = [];
+  insuranceMasterTable: any = [];
   myDate: any;
   msgs: Message[] = [];
-  display : boolean = false;
   submitButton : string = 'Submit'
-  @ViewChild ('dt2') FilteredData:Table;
   constructor(private _apiservice: ApiService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig , public _utility : AppUtility) { }
 
   ngOnInit(): void { 
@@ -37,33 +34,34 @@ export class PolicyTypeComponent implements OnInit {
 
   breadcrumb = [
     {
-      title: 'policy Master',
+      title: 'Insurance Master',
       subTitle: 'Dashboard'
     }
   ]
 
-  policyMaster = new FormGroup({
-    policyTypeName: new FormControl('', [Validators.required ]), 
+  @ViewChild ('dt2') FilteredData:Table;
+  insuranceMaster = new FormGroup({
+    insuranceTypeName: new FormControl('', [Validators.required ]), 
   })
 
-  policyMasterSubmit(policyMaster : FormGroupDirective) {
-    console.log(this.policyMaster.value);
-    if (this.policyMaster.valid) {
-      let object = this.policyMaster.value;
+  insuranceMasterSubmit(insuranceMaster : FormGroupDirective) {
+    console.log(this.insuranceMaster.value);
+    if (this.insuranceMaster.valid) {
+      let object = this.insuranceMaster.value;
       if(this.submitButton == 'Submit'){
       this._utility.loader(true); 
-      this._apiservice.addPolicyMaster(object).then((res: any) => {
+      this._apiservice.addInsuranceMaster(object).then((res: any) => {
         this._utility.loader(false);
         if (res.success == true) {
           window.scroll(0, 0);
           this.display = false;
           this._apiservice.showMessage(res.message, 'success');
           this.getAllTableData();
-          this.policyMaster.reset();
-          Object.keys(this.policyMaster.controls).forEach(key => {
-            this.policyMaster.controls[key].setErrors(null)
+          this.insuranceMaster.reset();
+          Object.keys(this.insuranceMaster.controls).forEach(key => {
+            this.insuranceMaster.controls[key].setErrors(null)
           });
-          policyMaster.resetForm();
+          insuranceMaster.resetForm();
         }
         else {
           this._apiservice.showMessage(res.message, 'error');
@@ -73,19 +71,19 @@ export class PolicyTypeComponent implements OnInit {
       })
      }
      else {  
-      object['policyTypeId'] = this.editagentId;   
-      console.log(object);  
+      object['insuranceTypeId'] = this.editagentId;   
+      console.log(object);      
       this.display = false;
-      this._apiservice.editPolicyMaster(object).then((res:any)=>{
+      this._apiservice.editInsuranceMaster(object).then((res:any)=>{
         this._utility.loader(false);
         if (res.success == true) {
           this._apiservice.showMessage(res.message, 'success');
           this.getAllTableData();
-          this.policyMaster.reset();
-          Object.keys(this.policyMaster.controls).forEach(key => {
-            this.policyMaster.controls[key].setErrors(null)
+          this.insuranceMaster.reset();
+          Object.keys(this.insuranceMaster.controls).forEach(key => {
+            this.insuranceMaster.controls[key].setErrors(null)
           });
-          policyMaster.resetForm();
+          insuranceMaster.resetForm();
           this.submitButton = 'Submit'
         }
 
@@ -99,24 +97,24 @@ export class PolicyTypeComponent implements OnInit {
   }
 
   getAllTableData() {
-    this._apiservice.getPolicyMaster()
+    this._apiservice.getInsuranceMaster()
     .then((res: any) => {
       console.log(res);
-      this.policyMasterTable = res.returnValue;
+      this.insuranceMasterTable = res.returnValue;
     })
     .catch((error:any)=>{
-      this.policyMasterTable = [];
+      this.insuranceMasterTable = [];
     })
   }
 
-  confirm1(policy: any) {
+  confirm1(insurance: any) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
-      header: 'Delete Policy Type Master Record',
+      header: 'Delete Agent Master Record',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.msgs = [{ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' }];
-        this.deleteItem(policy ?? 1);
+        this.deleteItem(insurance.insuranceId ?? 1);
       },
       reject: () => {
         this.msgs = [{ severity: 'info', summary: 'Rejected', detail: 'You have rejected' }];
@@ -124,17 +122,17 @@ export class PolicyTypeComponent implements OnInit {
     });
   }
 
-  deleteItem(policyTypeId: any) {
+  deleteItem(agentId: any) {
+    this.insuranceMaster.reset();
+    Object.keys(this.insuranceMaster.controls).forEach(key => {
+      this.insuranceMaster.controls[key].setErrors(null)
+    });
     this._utility.loader(true);
-    this._apiservice.deletePolicyMaster(policyTypeId).then((res: any) => {
+    this._apiservice.deleteInsuranceMaster(agentId).then((res: any) => {
       this._utility.loader(false);
       if (res.success == true) {
         window.scroll(0, 0)
         this._apiservice.showMessage(res.message, 'success');
-        this.policyMaster.reset();
-        Object.keys(this.policyMaster.controls).forEach(key => {
-          this.policyMaster.controls[key].setErrors(null)
-        });
         this.getAllTableData();
       }
 
@@ -150,13 +148,13 @@ export class PolicyTypeComponent implements OnInit {
   editagentId : any;
   EditItem(customer : any){
     console.log(customer);
-    Object.keys(this.policyMaster.controls).forEach(key => { 
-      this.policyMaster.controls[key].setValue(customer[key]);
+    Object.keys(this.insuranceMaster.controls).forEach(key => { 
+      this.insuranceMaster.controls[key].setValue(customer[key]);
     });   
     this.submitButton = 'Update'
-    this.header = 'Update Policy Type'
+    this.header = 'Update Insurance'
+    this.editagentId = customer.insuranceTypeId;
     this.display = true;
-    this.editagentId = customer.policyTypeId;
   } 
 
 
@@ -169,15 +167,17 @@ export class PolicyTypeComponent implements OnInit {
   }
 
 
-  header : string = 'Add Policy Type';
+  header : string = 'Add Insurance';
+  display : boolean = false;
   openModel(){
-    Object.keys(this.policyMaster.controls).forEach(key => {
-      this.policyMaster.controls[key].setValue('');
+    Object.keys(this.insuranceMaster.controls).forEach(key => {
+      this.insuranceMaster.controls[key].setValue('');
     });
-    this.header = 'Add Policy Type';
+    this.header = 'Add Insurance';
     this.submitButton = 'Submit';
     this.display = true;
   }
 
    
 }
+

@@ -41,7 +41,9 @@ import { PolicyComponent } from './components/Admin Module/forms/policy/policy.c
 import { PolicyTypeComponent } from './components/Admin Module/forms/policy-type/policy-type.component';
 import { VallageComponent } from './components/Admin Module/forms/vallage/vallage.component';
 import { VehicleTypeComponent } from './components/Admin Module/forms/vehicle-type/vehicle-type.component';
-
+import { CalendarModule } from 'primeng/calendar';
+import {KeyFilterModule} from 'primeng/keyfilter';
+import { CommisionComponent } from './components/Admin Module/forms/commision/commision.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,7 @@ import { VehicleTypeComponent } from './components/Admin Module/forms/vehicle-ty
     PolicyTypeComponent,
     VallageComponent,
     VehicleTypeComponent,
+    CommisionComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,6 +86,9 @@ import { VehicleTypeComponent } from './components/Admin Module/forms/vehicle-ty
     DialogModule,
     TableModule,
     InputTextModule,
+    InputNumberModule,
+    CalendarModule,
+    KeyFilterModule,
     InputNumberModule
   ],
   providers: [ MessageService,ConfirmationService 

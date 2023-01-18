@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ConfirmationService, Message, PrimeNGConfig } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { AppUtility } from 'src/app/interceptor/apputitlity';
 import { ApiService } from 'src/app/Services/api.service';
 
@@ -39,6 +40,7 @@ export class InsuranceComponent implements OnInit {
     }
   ]
 
+  @ViewChild ('dt2') FilteredData:Table;
   insuranceMaster = new FormGroup({
     insuranceTypeName: new FormControl('', [Validators.required ]), 
   })
@@ -52,7 +54,8 @@ export class InsuranceComponent implements OnInit {
       this._apiservice.addInsuranceMaster(object).then((res: any) => {
         this._utility.loader(false);
         if (res.success == true) {
-          window.scroll(0, 0)
+          window.scroll(0, 0);
+          this.display = false;
           this._apiservice.showMessage(res.message, 'success');
           this.getAllTableData();
           this.insuranceMaster.reset();
@@ -71,6 +74,7 @@ export class InsuranceComponent implements OnInit {
      else {  
       object['insuranceTypeId'] = this.editagentId;   
       console.log(object);      
+      this.display = false;
       this._apiservice.editInsuranceMaster(object).then((res:any)=>{
         this._utility.loader(false);
         if (res.success == true) {
@@ -149,8 +153,31 @@ export class InsuranceComponent implements OnInit {
       this.insuranceMaster.controls[key].setValue(customer[key]);
     });   
     this.submitButton = 'Update'
+    this.header = 'Update Insurance'
     this.editagentId = customer.insuranceTypeId;
+    this.display = true;
   } 
+
+
+  filterval: string;
+  dateFilterVal: string;
+  reset(dt2) {
+    dt2.reset();
+    this.filterval = '';
+    this.dateFilterVal = ''
+  }
+
+
+  header : string = 'Add Insurance';
+  display : boolean = false;
+  openModel(){
+    Object.keys(this.insuranceMaster.controls).forEach(key => {
+      this.insuranceMaster.controls[key].setValue('');
+    });
+    this.header = 'Add Insurance';
+    this.submitButton = 'Submit';
+    this.display = true;
+  }
 
    
 }

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ConfirmationService, Message, PrimeNGConfig } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { AppUtility } from 'src/app/interceptor/apputitlity';
 import { ApiService } from 'src/app/Services/api.service';
 
@@ -21,8 +22,12 @@ export class CompanyComponent implements OnInit {
 
   companyMasterTable: any = [];
   myDate: any;
+  display : boolean = false;
+  header : string = 'Add Company';
   msgs: Message[] = [];
   submitButton : string = 'Submit'
+
+  @ViewChild ('dt2') FilteredData:Table;
   constructor(private _apiservice: ApiService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig , public _utility : AppUtility) { }
 
   ngOnInit(): void { 
@@ -90,6 +95,9 @@ export class CompanyComponent implements OnInit {
         }
       })
     }
+
+    this.display = false;
+    this.submitButton = 'Submit';
     }
   }
 
@@ -150,7 +158,26 @@ export class CompanyComponent implements OnInit {
     });   
     this.submitButton = 'Update'
     this.editagentId = customer.companyId;
+    this.display = true;
   } 
+
+  filterval: string;
+  dateFilterVal: string;
+  reset(dt2) {
+    dt2.reset();
+    this.filterval = '';
+    this.dateFilterVal = ''
+  }
+
+
+  openModel(){
+    Object.keys(this.companyMaster.controls).forEach(key => {
+      this.companyMaster.controls[key].setValue('');
+    });
+    this.header = 'Add Company';
+    this.submitButton = 'Submit';
+    this.display = true;
+  }
 
    
 }
