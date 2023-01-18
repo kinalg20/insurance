@@ -19,10 +19,10 @@
     <!-- Start -->
     <div class="add-listings-box1">
 
-    <div class="card item-master" *ngIf="insuranceMasterTable.length > 0">
-        <p-table #dt2 [value]="insuranceMasterTable" [scrollable]="true" dataKey="id" [rows]="10"  [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,20,30,50]"
+    <div class="card item-master">
+        <p-table #dt2 [value]="commissionMasterTable" [scrollable]="true" dataKey="id" [rows]="10"  [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,20,30,50]"
             [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [globalFilterFields]="['insuranceTypeName']">
+            [globalFilterFields]="['commissionTypeName']">
             <ng-template pTemplate="caption">
                 <div class="d-flex" style="justify-content: space-between;
                     align-items: center;">
@@ -43,13 +43,13 @@
             <ng-template pTemplate="header" >
                 <tr>
                     <th style="min-width: 20px;">S.No.</th>
-                    <th style="min-width: 180px;">Insurance Name</th>
+                    <th style="min-width: 180px;">Commission</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-agent let-i="rowIndex">
                 <tr>
                     <td>{{i+1}}</td>
-                    <td><span class="image-text">{{agent.insuranceTypeName}}</span></td>
+                    <td><span class="image-text">{{agent.commissionTypeName}}</span></td>
                     <td class="d-flex">
                         <button pButton pRipple type="button" icon="bx bx-pencil" class="p-button-rounded p-button-primary p-button-text" (click)="EditItem(agent)"></button>
                         <button pButton pRipple type="button" icon="bx bx-trash" class="p-button-rounded p-button-danger p-button-text" (click)="confirm1(agent)"></button>
@@ -73,12 +73,12 @@
     <div class="add-listings-box1">
         <!-- Start -->
         <div class="add-listings-box1">
-            <form [formGroup]="insuranceMaster" (ngSubmit)="insuranceMasterSubmit(itemForm)" #itemForm="ngForm">
+            <form [formGroup]="commissionMaster" (ngSubmit)="commissionMasterSubmit(itemForm)" #itemForm="ngForm">
                 <div class="row">
                         <div class="col-lg-6 col-md-12 form-group">
-                            <label for="status">insurance Name<span class="star_class">*</span></label>
-                            <input type="text" class="form-control" formControlName="insuranceTypeName" placeholder="Enter insurance Name" [class.is-invalid]="(itemForm.submitted && insuranceMaster.get('insuranceTypeName')?.invalid) || (insuranceMaster.get('insuranceTypeName').touched && insuranceMaster.get('insuranceTypeName')?.invalid)" required>
-                            <div class="invalid-feedback"> insurance Name is Required </div>
+                            <label for="status">commission Name<span class="star_class">*</span></label>
+                            <input type="text" class="form-control" formControlName="commissionTypeName" placeholder="Enter commission Name" [class.is-invalid]="(itemForm.submitted && commissionMaster.get('commissionTypeName')?.invalid) || (commissionMaster.get('commissionTypeName').touched && commissionMaster.get('commissionTypeName')?.invalid)" required>
+                            <div class="invalid-feedback"> commission Name is Required </div>
                         </div>
                           
                         <div class="add-listings-btn col-lg-4 col-md-6">
