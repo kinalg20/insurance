@@ -47,7 +47,7 @@ export class PolicyComponent implements OnInit {
     policyTypeId: new FormControl('', [Validators.required]),
     agentId: new FormControl(''),
     address: new FormControl('', [Validators.required]),
-    pincode: new FormControl('', [Validators.required]),
+    pinCode: new FormControl('', [Validators.required]),
     rcNumber : new FormControl('', [Validators.required]),
     policyNumber: new FormControl('', [Validators.required]),
     policyIssueDate: new FormControl('', [Validators.required]),
