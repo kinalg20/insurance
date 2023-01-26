@@ -181,7 +181,7 @@ export class AgentComponent implements OnInit {
     });   
 
     this.submitButton = 'Update'
-    this.editagentId = customer.agentId;
+    this.editagentId = customer.id;
     this.display = true;
   }
 

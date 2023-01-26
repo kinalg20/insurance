@@ -17,206 +17,294 @@
     <!-- End Breadcrumb Area -->
 
     <!-- Start -->
-    <div class="add-listings-box1">
-    <!-- Start -->
-        <!-- <prime-toast></prime-toast> -->
-    <!-- End -->
-        <form [formGroup]="policyMaster" (ngSubmit)="policyMasterSubmit(policy)" #policy="ngForm">
-            <div class="row">
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Policy Name<span class="star_class">*</span></label>
-                        <select class="form-select form-control select-dropdown" formControlName="policyId" required>
-                            <option value="">Select Policy Name</option>
-                            <ng-container *ngFor="let policy of policyDropdown">
-                                <option [value]="policy.policyTypeId">{{policy.policyTypeName}}</option>
-                            </ng-container>
-                        </select>
-                        <div class="invalid-feedback"> Policy Name is Required </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Policy Number<span class="star_class">*</span></label>
-                        <input type="text" class="form-control" pKeyFilter="int" formControlName="policyNumber" placeholder="Enter policy Number" [class.is-invalid]="(policy.submitted && policyMaster.get('policyNumber')?.invalid) || (policyMaster.get('policyNumber').touched && policyMaster.get('policyNumber')?.invalid)" required>
-                        <div class="invalid-feedback"> Policy Number is Required </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Policy Issue Date<span class="star_class">*</span></label>
-                        <p-calendar formControlName="policyIssueDate" placeholder="Select Policy Issue Date" [readonlyInput]="true"
-                        [showIcon]="true" [class.is-invalid]="policy.submitted &&
-                        policyMaster.get('policyIssueDate')?.invalid ||
-                        policyMaster.get('policyIssueDate')?.invalid &&
-                        policyMaster.get('policyIssueDate')?.touched" required></p-calendar>
-                        <div class="invalid-feedback"> Policy Issue Date is Required </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Policy Expiry Date<span class="star_class">*</span></label>
-                        <p-calendar formControlName="policyExpiryDate" placeholder="Select Policy Expiry Date" [readonlyInput]="true"
-                        [showIcon]="true" [class.is-invalid]="policy.submitted &&
-                        policyMaster.get('policyExpiryDate')?.invalid ||
-                        policyMaster.get('policyExpiryDate')?.invalid &&
-                        policyMaster.get('policyExpiryDate')?.touched" required></p-calendar>
-                        <div class="invalid-feedback"> Policy Expiry Date is Required </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Customer Name<span class="star_class">*</span></label>
-                        <input type="text" class="form-control" formControlName="customerName" placeholder="Enter Customer Name" [class.is-invalid]="(policy.submitted && policyMaster.get('customerName')?.invalid) || (policyMaster.get('customerName').touched && policyMaster.get('customerName')?.invalid)" required>
-                        <div class="invalid-feedback"> Customer Name is Required </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Customer Father Name<span class="star_class">*</span></label>
-                        <input type="text" class="form-control" formControlName="customerFName" placeholder="Enter Customer Father Name" [class.is-invalid]="(policy.submitted && policyMaster.get('customerFName')?.invalid) || (policyMaster.get('customerFName').touched && policyMaster.get('customerFName')?.invalid)" required>
-                        <div class="invalid-feedback"> Customer Father Name is Required </div>
-                    </div>
-                    
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Village<span class="star_class">*</span></label>
-                        <select class="form-select form-control select-dropdown" formControlName="vallageId" [class.is-invalid]="(policy.submitted && policyMaster.get('vallageId')?.invalid) || (policyMaster.get('vallageId').touched && policyMaster.get('vallageId')?.invalid)" >
-                            <option value="">Select Village</option>
-                            <ng-container *ngFor="let policy of vallageDropdown">
-                                <option [value]="policy.vallageId">{{policy.vallageName}}</option>
-                            </ng-container>
-                        </select>
-                        <div class="invalid-feedback"> Village is Required </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Insurance<span class="star_class">*</span></label>
-                        <select class="form-select form-control select-dropdown" formControlName="insuranceTypeId" [class.is-invalid]="(policy.submitted && policyMaster.get('insuranceTypeId')?.invalid) || (policyMaster.get('insuranceTypeId').touched && policyMaster.get('insuranceTypeId')?.invalid)">
-                            <option value="">Select Insurance</option>
-                            <ng-container *ngFor="let insurance of insuranceDropdown">
-                                <option [value]="insurance.insuranceTypeId">{{insurance.insuranceTypeName}}</option>
-                            </ng-container>
-                        </select>
-                        <div class="invalid-feedback"> Insurance is Required </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Vehicle Type<span class="star_class">*</span></label>
-                        <select class="form-select form-control select-dropdown" formControlName="vechileTypeId" [class.is-invalid]="(policy.submitted && policyMaster.get('vechileTypeId')?.invalid) || (policyMaster.get('vechileTypeId').touched && policyMaster.get('vechileTypeId')?.invalid)">
-                            <option value="">Select Vehicle</option>
-                            <ng-container *ngFor="let vehicle of vehicleTypeDropdown">
-                                <option [value]="vehicle.vechileTypeId">{{vehicle.vechileTypeName}}</option>
-                            </ng-container>
-                        </select>
-                        <div class="invalid-feedback"> Vehicle is Required </div>
-                    </div>
-                    
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Registration Number<span class="star_class">*</span></label>
-                        <input type="text" class="form-control" pKeyFilter="int" formControlName="registrationNumber" placeholder="Enter registration Number" [class.is-invalid]="(policy.submitted && policyMaster.get('registrationNumber')?.invalid) || (policyMaster.get('registrationNumber').touched && policyMaster.get('registrationNumber')?.invalid)" required>
-                        <div class="invalid-feedback"> Registration Number is Required </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Mobile Number<span class="star_class">*</span></label>
-                        <input type="text" class="form-control" maxlength="10" pKeyFilter="int" formControlName="mobileNumber" placeholder="Enter mobile Number" [class.is-invalid]="(policy.submitted && policyMaster.get('mobileNumber')?.invalid) || (policyMaster.get('mobileNumber').touched && policyMaster.get('mobileNumber')?.invalid)" required>
-                        <div class="invalid-feedback" *ngIf="policyMaster.get('mobileNumber').errors?.required"> Mobile Number is Required </div>
-                        <div class="invalid-feedback" *ngIf="policyMaster.get('mobileNumber').errors?.minlength"> Mobile Number is invalid </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Father Mobile Number<span class="star_class">*</span></label>
-                        <input type="text" class="form-control" maxlength="10" pKeyFilter="int" formControlName="fMobileNumber" placeholder="Enter mobile Number" [class.is-invalid]="(policy.submitted && policyMaster.get('fMobileNumber')?.invalid) || (policyMaster.get('fMobileNumber').touched && policyMaster.get('fMobileNumber')?.invalid)" required>
-                        <div class="invalid-feedback" *ngIf="policyMaster.get('fMobileNumber').errors?.required">Father Mobile Number is Required </div>
-                        <div class="invalid-feedback" *ngIf="policyMaster.get('fMobileNumber').errors?.minlength">Father Mobile Number is invalid </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Premium Amount<span class="star_class">*</span></label>
-                        <p-inputNumber formControlName="premiumAmount"  mode="currency" [minFractionDigits]="2" currency="INR" locale="en-IN" [maxFractionDigits]="2" [class.is-invalid]="(policy.submitted && policyMaster.get('premiumAmount')?.invalid) || (policyMaster.get('premiumAmount').touched && policyMaster.get('premiumAmount')?.invalid)"></p-inputNumber>
-                        <!-- <input type="text" class="form-control" pKeyFilter="int" formControlName="premiumAmount" placeholder="Enter Premium Amount" [class.is-invalid]="(policy.submitted && policyMaster.get('premiumAmount')?.invalid) || (policyMaster.get('premiumAmount').touched && policyMaster.get('premiumAmount')?.invalid)" required> -->
-                        <div class="invalid-feedback" *ngIf="policyMaster.get('premiumAmount').errors?.required">Premium Amount is Required </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Net Premium Amount<span class="star_class">*</span></label>
-                        <p-inputNumber formControlName="netPremiumAmount"  mode="currency" [minFractionDigits]="2" currency="INR" locale="en-IN" [maxFractionDigits]="2" [class.is-invalid]="(policy.submitted && policyMaster.get('netPremiumAmount')?.invalid) || (policyMaster.get('netPremiumAmount').touched && policyMaster.get('netPremiumAmount')?.invalid)"></p-inputNumber>
-                        <!-- <input type="text" class="form-control" pKeyFilter="int" formControlName="netPremiumAmount" placeholder="Enter Premium Amount" [class.is-invalid]="(policy.submitted && policyMaster.get('netPremiumAmount')?.invalid) || (policyMaster.get('netPremiumAmount').touched && policyMaster.get('netPremiumAmount')?.invalid)" required> -->
-                        <div class="invalid-feedback" *ngIf="policyMaster.get('netPremiumAmount').errors?.required">Net Premium Amount is Required </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Commission Percentage<span class="star_class">*</span></label>
-                        <p-inputNumber formControlName="commissionPer" inputId="percent" suffix="%" [class.is-invalid]="(policy.submitted && policyMaster.get('commissionPer')?.invalid) || (policyMaster.get('commissionPer').touched && policyMaster.get('commissionPer')?.invalid)" required></p-inputNumber>
-                        <!-- <input type="text" class="form-control" pKeyFilter="int" formControlName="commissionPer" placeholder="Enter Commission" [class.is-invalid]="(policy.submitted && policyMaster.get('commissionPer')?.invalid) || (policyMaster.get('commissionPer').touched && policyMaster.get('commissionPer')?.invalid)" required> -->
-                        <div class="invalid-feedback"> Commission is Required </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Commission Amount<span class="star_class">*</span></label>
-                        <input type="text" class="form-control" maxlength="10" pKeyFilter="int" formControlName="commissionAmount" placeholder="Enter mobile Number" [class.is-invalid]="(policy.submitted && policyMaster.get('commissionAmount')?.invalid) || (policyMaster.get('commissionAmount').touched && policyMaster.get('commissionAmount')?.invalid)" required>
-                        <div class="invalid-feedback" *ngIf="policyMaster.get('commissionAmount').errors?.required"> Commision Amount is Required </div>
-                        <div class="invalid-feedback" *ngIf="policyMaster.get('commissionAmount').errors?.minlength"> Commision Amount is invalid </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Country<span class="star_class">*</span></label>
-                        <select class="form-select form-control select-dropdown" formControlName="countryId" [class.is-invalid]="(policy.submitted && policyMaster.get('countryId')?.invalid) || (policyMaster.get('countryId').touched && policyMaster.get('countryId')?.invalid)">
-                            <option value="">Select Country</option>
-                            <ng-container *ngFor="let vehicle of country_dropdown">
-                                <option [value]="vehicle.id">{{vehicle.value}}</option>
-                            </ng-container>
-                        </select>
-                        <div class="invalid-feedback"> Country is Required </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">State<span class="star_class">*</span></label>
-                        <select class="form-select form-control select-dropdown" formControlName="stateId" [class.is-invalid]="(policy.submitted && policyMaster.get('stateId')?.invalid) || (policyMaster.get('stateId').touched && policyMaster.get('stateId')?.invalid)">
-                            <option value="">Select State</option>
-                            <ng-container *ngFor="let vehicle of state_dropdown">
-                                <option [value]="vehicle.id">{{vehicle.value}}</option>
-                            </ng-container>
-                        </select>
-                        <div class="invalid-feedback"> Country is Required </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Company<span class="star_class">*</span></label>
-                        <select class="form-select form-control select-dropdown" formControlName="companyId" [class.is-invalid]="(policy.submitted && policyMaster.get('companyId')?.invalid) || (policyMaster.get('companyId').touched && policyMaster.get('companyId')?.invalid)">
-                            <option value="">Select Company</option>
-                            <ng-container *ngFor="let vehicle of companyDropdown">
-                                <option [value]="vehicle.companyId">{{vehicle.companyName}}</option>
-                            </ng-container>
-                        </select>
-                        <div class="invalid-feedback"> Company is Required </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Policy Document<span class="star_class">*</span></label>
-                        <input type="file" class="form-control" (change)="uploadedFile($event , 'policy')" [class.is-invalid]="(policy.submitted && policyMaster.get('policyUpload')?.invalid) || (policyMaster.get('policyUpload').touched && policyMaster.get('policyUpload')?.invalid)" required>
-                        <div class="invalid-feedback"> document is Required </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Old Policy Document<span class="star_class">*</span></label>
-                        <input type="file" class="form-control" (change)="uploadedFile($event , 'oldpolicyUpload')" [class.is-invalid]="(policy.submitted && policyMaster.get('oldpolicyUpload')?.invalid) || (policyMaster.get('oldpolicyUpload').touched && policyMaster.get('oldpolicyUpload')?.invalid)" required>
-                        <div class="invalid-feedback"> document is Required </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">RC Upload<span class="star_class">*</span></label>
-                        <input type="file" class="form-control" (change)="uploadedFile($event , 'rcUpload')" [class.is-invalid]="(policy.submitted && policyMaster.get('rcUpload')?.invalid) || (policyMaster.get('rcUpload').touched && policyMaster.get('rcUpload')?.invalid)" required>
-                        <div class="invalid-feedback"> document is Required </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Document Upload<span class="star_class">*</span></label>
-                        <input type="file" class="form-control" (change)="uploadedFile($event , 'documentUpload')" [class.is-invalid]="(policy.submitted && policyMaster.get('documentUpload')?.invalid) || (policyMaster.get('documentUpload').touched && policyMaster.get('documentUpload')?.invalid)" required>
-                        <div class="invalid-feedback"> document is Required </div>
-                    </div>
-                    <div class="add-listings-btn col-lg-4 col-md-6">
-                        <div class="form-group">
-                            <button type="submit" class="submit_btn">{{submitButton}}</button>
-                            <button type="reset" class="mx-3 reset_btn"  (click)="submitButton='Submit'">Reset</button>
+    <p-dialog [(visible)]="displayPolicy" [draggable]="false" [header]="header"
+    [style]="{width: '70vw'}" [modal]="true">
+        <div class="add-listings-box1">
+            <form [formGroup]="policyMaster" (ngSubmit)="policyMasterSubmit(policy)" #policy="ngForm">
+                <!-- <div class="row"> -->
+                        <div class="section-heading">
+                            <h5>Policy Details</h5>
                         </div>
-                    </div>
-                </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Policy Name<span class="star_class">*</span></label>
+                                <select class="form-select form-control select-dropdown" formControlName="policyTypeId" required>
+                                    <option value="">Select Policy Name</option>
+                                    <ng-container *ngFor="let policy of policyDropdown">
+                                        <option [value]="policy.policyTypeId">{{policy.policyTypeName}}</option>
+                                    </ng-container>
+                                </select>
+                                <div class="invalid-feedback"> Policy Name is Required </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Policy Number<span class="star_class">*</span></label>
+                                <input type="text" class="form-control" pKeyFilter="int" formControlName="policyNumber" placeholder="Enter policy Number" [class.is-invalid]="(policy.submitted && policyMaster.get('policyNumber')?.invalid) || (policyMaster.get('policyNumber').touched && policyMaster.get('policyNumber')?.invalid)" required>
+                                <div class="invalid-feedback"> Policy Number is Required </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Policy Issue Date<span class="star_class">*</span></label>
+                                <p-calendar formControlName="policyIssueDate" placeholder="Select Policy Issue Date" [readonlyInput]="true"
+                                [showIcon]="true" [class.is-invalid]="policy.submitted &&
+                                policyMaster.get('policyIssueDate')?.invalid ||
+                                policyMaster.get('policyIssueDate')?.invalid &&
+                                policyMaster.get('policyIssueDate')?.touched" required></p-calendar>
+                                <div class="invalid-feedback"> Policy Issue Date is Required </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Policy Expiry Date<span class="star_class">*</span></label>
+                                <p-calendar formControlName="policyExpiryDate" placeholder="Select Policy Expiry Date" [readonlyInput]="true"
+                                [showIcon]="true" [class.is-invalid]="policy.submitted &&
+                                policyMaster.get('policyExpiryDate')?.invalid ||
+                                policyMaster.get('policyExpiryDate')?.invalid &&
+                                policyMaster.get('policyExpiryDate')?.touched" required></p-calendar>
+                                <div class="invalid-feedback"> Policy Expiry Date is Required </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Policy Document<span class="star_class">*</span></label>
+                                <input type="file" class="form-control" (change)="uploadedFile($event , 'policy')" [class.is-invalid]="(policy.submitted && policyMaster.get('policyUpload')?.invalid) || (policyMaster.get('policyUpload').touched && policyMaster.get('policyUpload')?.invalid)" required>
+                                <div class="invalid-feedback"> document is Required </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Old Policy Document<span class="star_class">*</span></label>
+                                <input type="file" class="form-control" (change)="uploadedFile($event , 'oldpolicy')" [class.is-invalid]="(policy.submitted && policyMaster.get('oldpolicyUpload')?.invalid) || (policyMaster.get('oldpolicyUpload').touched && policyMaster.get('oldpolicyUpload')?.invalid)" required>
+                                <div class="invalid-feedback"> document is Required </div>
+                            </div>
+                        </div>
+                        <div class="section-heading">
+                            <h5>Customer Details</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Registration Number<span class="star_class">*</span></label>
+                                <input type="text" class="form-control" pKeyFilter="int" formControlName="registrationNumber" placeholder="Enter registration Number" [class.is-invalid]="(policy.submitted && policyMaster.get('registrationNumber')?.invalid) || (policyMaster.get('registrationNumber').touched && policyMaster.get('registrationNumber')?.invalid)" required>
+                                <div class="invalid-feedback"> Registration Number is Required </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Customer Name<span class="star_class">*</span></label>
+                                <input type="text" class="form-control" formControlName="customerName" placeholder="Enter Customer Name" [class.is-invalid]="(policy.submitted && policyMaster.get('customerName')?.invalid) || (policyMaster.get('customerName').touched && policyMaster.get('customerName')?.invalid)" required>
+                                <div class="invalid-feedback"> Customer Name is Required </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Customer Father Name<span class="star_class">*</span></label>
+                                <input type="text" class="form-control" formControlName="customerFName" placeholder="Enter Customer Father Name" [class.is-invalid]="(policy.submitted && policyMaster.get('customerFName')?.invalid) || (policyMaster.get('customerFName').touched && policyMaster.get('customerFName')?.invalid)" required>
+                                <div class="invalid-feedback"> Customer Father Name is Required </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Mobile Number<span class="star_class">*</span></label>
+                                <input type="text" class="form-control" maxlength="10" pKeyFilter="int" formControlName="mobileNumber" placeholder="Enter mobile Number" [class.is-invalid]="(policy.submitted && policyMaster.get('mobileNumber')?.invalid) || (policyMaster.get('mobileNumber').touched && policyMaster.get('mobileNumber')?.invalid)" required>
+                                <div class="invalid-feedback" *ngIf="policyMaster.get('mobileNumber').errors?.required"> Mobile Number is Required </div>
+                                <div class="invalid-feedback" *ngIf="policyMaster.get('mobileNumber').errors?.minlength"> Mobile Number is invalid </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Father Mobile Number<span class="star_class">*</span></label>
+                                <input type="text" class="form-control" maxlength="10" pKeyFilter="int" formControlName="fMobileNumber" placeholder="Enter mobile Number" [class.is-invalid]="(policy.submitted && policyMaster.get('fMobileNumber')?.invalid) || (policyMaster.get('fMobileNumber').touched && policyMaster.get('fMobileNumber')?.invalid)" required>
+                                <div class="invalid-feedback" *ngIf="policyMaster.get('fMobileNumber').errors?.required">Father Mobile Number is Required </div>
+                                <div class="invalid-feedback" *ngIf="policyMaster.get('fMobileNumber').errors?.minlength">Father Mobile Number is invalid </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Country<span class="star_class">*</span></label>
+                                <select class="form-select form-control select-dropdown" formControlName="countryId" [class.is-invalid]="(policy.submitted && policyMaster.get('countryId')?.invalid) || (policyMaster.get('countryId').touched && policyMaster.get('countryId')?.invalid)">
+                                    <option value="">Select Country</option>
+                                    <ng-container *ngFor="let vehicle of country_dropdown">
+                                        <option [value]="vehicle.id">{{vehicle.value}}</option>
+                                    </ng-container>
+                                </select>
+                                <div class="invalid-feedback"> Country is Required </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">State<span class="star_class">*</span></label>
+                                <select class="form-select form-control select-dropdown" formControlName="stateId" [class.is-invalid]="(policy.submitted && policyMaster.get('stateId')?.invalid) || (policyMaster.get('stateId').touched && policyMaster.get('stateId')?.invalid)">
+                                    <option value="">Select State</option>
+                                    <ng-container *ngFor="let vehicle of state_dropdown">
+                                        <option [value]="vehicle.id">{{vehicle.value}}</option>
+                                    </ng-container>
+                                </select>
+                                <div class="invalid-feedback"> State is Required </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Village<span class="star_class">*</span></label>
+                                <select class="form-select form-control select-dropdown" formControlName="vallageId" [class.is-invalid]="(policy.submitted && policyMaster.get('vallageId')?.invalid) || (policyMaster.get('vallageId').touched && policyMaster.get('vallageId')?.invalid)" >
+                                    <option value="">Select Village</option>
+                                    <ng-container *ngFor="let policy of vallageDropdown">
+                                        <option [value]="policy.vallageId">{{policy.vallageName}}</option>
+                                    </ng-container>
+                                </select>
+                                <div class="invalid-feedback"> Village is Required </div>
+                            </div>
+                        </div>
+                    
+                        <div class="section-heading">
+                            <h5>Insurance Details</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Insurance<span class="star_class">*</span></label>
+                                <select class="form-select form-control select-dropdown" formControlName="insuranceTypeId" [class.is-invalid]="(policy.submitted && policyMaster.get('insuranceTypeId')?.invalid) || (policyMaster.get('insuranceTypeId').touched && policyMaster.get('insuranceTypeId')?.invalid)">
+                                    <option value="">Select Insurance</option>
+                                    <ng-container *ngFor="let insurance of insuranceDropdown">
+                                        <option [value]="insurance.insuranceTypeId">{{insurance.insuranceTypeName}}</option>
+                                    </ng-container>
+                                </select>
+                                <div class="invalid-feedback"> Insurance is Required </div>
+                            </div>
+        
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Vehicle Type<span class="star_class">*</span></label>
+                                <select class="form-select form-control select-dropdown" formControlName="vechileTypeId" [class.is-invalid]="(policy.submitted && policyMaster.get('vechileTypeId')?.invalid) || (policyMaster.get('vechileTypeId').touched && policyMaster.get('vechileTypeId')?.invalid)">
+                                    <option value="">Select Vehicle</option>
+                                    <ng-container *ngFor="let vehicle of vehicleTypeDropdown">
+                                        <option [value]="vehicle.vechileTypeId">{{vehicle.vechileTypeName}}</option>
+                                    </ng-container>
+                                </select>
+                                <div class="invalid-feedback"> Vehicle is Required </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Premium Amount<span class="star_class">*</span></label>
+                                <p-inputNumber formControlName="premiumAmount"  mode="currency" [minFractionDigits]="2" currency="INR" locale="en-IN" [maxFractionDigits]="2" [class.is-invalid]="(policy.submitted && policyMaster.get('premiumAmount')?.invalid) || (policyMaster.get('premiumAmount').touched && policyMaster.get('premiumAmount')?.invalid)"></p-inputNumber>
+                                <!-- <input type="text" class="form-control" pKeyFilter="int" formControlName="premiumAmount" placeholder="Enter Premium Amount" [class.is-invalid]="(policy.submitted && policyMaster.get('premiumAmount')?.invalid) || (policyMaster.get('premiumAmount').touched && policyMaster.get('premiumAmount')?.invalid)" required> -->
+                                <div class="invalid-feedback" *ngIf="policyMaster.get('premiumAmount').errors?.required">Premium Amount is Required </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Net Premium Amount<span class="star_class">*</span></label>
+                                <p-inputNumber formControlName="netPremiumAmount"  mode="currency" [minFractionDigits]="2" currency="INR" locale="en-IN" [maxFractionDigits]="2" [class.is-invalid]="(policy.submitted && policyMaster.get('netPremiumAmount')?.invalid) || (policyMaster.get('netPremiumAmount').touched && policyMaster.get('netPremiumAmount')?.invalid)"></p-inputNumber>
+                                <!-- <input type="text" class="form-control" pKeyFilter="int" formControlName="netPremiumAmount" placeholder="Enter Premium Amount" [class.is-invalid]="(policy.submitted && policyMaster.get('netPremiumAmount')?.invalid) || (policyMaster.get('netPremiumAmount').touched && policyMaster.get('netPremiumAmount')?.invalid)" required> -->
+                                <div class="invalid-feedback" *ngIf="policyMaster.get('netPremiumAmount').errors?.required">Net Premium Amount is Required </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Commission Percentage<span class="star_class">*</span></label>
+                                <p-inputNumber formControlName="commissionPer" inputId="percent" suffix="%" [class.is-invalid]="(policy.submitted && policyMaster.get('commissionPer')?.invalid) || (policyMaster.get('commissionPer').touched && policyMaster.get('commissionPer')?.invalid)" required></p-inputNumber>
+                                <!-- <input type="text" class="form-control" pKeyFilter="int" formControlName="commissionPer" placeholder="Enter Commission" [class.is-invalid]="(policy.submitted && policyMaster.get('commissionPer')?.invalid) || (policyMaster.get('commissionPer').touched && policyMaster.get('commissionPer')?.invalid)" required> -->
+                                <div class="invalid-feedback"> Commission is Required </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Commission<span class="star_class">*</span></label>
+                                <select class="form-select form-control select-dropdown" formControlName="commissionId" [class.is-invalid]="(policy.submitted && policyMaster.get('commissionId')?.invalid) || (policyMaster.get('commissionId').touched && policyMaster.get('commissionId')?.invalid)" >
+                                    <option value="">Select Commission</option>
+                                    <ng-container *ngFor="let policy of commission_dropdown">
+                                        <option [value]="policy.commissionId">{{policy.commissionName}}</option>
+                                    </ng-container>
+                                </select>
+                                <div class="invalid-feedback"> Commision is Required </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Commission Amount<span class="star_class">*</span></label>
+                                <input type="text" class="form-control" maxlength="10" pKeyFilter="int" formControlName="commissionAmount" placeholder="Enter mobile Number" [class.is-invalid]="(policy.submitted && policyMaster.get('commissionAmount')?.invalid) || (policyMaster.get('commissionAmount').touched && policyMaster.get('commissionAmount')?.invalid)" required>
+                                <div class="invalid-feedback" *ngIf="policyMaster.get('commissionAmount').errors?.required"> Commision Amount is Required </div>
+                                <div class="invalid-feedback" *ngIf="policyMaster.get('commissionAmount').errors?.minlength"> Commision Amount is invalid </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Company<span class="star_class">*</span></label>
+                                <select class="form-select form-control select-dropdown" formControlName="companyId" [class.is-invalid]="(policy.submitted && policyMaster.get('companyId')?.invalid) || (policyMaster.get('companyId').touched && policyMaster.get('companyId')?.invalid)">
+                                    <option value="">Select Company</option>
+                                    <ng-container *ngFor="let vehicle of companyDropdown">
+                                        <option [value]="vehicle.companyId">{{vehicle.companyName}}</option>
+                                    </ng-container>
+                                </select>
+                                <div class="invalid-feedback"> Company is Required </div>
+                            </div>
+    
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">RC Upload<span class="star_class">*</span></label>
+                                <input type="file" class="form-control" (change)="uploadedFile($event , 'rcUpload')" [class.is-invalid]="(policy.submitted && policyMaster.get('rcUpload')?.invalid) || (policyMaster.get('rcUpload').touched && policyMaster.get('rcUpload')?.invalid)" required>
+                                <div class="invalid-feedback"> document is Required </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 form-group">
+                                <label for="status">Document Upload<span class="star_class">*</span></label>
+                                <input type="file" class="form-control" (change)="uploadedFile($event , 'documentUpload')" [class.is-invalid]="(policy.submitted && policyMaster.get('documentUpload')?.invalid) || (policyMaster.get('documentUpload').touched && policyMaster.get('documentUpload')?.invalid)" required>
+                                <div class="invalid-feedback"> document is Required </div>
+                            </div>
+                        </div>
+                        <div class="add-listings-btn col-lg-4 col-md-6">
+                            <div class="form-group d-flex">
+                                <button type="submit" class="submit_btn">{{submitButton}}</button>
+                                <button type="reset" class="mx-3 reset_btn" *ngIf="submitButton == 'Submit'"  (click)="submitButton='Submit'">Reset</button>
+                            </div>
+                        </div>
+                    <!-- </div> -->
             </form>
-    </div>
+        </div>
+    </p-dialog>
     <!-- End -->
     
-    <div class="card item-master" *ngIf="policyMasterTable.length > 0">
+    <div class="card item-master">
         <p-table #dt2 [value]="policyMasterTable" [scrollable]="true" dataKey="id" [rows]="10" [scrollable]="true"  [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,20,30,50]"
         [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [globalFilterFields]="['Agent Name','Agent Type']">
+            <ng-template pTemplate="caption">
+                <div class="d-flex" style="justify-content: space-between;
+                    align-items: center;">
+                    <span class="p-input-icon-left d-flex align-items-center">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" style="height: 35px;"
+                            (input)="dt.filterGlobal($event.target.value,'contains')"
+                            placeholder="Global Search" [(ngModel)]="filterval"
+                            />
+                        <p-button type="button" class="mx-2" (click)="reset(dt)"
+                            icon="bx bx-reset"></p-button>
+                    </span>
+                    <div class="add-listings-btn">
+                        <button class="submit_btn mt-0" (click)="openModel()">+Add</button>
+                    </div>
+                </div>
+            </ng-template>
             <ng-template pTemplate="header" >
                 <tr>
                     <th style="min-width: 20px;">S.No.</th>
-                    <th style="min-width: 180px;">Agent Name</th>
+                    <th style="min-width: 180px;">Policy Name</th>
+                    <th style="min-width: 180px;">Policy Number</th>
+                    <th style="min-width: 180px;">Policy Issue Date</th>
+                    <th style="min-width: 180px;">Policy Expiry Date</th>
+                    <th style="min-width: 180px;">Registration Number</th>
+                    <th style="min-width: 180px;">Customer Name</th>
+                    <th style="min-width: 180px;">Customer Father Name</th>
+                    <th style="min-width: 180px;">Village</th>
+                    <th style="min-width: 180px;">Insurance Type</th>
+                    <th style="min-width: 180px;">Vehicle Type</th>
+                    <th style="min-width: 180px;">Mobile Number</th>
+                    <th style="min-width: 180px;">Father Mobile Number</th>
+                    <th style="min-width: 180px;">Premium Amount</th>
+                    <th style="min-width: 180px;">Net Premium Amount</th>
+                    <th style="min-width: 180px;">Commission Percentage</th>
+                    <th style="min-width: 180px;">Commission</th>
+                    <th style="min-width: 180px;">Commission Amount</th>
+                    <th style="min-width: 180px;">Country</th>
+                    <th style="min-width: 180px;">State</th>
+                    <th style="min-width: 180px;">Company</th>
+                    <th style="min-width: 180px;">Policy Document</th>
+                    <th style="min-width: 180px;">Old Policy Document</th>
+                    <th style="min-width: 180px;">RC Upload</th>
+                    <th style="min-width: 180px;">Document Upload</th>
+                    <th style="min-width: 180px;">Action</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-agent let-i="rowIndex">
                 <tr>
                     <td>{{i+1}}</td>
                     <td><span class="image-text">{{agent.policyTypeName}}</span></td>
+                    <!-- <td><span class="image-text">{{agent.policyTypeName}}</span></td> -->
+                    <td><span class="image-text">{{agent.policyNumber}}</span></td>
+                    <td><span class="image-text">{{agent.policyIssueDate | date}}</span></td>
+                    <td><span class="image-text">{{agent.policyExpiryDate | date}}</span></td>
+                    <td><span class="image-text">{{agent.registrationNumber}}</span></td>
+                    <td><span class="image-text">{{agent.insuranceTypeName}}</span></td>
+                    <td><span class="image-text">{{agent.customerName}}</span></td>
+                    <td><span class="image-text">{{agent.customerFName}}</span></td>
+                    <td><span class="image-text">{{agent.vechileTypeName}}</span></td>
+                    <td><span class="image-text">{{agent.vallageName}}</span></td>
+                    <td><span class="image-text">{{agent.mobileNumber}}</span></td>
+                    <td><span class="image-text">{{agent.fMobileNumber}}</span></td>
+                    <td><span class="image-text">{{agent.premiumAmount}}</span></td>
+                    <td><span class="image-text">{{agent.netPremiumAmount}}</span></td>
+                    <td><span class="image-text">{{agent.commissionPer}}</span></td>
+                    <td><span class="image-text">{{agent.commissionName}}</span></td>
+                    <td><span class="image-text">{{agent.commissionAmount}}</span></td>
+                    <td><span class="image-text">{{agent.countryName}}</span></td>
+                    <td><span class="image-text">{{agent.stateName}}</span></td>
+                    <td><span class="image-text">{{agent.companyName}}</span></td>
+                    <td><span class="image-text">{{agent.policyUpload}}</span></td>
+                    <td><span class="image-text">{{agent.oldPolicyUpload}}</span></td>
+                    <td><span class="image-text">{{agent.rcUpload}}</span></td>
+                    <td><span class="image-text">{{agent.documentUpload}}</span></td>
                     <td class="d-flex">
                         <button pButton pRipple type="button" icon="bx bx-pencil" class="p-button-rounded p-button-primary p-button-text" (click)="EditItem(agent)"></button>
                         <button pButton pRipple type="button" icon="bx bx-trash" class="p-button-rounded p-button-danger p-button-text" (click)="confirm1(agent)"></button>

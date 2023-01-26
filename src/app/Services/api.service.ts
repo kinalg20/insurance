@@ -115,7 +115,7 @@ export class ApiService {
   }
 
 
-  //policy
+  //policyType
   getPolicyMaster(): Promise<any> {
     return this.http.get(this._baseUrl + 'PolicyType').toPromise()
   }
@@ -129,6 +129,22 @@ export class ApiService {
   }
   deletePolicyMaster(id: any): Promise<any> {
     return this.http.delete(this._baseUrl + 'PolicyType/' + id).toPromise()
+  }
+
+  //policy
+  getPolicyPMaster(): Promise<any> {
+    return this.http.get(this._baseUrl + 'Policy').toPromise()
+  }
+
+  addPolicyPMaster(agentData: any): Promise<any> {
+    return this.http.post(this._baseUrl + 'Policy', agentData).toPromise()
+  }
+
+  editPolicyPMaster(object: any): Promise<any> {
+    return this.http.put(this._baseUrl + 'Policy', object).toPromise()
+  }
+  deletePolicyPMaster(id: any): Promise<any> {
+    return this.http.delete(this._baseUrl + 'Policy/' + id).toPromise()
   }
 
 
@@ -161,8 +177,15 @@ export class ApiService {
   editVehicleTypeMaster(object: any): Promise<any> {
     return this.http.put(this._baseUrl + 'VechileType', object).toPromise()
   }
+
   deleteVehicleTypeMaster(id: any): Promise<any> {
     return this.http.delete(this._baseUrl + 'VechileType/' + id).toPromise()
+  }
+  
+  
+  //dashboard  datewise
+  getDashboardMaster(id: any): Promise<any> {
+    return this.http.get(this._baseUrl + 'Dashboard/dateWisePolicy/' + id).toPromise()
   }
 
 }

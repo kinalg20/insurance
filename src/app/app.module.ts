@@ -44,6 +44,7 @@ import { VehicleTypeComponent } from './components/Admin Module/forms/vehicle-ty
 import { CalendarModule } from 'primeng/calendar';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import { CommisionComponent } from './components/Admin Module/forms/commision/commision.component';
+import { PolicyDashboardComponent } from './components/Admin Module/forms/policy-dashboard/policy-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { CommisionComponent } from './components/Admin Module/forms/commision/co
     VallageComponent,
     VehicleTypeComponent,
     CommisionComponent,
+    PolicyDashboardComponent,
   ],
   imports: [
     BrowserModule,
