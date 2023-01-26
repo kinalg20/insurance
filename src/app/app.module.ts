@@ -44,6 +44,7 @@ import { VehicleTypeComponent } from './components/Admin Module/forms/vehicle-ty
 import { CalendarModule } from 'primeng/calendar';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import { CommisionComponent } from './components/Admin Module/forms/commision/commision.component';
+import { HomeComponent } from './components/website/home/home.component';
 
 @NgModule({
   declarations: [
@@ -65,12 +66,12 @@ import { CommisionComponent } from './components/Admin Module/forms/commision/co
     VallageComponent,
     VehicleTypeComponent,
     CommisionComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    CarouselModule,
     SelectDropDownModule,
     NgxTypedJsModule,
     ReactiveFormsModule,
@@ -89,7 +90,8 @@ import { CommisionComponent } from './components/Admin Module/forms/commision/co
     InputNumberModule,
     CalendarModule,
     KeyFilterModule,
-    InputNumberModule
+    InputNumberModule,
+    CarouselModule
   ],
   providers: [ MessageService,ConfirmationService 
     ,{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },],
