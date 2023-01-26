@@ -42,9 +42,11 @@ import { PolicyTypeComponent } from './components/Admin Module/forms/policy-type
 import { VallageComponent } from './components/Admin Module/forms/vallage/vallage.component';
 import { VehicleTypeComponent } from './components/Admin Module/forms/vehicle-type/vehicle-type.component';
 import { CalendarModule } from 'primeng/calendar';
-import {KeyFilterModule} from 'primeng/keyfilter';
+import { KeyFilterModule} from 'primeng/keyfilter';
 import { CommisionComponent } from './components/Admin Module/forms/commision/commision.component';
 import { HomeComponent } from './components/website/home/home.component';
+import { PolicyDashboardComponent } from './components/Admin Module/forms/policy-dashboard/policy-dashboard.component';
+import { StatsComponent } from './components/commonModule/dashboard/stats/stats.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +69,8 @@ import { HomeComponent } from './components/website/home/home.component';
     VehicleTypeComponent,
     CommisionComponent,
     HomeComponent,
+    PolicyDashboardComponent,
+    StatsComponent
   ],
   imports: [
     BrowserModule,

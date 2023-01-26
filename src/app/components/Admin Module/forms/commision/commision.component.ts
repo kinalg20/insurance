@@ -19,7 +19,7 @@ export class CommisionComponent implements OnInit {
   state_dropdown : any = [];
 
 
-  insuranceMasterTable: any = [];
+  commissionMasterTable: any = [];
   myDate: any;
   msgs: Message[] = [];
   submitButton : string = 'Submit'
@@ -34,34 +34,34 @@ export class CommisionComponent implements OnInit {
 
   breadcrumb = [
     {
-      title: 'Insurance Master',
+      title: 'Commission Master',
       subTitle: 'Dashboard'
     }
   ]
 
   @ViewChild ('dt2') FilteredData:Table;
-  insuranceMaster = new FormGroup({
-    insuranceTypeName: new FormControl('', [Validators.required ]), 
+  commissionMaster = new FormGroup({
+    commissionName: new FormControl('', [Validators.required ]), 
   })
 
-  insuranceMasterSubmit(insuranceMaster : FormGroupDirective) {
-    console.log(this.insuranceMaster.value);
-    if (this.insuranceMaster.valid) {
-      let object = this.insuranceMaster.value;
+  commissionMasterSubmit(CommissionMaster : FormGroupDirective) {
+    console.log(this.commissionMaster.value);
+    if (this.commissionMaster.valid) {
+      let object = this.commissionMaster.value;
       if(this.submitButton == 'Submit'){
       this._utility.loader(true); 
-      this._apiservice.addInsuranceMaster(object).then((res: any) => {
+      this._apiservice.addCommissionMaster(object).then((res: any) => {
         this._utility.loader(false);
         if (res.success == true) {
           window.scroll(0, 0);
           this.display = false;
           this._apiservice.showMessage(res.message, 'success');
           this.getAllTableData();
-          this.insuranceMaster.reset();
-          Object.keys(this.insuranceMaster.controls).forEach(key => {
-            this.insuranceMaster.controls[key].setErrors(null)
+          this.commissionMaster.reset();
+          Object.keys(this.commissionMaster.controls).forEach(key => {
+            this.commissionMaster.controls[key].setErrors(null)
           });
-          insuranceMaster.resetForm();
+          CommissionMaster.resetForm();
         }
         else {
           this._apiservice.showMessage(res.message, 'error');
@@ -71,19 +71,19 @@ export class CommisionComponent implements OnInit {
       })
      }
      else {  
-      object['insuranceTypeId'] = this.editagentId;   
+      object['CommissionTypeId'] = this.editagentId;   
       console.log(object);      
       this.display = false;
-      this._apiservice.editInsuranceMaster(object).then((res:any)=>{
+      this._apiservice.editCommissionMaster(object).then((res:any)=>{
         this._utility.loader(false);
         if (res.success == true) {
           this._apiservice.showMessage(res.message, 'success');
           this.getAllTableData();
-          this.insuranceMaster.reset();
-          Object.keys(this.insuranceMaster.controls).forEach(key => {
-            this.insuranceMaster.controls[key].setErrors(null)
+          this.commissionMaster.reset();
+          Object.keys(this.commissionMaster.controls).forEach(key => {
+            this.commissionMaster.controls[key].setErrors(null)
           });
-          insuranceMaster.resetForm();
+          CommissionMaster.resetForm();
           this.submitButton = 'Submit'
         }
 
@@ -97,24 +97,24 @@ export class CommisionComponent implements OnInit {
   }
 
   getAllTableData() {
-    this._apiservice.getInsuranceMaster()
+    this._apiservice.getCommissionMaster()
     .then((res: any) => {
       console.log(res);
-      this.insuranceMasterTable = res.returnValue;
+      this.commissionMasterTable = res.returnValue;
     })
     .catch((error:any)=>{
-      this.insuranceMasterTable = [];
+      this.commissionMasterTable = [];
     })
   }
 
-  confirm1(insurance: any) {
+  confirm1(Commission: any) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Delete Agent Master Record',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.msgs = [{ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' }];
-        this.deleteItem(insurance.insuranceId ?? 1);
+        this.deleteItem(Commission.CommissionId ?? 1);
       },
       reject: () => {
         this.msgs = [{ severity: 'info', summary: 'Rejected', detail: 'You have rejected' }];
@@ -123,12 +123,12 @@ export class CommisionComponent implements OnInit {
   }
 
   deleteItem(agentId: any) {
-    this.insuranceMaster.reset();
-    Object.keys(this.insuranceMaster.controls).forEach(key => {
-      this.insuranceMaster.controls[key].setErrors(null)
+    this.commissionMaster.reset();
+    Object.keys(this.commissionMaster.controls).forEach(key => {
+      this.commissionMaster.controls[key].setErrors(null)
     });
     this._utility.loader(true);
-    this._apiservice.deleteInsuranceMaster(agentId).then((res: any) => {
+    this._apiservice.deleteCommissionMaster(agentId).then((res: any) => {
       this._utility.loader(false);
       if (res.success == true) {
         window.scroll(0, 0)
@@ -148,12 +148,12 @@ export class CommisionComponent implements OnInit {
   editagentId : any;
   EditItem(customer : any){
     console.log(customer);
-    Object.keys(this.insuranceMaster.controls).forEach(key => { 
-      this.insuranceMaster.controls[key].setValue(customer[key]);
+    Object.keys(this.commissionMaster.controls).forEach(key => { 
+      this.commissionMaster.controls[key].setValue(customer[key]);
     });   
     this.submitButton = 'Update'
-    this.header = 'Update Insurance'
-    this.editagentId = customer.insuranceTypeId;
+    this.header = 'Update Commission'
+    this.editagentId = customer.CommissionTypeId;
     this.display = true;
   } 
 
@@ -167,13 +167,13 @@ export class CommisionComponent implements OnInit {
   }
 
 
-  header : string = 'Add Insurance';
+  header : string = 'Add Commission';
   display : boolean = false;
   openModel(){
-    Object.keys(this.insuranceMaster.controls).forEach(key => {
-      this.insuranceMaster.controls[key].setValue('');
+    Object.keys(this.commissionMaster.controls).forEach(key => {
+      this.commissionMaster.controls[key].setValue('');
     });
-    this.header = 'Add Insurance';
+    this.header = 'Add Commission';
     this.submitButton = 'Submit';
     this.display = true;
   }

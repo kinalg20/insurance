@@ -15,18 +15,20 @@ import { CommonFunction } from 'src/app/Utility/commonFunction';
 export class PolicyComponent implements OnInit {
 
   tax_dropdown: any = [];
-  agent_dropdown : any = [];
-  city_dropdown : any = [];
-  state_dropdown : any = [];
+  agent_dropdown: any = [];
+  city_dropdown: any = [];
+  state_dropdown: any = [];
 
 
   policyMasterTable: any = [];
   myDate: any;
   msgs: Message[] = [];
-  submitButton : string = 'Submit'
-  constructor(private _apiservice: ApiService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig , public _utility : AppUtility) { }
+  submitButton: string = 'Submit'
+  displayPolicy: boolean = false;
+  header: string = 'Add Policy'
+  constructor(private _apiservice: ApiService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig, public _utility: AppUtility) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.getAllTableData();
     this.getDropdowns();
     this.primengConfig.ripple = true;
@@ -36,97 +38,111 @@ export class PolicyComponent implements OnInit {
 
   breadcrumb = [
     {
-      title: 'policy Master',
+      title: 'Policy Master',
       subTitle: 'Dashboard'
     }
   ]
 
   policyMaster = new FormGroup({
-    policyId: new FormControl('', [Validators.required ]), 
-    policyNumber: new FormControl('', [Validators.required ]), 
-    policyIssueDate: new FormControl('', [Validators.required ]), 
-    policyExpiryDate: new FormControl('', [Validators.required ]), 
-    customerName: new FormControl('', [Validators.required ]), 
-    customerFName: new FormControl('', [Validators.required ]), 
-    vallageId: new FormControl('', [Validators.required ]), 
-    insuranceTypeId: new FormControl('', [Validators.required ]), 
-    vechileTypeId: new FormControl('', [Validators.required ]), 
-    registrationNumber: new FormControl('', [Validators.required ]),
-    mobileNumber: new FormControl('', [Validators.required , Validators.minLength(10) , Validators.maxLength(10)]),
-    fMobileNumber: new FormControl('', [Validators.required ]),
-    premiumAmount: new FormControl('', [Validators.required ]),
-    netPremiumAmount: new FormControl('', [Validators.required ]),
-    commissionPer: new FormControl('', [Validators.required ]),
-    commissionAmount: new FormControl('', [Validators.required ]),
-    stateId: new FormControl('', [Validators.required ]),
-    companyId: new FormControl('', [Validators.required ]),
-    commissionId: new FormControl('', [Validators.required ]),
-    countryId: new FormControl('', [Validators.required ]),
-    policyUpload: new FormControl('', [Validators.required ]),
-    oldpolicyUpload: new FormControl('', [Validators.required ]),
-    rcUpload: new FormControl('', [Validators.required ]),
-    documentUpload: new FormControl('', [Validators.required ]),
+    policyTypeId: new FormControl('', [Validators.required]),
+    agentId: new FormControl(''),
+    address: new FormControl('', [Validators.required]),
+    pinCode: new FormControl('', [Validators.required]),
+    rcNumber : new FormControl('', [Validators.required]),
+    policyNumber: new FormControl('', [Validators.required]),
+    policyIssueDate: new FormControl('', [Validators.required]),
+    policyExpiryDate: new FormControl('', [Validators.required]),
+    customerName: new FormControl('', [Validators.required]),
+    customerFName: new FormControl('', [Validators.required]),
+    vallageId: new FormControl('', [Validators.required]),
+    insuranceTypeId: new FormControl('', [Validators.required]),
+    vechileTypeId: new FormControl('', [Validators.required]),
+    registrationNumber: new FormControl('', [Validators.required]),
+    mobileNumber: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]),
+    fMobileNumber: new FormControl('', [Validators.required]),
+    premiumAmount: new FormControl('', [Validators.required]),
+    netPremiumAmount: new FormControl('', [Validators.required]),
+    commissionPer: new FormControl('', [Validators.required]),
+    commissionAmount: new FormControl('', [Validators.required]),
+    stateId: new FormControl('', [Validators.required]),
+    companyId: new FormControl('', [Validators.required]),
+    // commissionId: new FormControl(''),
+    countryId: new FormControl('', [Validators.required]),
+    policyUpload: new FormControl('', [Validators.required]),
+    oldpolicyUpload: new FormControl('', [Validators.required]),
+    rcUpload: new FormControl('', [Validators.required]),
+    documentUpload: new FormControl('', [Validators.required]),
   })
 
-  policyMasterSubmit(policyMaster : FormGroupDirective) {
-    console.log(this.policyMaster.value , this.policyMaster.valid);
+  policyMasterSubmit(policyMaster: FormGroupDirective) {
+    console.log(this.policyMaster.value, this.policyMaster.valid);
     if (this.policyMaster.valid) {
       let object = this.policyMaster.value;
-      if(this.submitButton == 'Submit'){
-      this._utility.loader(true); 
-      this._apiservice.addPolicyMaster(object).then((res: any) => {
-        this._utility.loader(false);
-        if (res.success == true) {
-          window.scroll(0, 0)
-          this._apiservice.showMessage(res.message, 'success');
-          this.getAllTableData();
-          this.policyMaster.reset();
-          Object.keys(this.policyMaster.controls).forEach(key => {
-            this.policyMaster.controls[key].setErrors(null)
-          });
-          policyMaster.resetForm();
-        }
-        else {
-          this._apiservice.showMessage(res.message, 'error');
-          this.getAllTableData();
-        }
-
-      })
-     }
-     else {  
-      object['policyTypeId'] = this.editagentId;   
-      console.log(object);      
-      this._apiservice.editPolicyMaster(object).then((res:any)=>{
-        this._utility.loader(false);
-        if (res.success == true) {
-          this._apiservice.showMessage(res.message, 'success');
-          this.getAllTableData();
-          this.policyMaster.reset();
-          Object.keys(this.policyMaster.controls).forEach(key => {
-            this.policyMaster.controls[key].setErrors(null)
-          });
-          policyMaster.resetForm();
-          this.submitButton = 'Submit'
-        }
-
-        else {
-          this._apiservice.showMessage(res.message, 'error');
-          this.getAllTableData();
+      let formData = new FormData();
+      Object.keys(object).forEach((key: any) => {
+        if (key == 'policyIssueDate' || key == 'policyExpiryDate') {
+          formData.append(key, this._utility.dateTimeChange(object[key]))
+        } else {
+          formData.append(key, object[key])
         }
       })
-    }
+      if (this.submitButton == 'Submit') {
+        this._utility.loader(true);
+        this._apiservice.addPolicyPMaster(formData).then((res: any) => {
+          this._utility.loader(false);
+          if (res.success == true) {
+            window.scroll(0, 0);
+            this.displayPolicy = false;
+            this._apiservice.showMessage(res.message, 'success');
+            this.getAllTableData();
+            this.policyMaster.reset();
+            Object.keys(this.policyMaster.controls).forEach(key => {
+              this.policyMaster.controls[key].setErrors(null)
+            });
+            policyMaster.resetForm();
+          }
+          else {
+            this._apiservice.showMessage(res.message, 'error');
+            this.getAllTableData();
+          }
+
+        })
+      }
+      else {
+        // object['policyTypeId'] = this.editagentId;
+        formData.append('policyId' , this.editagentId)
+        console.log(object);
+        this._apiservice.editPolicyPMaster(formData).then((res: any) => {
+          this._utility.loader(false);
+          if (res.success == true) {
+            this._apiservice.showMessage(res.message, 'success');
+            this.getAllTableData();
+            this.policyMaster.reset();
+            Object.keys(this.policyMaster.controls).forEach(key => {
+              this.policyMaster.controls[key].setErrors(null)
+            });
+            policyMaster.resetForm();
+            this.submitButton = 'Submit'
+          }
+
+          else {
+            this._apiservice.showMessage(res.message, 'error');
+            this.getAllTableData();
+          }
+        })
+      }
     }
   }
 
   getAllTableData() {
-    this._apiservice.getPolicyMaster()
-    .then((res: any) => {
-      console.log(res);
-      this.policyMasterTable = res.returnValue;
-    })
-    .catch((error:any)=>{
-      this.policyMasterTable = [];
-    })
+    this._apiservice.getPolicyPMaster()
+      .then((res: any) => {
+        console.log(res);
+        this.policyMasterTable = res.returnValue;
+      })
+      .catch((error: any) => {
+        this.policyMasterTable = [];
+      })
   }
 
   confirm1(policy: any) {
@@ -145,12 +161,12 @@ export class PolicyComponent implements OnInit {
   }
 
   deleteItem(agentId: any) {
-    this.policyMaster.reset();
+    this.policyMaster.reset();';'
     Object.keys(this.policyMaster.controls).forEach(key => {
       this.policyMaster.controls[key].setErrors(null)
     });
     this._utility.loader(true);
-    this._apiservice.deletePolicyMaster(agentId).then((res: any) => {
+    this._apiservice.deletePolicyPMaster(agentId).then((res: any) => {
       this._utility.loader(false);
       if (res.success == true) {
         window.scroll(0, 0)
@@ -160,22 +176,38 @@ export class PolicyComponent implements OnInit {
 
       else {
         window.scroll(0, 0)
-        this._apiservice.showMessage(res.message , 'error'); 
+        this._apiservice.showMessage(res.message, 'error');
         this.getAllTableData();
       }
 
     })
   }
 
-  editagentId : any;
-  EditItem(customer : any){
+
+
+  // policyUpload: new FormControl('', [Validators.required]),
+  // oldpolicyUpload: new FormControl('', [Validators.required]),
+  // rcUpload: new FormControl('', [Validators.required]),
+  // documentUpload: new FormControl('', [Validators.required]),
+
+  editagentId: any;
+  EditItem(customer: any) {
     console.log(customer);
-    Object.keys(this.policyMaster.controls).forEach(key => { 
-      this.policyMaster.controls[key].setValue(customer[key]);
-    });   
+    Object.keys(this.policyMaster.controls).forEach(key => {
+      if(key != 'policyUpload' && key != 'oldpolicyUpload' && key != 'rcUpload' && key != 'documentUpload'){
+        if (key == 'policyIssueDate' || key == 'policyExpiryDate') {
+          this.policyMaster.controls[key].setValue(this._utility.dateTimeChange(customer[key]));
+        }
+  
+        else {
+          this.policyMaster.controls[key].setValue(customer[key]);
+        }
+      }
+    });
     this.submitButton = 'Update'
-    this.editagentId = customer.policyTypeId;
-  } 
+    this.editagentId = customer.policyId;
+    this.displayPolicy = true;
+  }
 
 
   // filterval: string;
@@ -199,76 +231,110 @@ export class PolicyComponent implements OnInit {
   // }
 
 
-  policyDropdown : any = [];
-  vallageDropdown : any = [];
-  companyDropdown : any = [];
-  insuranceDropdown : any = [];
-  vehicleTypeDropdown : any = [];
-  country_dropdown : any = [];
-  getDropdowns(){
-    this._apiservice.getPolicyMaster().then((res:any)=>{
+  policyDropdown: any = [];
+  agentDropdown: any = [];
+  vallageDropdown: any = [];
+  companyDropdown: any = [];
+  insuranceDropdown: any = [];
+  vehicleTypeDropdown: any = [];
+  country_dropdown: any = [];
+  getDropdowns() {
+    this._apiservice.getPolicyMaster().then((res: any) => {
       console.log(res);
-      if(res.success){
+      if (res.success) {
         this.policyDropdown = res.returnValue;
       }
     })
-    this._apiservice.getVallageMaster().then((res:any)=>{
+    this._apiservice.dropdowndata('agent').then((res: any) => {
       console.log(res);
-      if(res.success){
+      if (res.success) {
+        this.agentDropdown = res.returnValue;
+      }
+    })
+    this._apiservice.getVallageMaster().then((res: any) => {
+      console.log(res);
+      if (res.success) {
         this.vallageDropdown = res.returnValue;
       }
     })
-    this._apiservice.getInsuranceMaster().then((res:any)=>{
+    this._apiservice.getInsuranceMaster().then((res: any) => {
       console.log(res);
-      if(res.success){
+      if (res.success) {
         this.insuranceDropdown = res.returnValue;
       }
     })
-    this._apiservice.getVehicleTypeMaster().then((res:any)=>{
+    this._apiservice.getVehicleTypeMaster().then((res: any) => {
       console.log(res);
-      if(res.success){
+      if (res.success) {
         this.vehicleTypeDropdown = res.returnValue;
       }
     })
-    this._apiservice.dropdowndata('state').then((res:any)=>{
+    this._apiservice.dropdowndata('state').then((res: any) => {
       console.log(res);
-      if(res.success){
+      if (res.success) {
         this.state_dropdown = res.returnValue;
       }
     })
-    this._apiservice.dropdowndata('country').then((res:any)=>{
+    this._apiservice.dropdowndata('country').then((res: any) => {
       console.log(res);
-      if(res.success){
+      if (res.success) {
         this.country_dropdown = res.returnValue;
       }
     })
-    this._apiservice.getCompanyMaster().then((res:any)=>{
+    this._apiservice.getCompanyMaster().then((res: any) => {
       console.log(res);
-      if(res.success){
+      if (res.success) {
         this.companyDropdown = res.returnValue;
+      }
+    })
+
+    this._apiservice.getCommissionMaster().then((res: any) => {
+      console.log(res);
+      if (res.success) {
+        this.commission_dropdown = res.returnValue;
       }
     })
   }
 
 
   // files : any = {};
-  uploadedFile(event:any , string:any){
+  commission_dropdown: any = [];
+  uploadedFile(event: any, string: any) {
     let file = this._utility.onFileChange(event);
-    if(file != false){
-      if(string == 'policy'){
+    if (file != false) {
+      if (string == 'policy') {
         this.policyMaster.controls['policyUpload'].setValue(file);
       }
 
-      else if(string == 'oldpolicy'){
+      else if (string == 'oldpolicy') {
         this.policyMaster.controls['oldpolicyUpload'].setValue(file);
       }
-      else if(string == 'rcUpload'){
+      else if (string == 'rcUpload') {
         this.policyMaster.controls['rcUpload'].setValue(file);
       }
-      else if(string == 'documentUpload'){
+      else if (string == 'documentUpload') {
         this.policyMaster.controls['documentUpload'].setValue(file);
       }
     }
   }
-   
+
+  openModel() {
+    Object.keys(this.policyMaster.controls).forEach(key => {
+      this.policyMaster.controls[key].setValue('');
+    });
+    this.header = 'Add Policy';
+    this.submitButton = 'Submit';
+    this.displayPolicy = true;
+  }
+
+  getComissionAmount(){
+    if(this.policyMaster.controls['netPremiumAmount'].value && this.policyMaster.controls['commissionPer'].value){
+      let commission : any = this.policyMaster.controls['commissionPer'].value;
+      let amount : any = this.policyMaster.controls['netPremiumAmount'].value;
+      let commissionAmount : any;
+      commissionAmount  = (amount * commission)/100;
+      this.policyMaster.controls['commissionAmount'].setValue(commissionAmount);
+    }
+  }
+
 }

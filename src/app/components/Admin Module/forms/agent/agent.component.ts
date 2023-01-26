@@ -60,9 +60,8 @@ export class AgentComponent implements OnInit {
     agentFName: new FormControl('', [Validators.required ]), 
     agentMobileNo: new FormControl('', [Validators.required ]), 
     agentAddress: new FormControl('', [Validators.required]),     
-    agentType: new FormControl("2", [Validators.required]),
+    agentType: new FormControl("2"),
     agentPinCode: new FormControl("", [Validators.required]),
-    stateId : new FormControl(""),
     aadharcard: new FormControl('', [Validators.required , Validators.pattern('^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$')]),
     panCard: new FormControl('', [Validators.required , Validators.pattern('[A-Z a-z]{5}[0-9]{4}[A-Z a-z]{1}')]),
     qualification: new FormControl('', [Validators.required]),
@@ -181,13 +180,13 @@ export class AgentComponent implements OnInit {
     });   
 
     this.submitButton = 'Update'
-    this.editagentId = customer.agentId;
+    this.editagentId = customer.id;
     this.display = true;
   }
 
 
   getDropdown(){
-    this._apiservice.dropdowndata('agent').then((res:any)=>{
+    this._apiservice.dropdowndata('agentType').then((res:any)=>{
       console.log(res);
       if(res.success){
         this.agent_dropdown = res.returnValue;

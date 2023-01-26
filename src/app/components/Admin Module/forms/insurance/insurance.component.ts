@@ -115,7 +115,7 @@ export class InsuranceComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.msgs = [{ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' }];
-        this.deleteItem(insurance.insuranceId ?? 1);
+        this.deleteItem(insurance.insuranceTypeId);
       },
       reject: () => {
         this.msgs = [{ severity: 'info', summary: 'Rejected', detail: 'You have rejected' }];
