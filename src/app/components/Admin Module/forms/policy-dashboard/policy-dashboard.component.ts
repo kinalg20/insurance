@@ -60,7 +60,7 @@ export class PolicyDashboardComponent implements OnInit {
   searchFilter(event?: any) {
     console.log(this.dateFilterVal);
     // let date = moment(event).format('DD-MM-YYYY');
-    if(this.dateFilterVal?.length  > 1){
+    if(this.dateFilterVal[0] != null && this.dateFilterVal[1] != null){
       this.calendar.overlayVisible = false;
     }
     // this.FilteredData.filter(date, 'billDate', 'contains');
