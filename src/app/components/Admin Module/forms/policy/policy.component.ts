@@ -45,6 +45,10 @@ export class PolicyComponent implements OnInit {
 
   policyMaster = new FormGroup({
     policyTypeId: new FormControl('', [Validators.required]),
+    agentId: new FormControl(''),
+    address: new FormControl('', [Validators.required]),
+    pincode: new FormControl('', [Validators.required]),
+    rcNumber : new FormControl('', [Validators.required]),
     policyNumber: new FormControl('', [Validators.required]),
     policyIssueDate: new FormControl('', [Validators.required]),
     policyExpiryDate: new FormControl('', [Validators.required]),
@@ -62,7 +66,7 @@ export class PolicyComponent implements OnInit {
     commissionAmount: new FormControl('', [Validators.required]),
     stateId: new FormControl('', [Validators.required]),
     companyId: new FormControl('', [Validators.required]),
-    commissionId: new FormControl('', [Validators.required]),
+    // commissionId: new FormControl(''),
     countryId: new FormControl('', [Validators.required]),
     policyUpload: new FormControl('', [Validators.required]),
     oldpolicyUpload: new FormControl('', [Validators.required]),
@@ -87,7 +91,8 @@ export class PolicyComponent implements OnInit {
         this._apiservice.addPolicyPMaster(formData).then((res: any) => {
           this._utility.loader(false);
           if (res.success == true) {
-            window.scroll(0, 0)
+            window.scroll(0, 0);
+            this.displayPolicy = false;
             this._apiservice.showMessage(res.message, 'success');
             this.getAllTableData();
             this.policyMaster.reset();
@@ -104,9 +109,10 @@ export class PolicyComponent implements OnInit {
         })
       }
       else {
-        object['policyTypeId'] = this.editagentId;
+        // object['policyTypeId'] = this.editagentId;
+        formData.append('policyId' , this.editagentId)
         console.log(object);
-        this._apiservice.editPolicyPMaster(object).then((res: any) => {
+        this._apiservice.editPolicyPMaster(formData).then((res: any) => {
           this._utility.loader(false);
           if (res.success == true) {
             this._apiservice.showMessage(res.message, 'success');
@@ -155,12 +161,12 @@ export class PolicyComponent implements OnInit {
   }
 
   deleteItem(agentId: any) {
-    this.policyMaster.reset();
+    this.policyMaster.reset();';'
     Object.keys(this.policyMaster.controls).forEach(key => {
       this.policyMaster.controls[key].setErrors(null)
     });
     this._utility.loader(true);
-    this._apiservice.deletePolicyMaster(agentId).then((res: any) => {
+    this._apiservice.deletePolicyPMaster(agentId).then((res: any) => {
       this._utility.loader(false);
       if (res.success == true) {
         window.scroll(0, 0)
@@ -177,20 +183,29 @@ export class PolicyComponent implements OnInit {
     })
   }
 
+
+
+  // policyUpload: new FormControl('', [Validators.required]),
+  // oldpolicyUpload: new FormControl('', [Validators.required]),
+  // rcUpload: new FormControl('', [Validators.required]),
+  // documentUpload: new FormControl('', [Validators.required]),
+
   editagentId: any;
   EditItem(customer: any) {
     console.log(customer);
     Object.keys(this.policyMaster.controls).forEach(key => {
-      if (key == 'policyIssueDate' || key == 'policyExpiryDate') {
-        this.policyMaster.controls[key].setValue(this._utility.dateTimeChange(customer[key]));
-      }
-
-      else {
-        this.policyMaster.controls[key].setValue(customer[key]);
+      if(key != 'policyUpload' && key != 'oldpolicyUpload' && key != 'rcUpload' && key != 'documentUpload'){
+        if (key == 'policyIssueDate' || key == 'policyExpiryDate') {
+          this.policyMaster.controls[key].setValue(this._utility.dateTimeChange(customer[key]));
+        }
+  
+        else {
+          this.policyMaster.controls[key].setValue(customer[key]);
+        }
       }
     });
     this.submitButton = 'Update'
-    this.editagentId = customer.policyTypeId;
+    this.editagentId = customer.policyId;
     this.displayPolicy = true;
   }
 
@@ -217,6 +232,7 @@ export class PolicyComponent implements OnInit {
 
 
   policyDropdown: any = [];
+  agentDropdown: any = [];
   vallageDropdown: any = [];
   companyDropdown: any = [];
   insuranceDropdown: any = [];
@@ -227,6 +243,12 @@ export class PolicyComponent implements OnInit {
       console.log(res);
       if (res.success) {
         this.policyDropdown = res.returnValue;
+      }
+    })
+    this._apiservice.dropdowndata('agent').then((res: any) => {
+      console.log(res);
+      if (res.success) {
+        this.agentDropdown = res.returnValue;
       }
     })
     this._apiservice.getVallageMaster().then((res: any) => {
@@ -303,6 +325,16 @@ export class PolicyComponent implements OnInit {
     this.header = 'Add Policy';
     this.submitButton = 'Submit';
     this.displayPolicy = true;
+  }
+
+  getComissionAmount(){
+    if(this.policyMaster.controls['netPremiumAmount'].value && this.policyMaster.controls['commissionPer'].value){
+      let commission : any = this.policyMaster.controls['commissionPer'].value;
+      let amount : any = this.policyMaster.controls['netPremiumAmount'].value;
+      let commissionAmount : any;
+      commissionAmount  = (amount * commission)/100;
+      this.policyMaster.controls['commissionAmount'].setValue(commissionAmount);
+    }
   }
 
 }

@@ -6,6 +6,7 @@ import { CommisionComponent } from './components/Admin Module/forms/commision/co
 // import { AuthGuardGuard } from './AuthGuards/auth-guard.guard';
 import { CompanyComponent } from './components/Admin Module/forms/company/company.component';
 import { InsuranceComponent } from './components/Admin Module/forms/insurance/insurance.component';
+import { PolicyDashboardComponent } from './components/Admin Module/forms/policy-dashboard/policy-dashboard.component';
 import { PolicyTypeComponent } from './components/Admin Module/forms/policy-type/policy-type.component';
 import { PolicyComponent } from './components/Admin Module/forms/policy/policy.component';
 import { VallageComponent } from './components/Admin Module/forms/vallage/vallage.component';
@@ -59,6 +60,7 @@ const routes: Routes = [
     {path: 'commisionMaster', component: CommisionComponent, pathMatch: 'full'},
     {path: 'insuranceMaster', component: InsuranceComponent, pathMatch: 'full'},
     {path: 'policyTypeMaster', component: PolicyTypeComponent, pathMatch: 'full'},
+    {path: 'dashboard', component: PolicyDashboardComponent, pathMatch: 'full'},
     {path: 'policyMaster', component: PolicyComponent, pathMatch: 'full'},
     {path: 'vehicleTypeMaster', component: VehicleTypeComponent, pathMatch: 'full'},
     {path: 'vallageMaster', component: VallageComponent, pathMatch: 'full'},

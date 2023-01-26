@@ -1,6 +1,8 @@
 .stats-card-box {
     margin-bottom: 30px;
-    padding: 35px 25px 34px 115px;
+    // padding: 35px 25px 34px 115px;
+    text-align: center;
+    padding: 20px;
     border-radius: 5px;
     position: relative;
     background-color: var(--mainColor);
@@ -45,10 +47,10 @@
             };
         }
     }
-    h3 {
+    h4 {
         margin-bottom: 0;
         color: var(--whiteColor);
-        font-size: 35px;
+        // font-size: 25px;
     }
 }
 .col-lg-3, .col-lg-4 {
@@ -85,7 +87,7 @@
 @media only screen and (max-width: 767px) {
 
     .stats-card-box {
-        padding: 30px 20px 30px 95px;
+        // padding: 30px 20px 30px 95px;
 
         .icon-box {
             left: 20px;

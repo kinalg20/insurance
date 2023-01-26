@@ -136,6 +136,10 @@ export class ApiService {
     return this.http.get(this._baseUrl + 'Policy').toPromise()
   }
 
+  getPolicyByIdMaster(id:any): Promise<any> {
+    return this.http.get(this._baseUrl + 'Policy?agentId=' + id).toPromise()
+  }
+
   addPolicyPMaster(agentData: any): Promise<any> {
     return this.http.post(this._baseUrl + 'Policy', agentData).toPromise()
   }
@@ -184,8 +188,8 @@ export class ApiService {
   
   
   //dashboard  datewise
-  getDashboardMaster(id: any): Promise<any> {
-    return this.http.get(this._baseUrl + 'Dashboard/dateWisePolicy/' + id).toPromise()
+  getDashboardMaster(object): Promise<any> {
+    return this.http.get(this._baseUrl + 'Dashboard/dateWisePolicy?agentId='+object.agentId).toPromise()
   }
 
 }

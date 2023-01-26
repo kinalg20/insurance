@@ -1,0 +1,309 @@
+.main-content {
+    transition: var(--transition);
+    overflow: hidden;
+    background-color: #fafafa;
+    min-height: 100vh;
+    padding: {
+        right: 30px;
+        left: 280px;
+        top: 120px;
+    };
+    .listing-area {
+        background-color: var(--whiteColor);
+        box-shadow: 1px 5px 24px 0 rgba(68, 102, 242, .05);
+        padding: 25px 20px 0;
+        border-radius: 5px;
+        margin-bottom: 30px;
+
+        .pagination-area {
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+    }
+    .single-listings-box {
+        .listings-footer {
+            border-top: 1px solid #eeeeee;
+            padding: 20px;
+            
+            .default-btn {
+                padding: {
+                    top: 11px;
+                    bottom: 11px;
+                };
+            }
+        }
+    }
+    .copyrights-area {
+        padding: {
+            top: 5px;
+            bottom: 30px;
+        };
+        p {
+            line-height: initial;
+            margin-bottom: 0;
+
+            i {
+                position: relative;
+                left: 0;
+                top: 1px;
+            }
+            a {
+                font-weight: 500;
+            }
+        }
+    }
+}
+.notification-alert {
+    margin-bottom: 30px;
+    background-color: #e6f3d8;
+    border: none;
+    padding: 20px 45px 19px 25px;
+    color: #5f9025;
+    border-radius: 5px;
+
+    strong {
+        font-weight: 600;
+    }
+    .close {
+        top: 6px;
+        transition: var(--transition);
+    }
+}
+.breadcrumb-area {
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+
+    h1 {
+        margin-bottom: 0;
+        position: relative;
+        color: var(--blackColor);
+        padding-right: 13px;
+        font: {
+            size: 22px;
+            weight: 600;
+        };
+        &::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 16px;
+            width: 1px;
+            background: #cecece;
+        }
+    }
+    .breadcrumb {
+        background-color: transparent;
+        border-radius: 0;
+        margin-bottom: 0;
+        padding: {
+            left: 12px;
+            right: 0;
+            bottom: 0;
+            top: 0;
+        };
+        .item {
+            color: var(--optionalColor);
+            margin-right: 25px;
+            position: relative;
+            font-size: 16px;
+
+            a {
+                display: block;
+                color: var(--optionalColor);
+
+                &:hover {
+                    color: var(--mainColor);
+                }
+            }
+            &::before {
+                content: "\ea50";
+                position: absolute;
+                right: -21px;
+                top: 4px;
+                line-height: 18px;
+                color: var(--optionalColor);
+                font: {
+                    family: "boxicons" !important;
+                    weight: normal;
+                    style: normal;
+                    variant: normal;
+                    size: 18px;
+                };
+            }
+            &:last-child {
+                margin-right: 0;
+
+                &::before {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+
+::ng-deep{
+    .p-button.p-button-icon-only.p-button-rounded{
+        height: 2rem!important;
+    }
+}
+
+
+.add-listings-box1 {
+    margin-bottom: 30px;
+    background-color: var(--whiteColor);
+    box-shadow: 1px 5px 24px 0 rgba(68, 102, 242, .05);
+    border-radius: 5px;
+    padding: 10px 25px 10px 25px;
+
+    .form-group {
+        margin: 10px 0;    
+        .form-control {
+            border: 1px solid #d5d5d5 !important;
+            border-radius: 5px;
+            background-color: #f9f9f9 !important;
+            padding-top: 6px;
+        }
+    }
+}
+
+
+input , select{
+    height: 35px;
+    font-size: 13px!important;
+}
+
+label{
+    display: block;
+    margin-bottom: 5px;
+    color: var(--blackColor);
+    position: relative;
+    padding-left: 2px;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+
+::ng-deep{
+    p-inputnumber, .p-inputnumber{
+        height: 33px!important;
+        width: 100%;
+    }
+
+    .p-inputnumber-input{
+        background-color: #f9f9f9 !important;
+    }
+
+    .p-inputtext{
+        font-size: 13px;
+    }
+
+}
+
+
+
+
+/* Min width 576px to Max width 767px */
+@media (max-width: 767px) {
+    .main-content {
+        padding-top: 110px;
+        padding: {
+            right: 15px;
+            left: 15px;
+        };
+    }
+}
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+
+    .main-content {
+        padding-top: 110px;
+        padding: {
+            right: 15px;
+            left: 15px;
+        };
+    }
+    .invoices-box {
+        ul {
+            li {
+                .default-btn {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+        }
+    }
+    .recent-activities-box {
+        ul {
+            li {
+                .close {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+        }
+    }
+
+}
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+
+    .main-content {
+        padding-top: 110px;
+        padding: {
+            right: 15px;
+            left: 15px;
+        };
+    }
+    .invoices-box {
+        ul {
+            li {
+                padding: {
+                    right: 140px;
+                    top: 25px;
+                    bottom: 25px;
+                };
+                .default-btn {
+                    right: 20px;
+                    padding: 6px 15px;
+                    opacity: 1;
+                    visibility: visible;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+    .breadcrumb-area {
+        margin-bottom: 30px;
+    }
+
+}
+/* Min width 1200px to Max width 1355px */
+@media only screen and (min-width: 1200px) and (max-width: 1355px) {
+
+    .main-content {
+        .listing-area {
+            .row {
+                .col-xl-4 {
+                    flex: 0 0 50%;
+                    max-width: 50%;
+                }
+            }
+        }
+    }
+    .invoices-box {
+        ul {
+            li {
+                padding: {
+                    top: 25px;
+                    bottom: 25px;
+                };
+            }
+        }
+    }
+
+}
