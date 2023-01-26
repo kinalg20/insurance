@@ -44,6 +44,7 @@ import { VehicleTypeComponent } from './components/Admin Module/forms/vehicle-ty
 import { CalendarModule } from 'primeng/calendar';
 import { KeyFilterModule} from 'primeng/keyfilter';
 import { CommisionComponent } from './components/Admin Module/forms/commision/commision.component';
+import { HomeComponent } from './components/website/home/home.component';
 import { PolicyDashboardComponent } from './components/Admin Module/forms/policy-dashboard/policy-dashboard.component';
 import { StatsComponent } from './components/commonModule/dashboard/stats/stats.component';
 
@@ -67,6 +68,7 @@ import { StatsComponent } from './components/commonModule/dashboard/stats/stats.
     VallageComponent,
     VehicleTypeComponent,
     CommisionComponent,
+    HomeComponent,
     PolicyDashboardComponent,
     StatsComponent
   ],
@@ -74,7 +76,6 @@ import { StatsComponent } from './components/commonModule/dashboard/stats/stats.
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    CarouselModule,
     SelectDropDownModule,
     NgxTypedJsModule,
     ReactiveFormsModule,
@@ -93,7 +94,8 @@ import { StatsComponent } from './components/commonModule/dashboard/stats/stats.
     InputNumberModule,
     CalendarModule,
     KeyFilterModule,
-    InputNumberModule
+    InputNumberModule,
+    CarouselModule
   ],
   providers: [ MessageService,ConfirmationService 
     ,{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },],

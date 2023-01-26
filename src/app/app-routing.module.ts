@@ -13,6 +13,7 @@ import { VallageComponent } from './components/Admin Module/forms/vallage/vallag
 import { VehicleTypeComponent } from './components/Admin Module/forms/vehicle-type/vehicle-type.component';
 import { LoginComponent } from './components/Auth/login/login.component';
 import { DashboardMyProfileComponent } from './components/commonModule/dashboard-my-profile/dashboard-my-profile.component';
+import { HomeComponent } from './components/website/home/home.component';
 // import { AboutUsComponent } from './components/pages/about-us/about-us.component';
 // import { AuthorProfileComponent } from './components/pages/author-profile/author-profile.component';
 // import { BlogDetailsComponent } from './components/pages/blog-details/blog-details.component';
@@ -64,6 +65,7 @@ const routes: Routes = [
     {path: 'policyMaster', component: PolicyComponent, pathMatch: 'full'},
     {path: 'vehicleTypeMaster', component: VehicleTypeComponent, pathMatch: 'full'},
     {path: 'vallageMaster', component: VallageComponent, pathMatch: 'full'},
+    {path: 'home', component: HomeComponent, pathMatch: 'full'},
 
 
 
