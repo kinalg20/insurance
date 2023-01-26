@@ -30,19 +30,6 @@
         <ng-template pTemplate="caption">
             <div class="row" style="justify-content: space-between;
                 align-items: center;">
-
-                <div class="col-lg-4">
-                    <span class="p-input-icon-left d-flex align-items-center">
-                        <i class="pi pi-search"></i>
-                        <input pInputText type="text" style="height: 35px;"
-                            (input)="dt2.filterGlobal($event.target.value,'contains')"
-                            placeholder="Global Search" [(ngModel)]="filterval"
-                            />
-                        <p-button type="button" style="margin-left: 5px;"
-                            (click)="reset(dt2)"
-                            icon="bx bx-reset"></p-button>
-                    </span>
-                </div>
                 <div class="col-lg-4">
                     <select class="form-select form-control select-dropdown">
                         <option value="" disabled>Select</option>
@@ -58,6 +45,18 @@
                         [(ngModel)]="dateFilterVal"
                         (onSelect)="searchFilter($event)">
                     </p-calendar>
+                </div>
+                <div class="col-lg-4">
+                    <span class="p-input-icon-left d-flex align-items-center">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" style="height: 35px;"
+                            (input)="dt2.filterGlobal($event.target.value,'contains')"
+                            placeholder="Global Search" [(ngModel)]="filterval"
+                            />
+                        <p-button type="button" style="margin-left: 5px;"
+                            (click)="reset(dt2)"
+                            icon="bx bx-reset"></p-button>
+                    </span>
                 </div>
             </div>
         </ng-template>
