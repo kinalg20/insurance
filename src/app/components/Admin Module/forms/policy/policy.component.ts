@@ -121,6 +121,7 @@ export class PolicyComponent implements OnInit {
         })
       }
       else {
+        this._utility.loader(true);
         formData.append('policyId' , this.editagentId)
         console.log(object);
         this._apiservice.editPolicyPMaster(formData).then((res: any) => {
@@ -369,19 +370,28 @@ export class PolicyComponent implements OnInit {
   }
 
 
+  // policyUpload: new FormControl('', [Validators.required]),
+  // oldpolicyUpload: new FormControl('', [Validators.required]),
+  // rcUpload: new FormControl('', [Validators.required]),
+  // documentUpload: new FormControl('', [Validators.required]),
+
   showFile(string:any){
     if(string == 'policy'){
       this.displayPolicyDoc =! this.displayPolicyDoc;
-
+      this.policyMaster.get('policyUpload').setValue('')
     }
     if(string == 'oldpolicy'){
       this.displayOldPolicyDoc =! this.displayOldPolicyDoc;
+      this.policyMaster.get('oldpolicyUpload').setValue('')
+
     }
     if(string == 'rcUpload'){
       this.displayRcUploadDoc =! this.displayRcUploadDoc;
+      this.policyMaster.get('rcUpload').setValue('')
     }
     if(string == 'documentUpload'){
       this.displayDoc =! this.displayDoc;
+      this.policyMaster.get('documentUpload').setValue('')
     }
   }
 
