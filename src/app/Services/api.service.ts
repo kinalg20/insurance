@@ -30,6 +30,9 @@ export class ApiService {
   userLogin(logindata: any): Promise<any> {
     return this.http.post(this._baseUrl + 'User/login', logindata).toPromise()
   }
+  userAgentLogin(logindata: any): Promise<any> {
+    return this.http.post(this._baseUrl + 'User/agentlogin', logindata).toPromise()
+  }
 
   GetOTP(OTPdata: any): Promise<any> {
     return this.http.put(this._baseUrl + 'User/OTP', OTPdata).toPromise()

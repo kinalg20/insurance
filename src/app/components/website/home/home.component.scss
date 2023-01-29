@@ -111,8 +111,8 @@
             background-color: var(--whiteColor);
             border: none;
             border-radius: 0;
-            box-shadow: 5px 5px var(--mainColor);
-            border: 1px solid var(--mainColor);
+            box-shadow: 5px 5px #081648;
+            border: 1px solid #081648;
             padding: 40px;
             position: relative;
 
@@ -172,7 +172,7 @@
                             height: 3px;
                             transition: var(--transition);
                             transform: scaleX(0);
-                            background-color: var(--mainColor);
+                            background-color: #081648;
                         }
 
                         &:hover,
@@ -314,7 +314,7 @@
 
                         button {
                             display: block;
-                            background-color: var(--mainColor);
+                            background-color: #081648;
                             color: var(--whiteColor);
                             border: none;
                             font-weight: 600;
@@ -471,7 +471,7 @@
 
                         button {
                             display: block;
-                            background-color: var(--mainColor);
+                            background-color: #081648;
                             color: var(--whiteColor);
                             border: none;
                             font-weight: 600;
@@ -762,7 +762,7 @@ h6 {
 .navbar .active,
 .navbar .active:focus,
 .navbar li:hover>a {
-    color: #081648;
+    color: white;
 }
 
 .navbar .getstarted,

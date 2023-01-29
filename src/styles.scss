@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
     --fontFamily: 'Work Sans', sans-serif;
-    --mainColor: #0ec6c6;
-    --mainColor2: #30eded;
+    --mainColor: #081648;
+    --mainColor2: #081648;
     --optionalColor: #666666;
     --whiteColor: #ffffff;
     --blackColor: #221638;
@@ -3432,11 +3432,11 @@ textarea.form-control {
 
 .vesax-login {
     max-width: 450px;
-    margin: 10px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    border-radius: 10px;
-    padding: 15px 45px;
-    width: 100%;
+    // margin: 10px;
+    // box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    // border-radius: 10px;
+    // padding: 15px 45px;
+    // width: 100%;
     .login-with-account {
         margin-bottom: 30px;
 
@@ -3798,7 +3798,7 @@ textarea.form-control {
 
 
 .invalid-feedback{
-    font-size: 0.675em;
+    font-size: 1em;
 }
 
 
