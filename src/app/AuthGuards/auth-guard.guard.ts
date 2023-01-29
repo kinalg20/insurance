@@ -14,38 +14,29 @@ export class AuthGuardGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     this.loginAuth = localStorage.getItem('UserObject');
     this.loginAuth = JSON.parse(this.loginAuth);
-    let roles = route.data.roles as Array<string>;
-    //return true;
+    console.log(route);
+    let roles = route.data.route as Array<string>;
     if(this.loginAuth){  
       this.authorizedflag = false;
-      // roles?.map((res:any)=>{
-      //   if( res.toString() == this.loginAuth.roleName){
-      //     this.authorizedflag = true;
-      //   }     
-      // })
-
-      for(var i = 0; i< roles.length; i++){
-
-        if( roles[i].toString() == this.loginAuth.roleName){
+      console.log(roles)
+      for(var i = 0; i< roles?.length; i++){
+        if( roles[i].toString() == this.loginAuth.userId){
           this.authorizedflag = true;
         }    
       }
-  
       if(this.authorizedflag == true){
         return true;
       }
-
       else {
         this.router.navigateByUrl('/dashboard-my-profile');
-        // localStorage.removeItem('UserObject');
         return false;
       }
     }
-
     else{
       localStorage.removeItem('UserObject');  
-      this.router.navigateByUrl('/login');
+      this.router.navigateByUrl('');
     }
+    // return false;
   }
   
 }

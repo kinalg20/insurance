@@ -7,12 +7,15 @@
             alt="" class="img-fluid"></a> -->
         <nav id="navbar" class="navbar d-block">
             <ul style="justify-content: right;">
-                <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-                <li><a class="nav-link scrollto" href="#portfolio">Products</a></li>
-                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                <!-- <li><a class="nav-link scrollto active" href="#hero">Home</a></li> -->
+                <li><a class="nav-link scrollto" style="cursor: pointer;" (click)="scroll(insurance)">Insurance</a></li>
+                <li><a class="nav-link scrollto" style="cursor: pointer;" (click)="scroll(Specifications)">Specifications</a></li>
+                <li><a class="nav-link scrollto" style="cursor: pointer;" (click)="scroll(partners)">Partners</a></li>
+                <li><a class="nav-link scrollto" style="cursor: pointer;" (click)="scroll(contact)">Contact</a></li>
                 <li><a class="nav-link scrollto" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#loginRegisterModal">Login</a></li>
             </ul>
-            <i class="bi bi-list mobile-nav-toggle"></i>
+            <!-- <div clas></div> -->
+            <i (click)="openMenu()" class="bi bi-list mobile-nav-toggle"></i>
         </nav>
     </div>
 </header>
@@ -121,13 +124,13 @@
 
   <main id="main">
     <!-- Services Section -->
-    <section class="services portfolio section-bg" id="portfolio">
+    <section class="services portfolio section-bg" #insurance>
       <div class="container" data-aos="fade-up">
         <div class="section-title p-0">
           <h2>Types of Insurance</h2>
         </div>
 
-        <p-carousel [value]="products" [numVisible]="3" [numScroll]="1" [circular]="false" [autoplayInterval]="3000">
+        <p-carousel [value]="products" [numVisible]="3" [responsiveOptions]="responsiveOptions" [numScroll]="1" [circular]="false" [autoplayInterval]="3000">
             <ng-template let-product pTemplate="item">
                 <div class="product-item insurance_carousel">
                     <div class="product-item-content">
@@ -143,7 +146,7 @@
     </section>
     <!-- End Services Section -->
 
-    <section class="specification" style="background-color: #081648">
+    <section class="specification" #Specifications style="background-color: #081648">
       <div class="section-title2" style="color: #fff!important;">
         <h2 style="color: #fff!important;">Specifications</h2>
         <p class="sub-title"> </p>
@@ -165,13 +168,13 @@
       </div>
     </section>
 
-    <section class="services portfolio section-bg" id="portfolio">
+    <section class="services portfolio section-bg" #partners>
         <div class="container" data-aos="fade-up">
           <div class="section-title p-0">
             <h2>Partners</h2>
           </div>
   
-          <p-carousel [value]="products" [numVisible]="3" [numScroll]="1" [circular]="false" [autoplayInterval]="3000">
+          <p-carousel [value]="products" [numVisible]="3" [responsiveOptions]="responsiveOptions" [numScroll]="1" [circular]="false" [autoplayInterval]="3000">
               <ng-template let-product pTemplate="item">
                   <div class="product-item insurance_carousel">
                       <div class="product-item-content">
@@ -187,7 +190,7 @@
       </section>
 
     <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact">
+    <section id="contact" class="contact" #contact>
       <div class="container" data-aos="fade-up">
         <div class="row">
           <div class="col-lg-7 mb-5 mt-lg-0 d-block align-items-stretch" style="justify-content: center;">

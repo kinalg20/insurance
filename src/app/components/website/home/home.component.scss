@@ -2710,3 +2710,45 @@ img {
     z-index: 9999;
     text-align: right;
 }
+
+@media (max-width : 525px) {
+    .insurance_carousel {
+        .product-item-content {
+            height: 315px;
+        }
+    }
+    .insurance_img {
+        margin-bottom: 30px;
+    }
+    #header {
+        .logo {
+            img {
+                height: 45px;
+            }
+        }
+    }
+    .banner_carousel {
+        margin-top: 69.98px;
+    }
+    .section-title {
+        h2 {
+            font-size: 25px;
+        }
+    }
+    .section-title2 {
+        h2 {
+            font-size: 25px;
+        }
+    }
+}
+
+:host::ng-deep {
+    @media (max-width : 525px) {
+        .pi-chevron-right:before {
+            font-size: 18px!important;
+        }
+        .pi-chevron-left:before {
+            font-size: 18px!important;
+        }
+    }
+}
