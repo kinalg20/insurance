@@ -23,7 +23,16 @@ export class HomeComponent implements OnInit {
     email : new FormControl('',[Validators.required])
   })
 
+  userFormControl = new FormGroup({
+    emailAddress: new FormControl('', [Validators.required, Validators.pattern('[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}')]),
+    OTP: new FormControl(''),
+  })
+
   banners : any = [{image : 'assets/img/banner1-edited.png'},{image : 'assets/img/banner1-edited.png'},{image : 'assets/img/banner1-edited.png'}]
+
+  errorMessage: string = ''
+  errorMessageCheck: string = ''
+  buttonvalue: string = 'Get OTP'
 
   products : any = [
     {image : 'assets/img/images/img1.jpeg'},
@@ -71,5 +80,64 @@ export class HomeComponent implements OnInit {
       this.messageService.add({ severity: 'error', summary: 'error', detail: 'Please Fill All the Details!' });
     }
   }
+  loginForAgent() {
+    if (this.buttonvalue == "Get OTP") {
+      if (this.userFormControl.valid) {
+        let signInObject = {
+          loginName: this.userFormControl.value.emailAddress
+        }
+        this._apiService.GetOTP(signInObject)
+          .then((res: any) => {
+            console.log(res);
+            // this._utility.loader(false);
+            if (res.success == false) {
+              window.scroll(0, 0);
+              this.errorMessage = res.message
+              this.errorMessageCheck = 'error'
+              this._apiService.showMessage(this.errorMessage, this.errorMessageCheck)
+            }
 
+            else {
+              this.buttonvalue = "Submit OTP";
+              this.userFormControl.get('OTP').setValidators(Validators.required);
+            }
+          })
+      }
+    }
+    else {
+      if (this.userFormControl.valid) {
+        let signInObject = {
+          loginName: this.userFormControl.value.emailAddress,
+          OTP: this.userFormControl.value.OTP
+        }
+        this._apiService.userLogin(signInObject)
+          .then((res: any) => {
+            console.log(res);
+            if (res.success == false) {
+              window.scroll(0, 0);
+              this.errorMessage = res.message
+              if (res.message == 'OTP Expire') {
+                this.buttonvalue = "Get OTP";
+                this.userFormControl.reset();
+                Object.keys(this.userFormControl.controls).forEach(key => {
+                  this.userFormControl.controls[key].setErrors(null)
+                });
+              }
+              this.errorMessageCheck = 'error'
+              this._apiService.showMessage(this.errorMessage, this.errorMessageCheck)
+            }
+
+            else {
+              localStorage.setItem('UserObject', JSON.stringify(res.returnValue))
+              this.userFormControl.reset();
+              Object.keys(this.userFormControl.controls).forEach(key => {
+                this.userFormControl.controls[key].setErrors(null)
+              });
+              this.router.navigateByUrl('/dashboard-my-profile');
+            }
+          })
+      }
+
+    }
+  }
 }
