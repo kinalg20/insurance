@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
+import { AppUtility } from 'src/app/interceptor/apputitlity';
 import { ApiService } from 'src/app/Services/api.service';
-import { CommonFunction } from 'src/app/Utility/commonFunction';
 
 @Component({
   selector: 'app-policy-detail-table',
@@ -18,7 +18,7 @@ export class PolicyDetailTableComponent implements OnInit {
   @ViewChild('calendar1') private calendar1: any;
   @ViewChild('calendar2') private calendar2: any;
   filterval5: string;
-  constructor(private _apiService: ApiService, private utility: CommonFunction) { }
+  constructor(private _apiService: ApiService, private utility: AppUtility) { }
 
   ngOnInit(): void {
     this.getAllPolicy()
