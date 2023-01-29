@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import { Table } from 'primeng/table';
+import { AppUtility } from 'src/app/interceptor/apputitlity';
 import { ApiService } from 'src/app/Services/api.service';
-import { CommonFunction } from 'src/app/Utility/commonFunction';
 
 @Component({
   selector: 'app-policy-dashboard',
@@ -15,7 +15,7 @@ export class PolicyDashboardComponent implements OnInit {
   dateFilterVal: Date[] | any;
   dateFilterVal1: Date[] | any;
   filterval5: string;
-  constructor(private _apiService: ApiService, private utility: CommonFunction) { }
+  constructor(private _apiService: ApiService, private utility: AppUtility) { }
 
   ngOnInit(): void {
     this.getAllPolicy()

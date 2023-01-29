@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AppUtility } from 'src/app/interceptor/apputitlity';
 import { ApiService } from 'src/app/Services/api.service';
-import { CommonFunction } from 'src/app/Utility/commonFunction';
 
 @Component({
   selector: 'app-dashboard-sidemenu',
@@ -10,7 +10,7 @@ import { CommonFunction } from 'src/app/Utility/commonFunction';
 export class DashboardSidemenuComponent implements OnInit {
 
   menuList : any = [];
-  constructor(private _apiService : ApiService , private _utility : CommonFunction) { }
+  constructor(private _apiService : ApiService , private _utility : AppUtility) { }
 
   ngOnInit(): void {
     this.getSideMenus();

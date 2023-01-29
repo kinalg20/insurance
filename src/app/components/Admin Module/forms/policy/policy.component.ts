@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ConfirmationService, Message, PrimeNGConfig } from 'primeng/api';
 import { AppUtility } from 'src/app/interceptor/apputitlity';
 import { ApiService } from 'src/app/Services/api.service';
-import { CommonFunction } from 'src/app/Utility/commonFunction';
 
 @Component({
   selector: 'app-policy',
@@ -13,20 +12,21 @@ import { CommonFunction } from 'src/app/Utility/commonFunction';
 })
 
 export class PolicyComponent implements OnInit {
-
+  @ViewChild('policy') PolicyForm : any;
   tax_dropdown: any = [];
   agent_dropdown: any = [];
   city_dropdown: any = [];
   state_dropdown: any = [];
-
-
   policyMasterTable: any = [];
   myDate: any;
-  displayPolicyDoc : boolean = false;
+  displayPolicyDoc : boolean;
   msgs: Message[] = [];
   submitButton: string = 'Submit'
   displayPolicy: boolean = false;
   header: string = 'Add Policy'
+  displayOldPolicyDoc: boolean;
+  displayRcUploadDoc: boolean;
+  displayDoc: boolean;
   constructor(private _apiservice: ApiService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig, public _utility: AppUtility) { }
 
   ngOnInit(): void {
@@ -84,7 +84,18 @@ export class PolicyComponent implements OnInit {
         if (key == 'policyIssueDate' || key == 'policyExpiryDate') {
           formData.append(key, this._utility.dateTimeChange(object[key]))
         } else {
-          formData.append(key, object[key])
+          if(!(['policyUpload' ,'oldpolicyUpload' , 'rcUpload' , 'documentUpload'].includes(key))){
+            formData.append(key, object[key])
+          }
+          else{
+            if(object[key] != 'Uploaded' ){
+              formData.append(key, object[key])
+            }
+
+            else{
+              formData.append(key, '')
+            }
+          }
         }
       })
       if (this.submitButton == 'Submit') {
@@ -110,12 +121,12 @@ export class PolicyComponent implements OnInit {
         })
       }
       else {
-        // object['policyTypeId'] = this.editagentId;
         formData.append('policyId' , this.editagentId)
         console.log(object);
         this._apiservice.editPolicyPMaster(formData).then((res: any) => {
           this._utility.loader(false);
           if (res.success == true) {
+            this.displayPolicy = false;
             this._apiservice.showMessage(res.message, 'success');
             this.getAllTableData();
             this.policyMaster.reset();
@@ -184,16 +195,11 @@ export class PolicyComponent implements OnInit {
     })
   }
 
-
-
-  // policyUpload: new FormControl('', [Validators.required]),
-  // oldpolicyUpload: new FormControl('', [Validators.required]),
-  // rcUpload: new FormControl('', [Validators.required]),
-  // documentUpload: new FormControl('', [Validators.required]),
-
   editagentId: any;
+  policyDocument : any = {};
   EditItem(customer: any) {
     console.log(customer);
+    this.policyDocument = {};
     Object.keys(this.policyMaster.controls).forEach(key => {
       if(key != 'policyUpload' && key != 'oldpolicyUpload' && key != 'rcUpload' && key != 'documentUpload'){
         if (key == 'policyIssueDate' || key == 'policyExpiryDate') {
@@ -202,6 +208,29 @@ export class PolicyComponent implements OnInit {
   
         else {
           this.policyMaster.controls[key].setValue(customer[key]);
+        }
+      }
+
+      else{
+        if(key == 'policyUpload' && customer[key] != ''){
+          this.displayPolicyDoc = true;
+          this.policyDocument['policyUpload'] = customer[key];
+          this.policyMaster.controls[key].setValue('Uploaded');
+        }
+        if(key == 'oldpolicyUpload' && customer[key] != ''){
+          this.displayOldPolicyDoc = true;
+          this.policyDocument['oldpolicyUpload'] = customer['oldPolicyUpload'];
+          this.policyMaster.controls[key].setValue('Uploaded');
+        }
+        if(key == 'rcUpload' && customer[key] != ''){
+          this.displayRcUploadDoc = true;
+          this.policyDocument['rcUpload'] = customer[key];
+          this.policyMaster.controls[key].setValue('Uploaded');
+        }
+        if(key == 'documentUpload' && customer[key] != ''){
+          this.displayDoc = true;
+          this.policyMaster.controls[key].setValue('Uploaded');
+          this.policyDocument['documentUpload'] = customer[key];
         }
       }
     });
@@ -320,6 +349,7 @@ export class PolicyComponent implements OnInit {
   }
 
   openModel() {
+    this.PolicyForm.resetForm();
     Object.keys(this.policyMaster.controls).forEach(key => {
       this.policyMaster.controls[key].setValue('');
     });
@@ -335,6 +365,23 @@ export class PolicyComponent implements OnInit {
       let commissionAmount : any;
       commissionAmount  = (amount * commission)/100;
       this.policyMaster.controls['commissionAmount'].setValue(commissionAmount);
+    }
+  }
+
+
+  showFile(string:any){
+    if(string == 'policy'){
+      this.displayPolicyDoc =! this.displayPolicyDoc;
+
+    }
+    if(string == 'oldpolicy'){
+      this.displayOldPolicyDoc =! this.displayOldPolicyDoc;
+    }
+    if(string == 'rcUpload'){
+      this.displayRcUploadDoc =! this.displayRcUploadDoc;
+    }
+    if(string == 'documentUpload'){
+      this.displayDoc =! this.displayDoc;
     }
   }
 
