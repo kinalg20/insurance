@@ -19,72 +19,47 @@
     <app-stats></app-stats>
     <!-- End -->
 
-    <p-table #dt2 [value]="policyData" [scrollable]="true" dataKey="id"
-        [rows]="10" [scrollable]="true" [showCurrentPageReport]="true"
+   <div class="row">
+    <div class="col-lg-6">
+        <div class="section-heading">
+            <h6 style="margin-bottom: 0;">Today Expiry Policy</h6>
+        </div>
+        <p-table #dt1 [value]="todayExpiryPolicy" dataKey="id"
+        [rows]="10" [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[10,20,30,50]"
         [paginator]="true" currentPageReportTemplate="Showing {first} to
         {last} of {totalRecords} entries"
-        [globalFilterFields]="['customerName','customerFName' , 'mobileNumber' ,
-        'policyNumber' , 'policyTypeName', 'insuranceTypeName', 'companyName',
-        'registrationNumber']">
+        [globalFilterFields]="['customerName' , 'registrationNumber', ]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="min-width: 20px;">S.No.</th>
+                <th>Registration No.</th>
+                <th>Customer Name</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
         <ng-template pTemplate="caption">
             <div class="row" style="justify-content: space-between;
                 align-items: center;">
-                <div class="col-lg-4">
-                    <select class="form-select form-control select-dropdown">
-                        <option value="" disabled>Select</option>
-                        <ng-container *ngFor="let policy of dropdown">
-                            <option [value]="policy.id">{{policy.value}}</option>
-                        </ng-container>
-                    </select>
-                </div>
-                <div class="col-lg-4">
-                    <p-calendar appendTo="body" class="ml-2"
-                        dateFormat="dd-mm-yy" selectionMode="range"
-                        placeholder="Bill Date" #calendar  [showIcon]="true"
-                        [(ngModel)]="dateFilterVal"
-                        (onSelect)="searchFilter($event)">
-                    </p-calendar>
-                </div>
-                <div class="col-lg-4">
+                <div class="col-lg-12">
                     <span class="p-input-icon-left d-flex align-items-center">
                         <i class="pi pi-search"></i>
                         <input pInputText type="text" style="height: 35px;"
-                            (input)="dt2.filterGlobal($event.target.value,'contains')"
-                            placeholder="Global Search" [(ngModel)]="filterval"
+                            (input)="dt1.filterGlobal($event.target.value,'contains')"
+                            placeholder="Global Search" [(ngModel)]="filterval1"
                             />
                         <p-button type="button" style="margin-left: 5px;"
-                            (click)="reset(dt2)"
+                            (click)="reset(dt1 , 'dt1')"
                             icon="bx bx-reset"></p-button>
                     </span>
                 </div>
             </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="min-width: 20px;">S.No.</th>
-                <th style="min-width: 180px;">Registration No.</th>
-                <th style="min-width: 180px;">Customer Name</th>
-                <th style="min-width: 180px;">Customer Father Name</th>
-                <th style="min-width: 180px;">Mobile Number</th>
-                <th style="min-width: 180px;">Policy Number</th>
-                <th style="min-width: 180px;">Policy Type Name</th>
-                <th style="min-width: 180px;">Insurance Type</th>
-                <th style="min-width: 180px;">Company Name</th>
-                <th style="min-width: 180px;">Action</th>
-            </tr>
         </ng-template>
         <ng-template pTemplate="body" let-agent let-i="rowIndex">
             <tr>
                 <td>{{i+1}}</td>
                 <td><span class="image-text">{{agent.registrationNumber}}</span></td>
                 <td><span class="image-text">{{agent.customerName}}</span></td>
-                <td><span class="image-text">{{agent.customerFName}}</span></td>
-                <td><span class="image-text">{{agent.mobileNumber}}</span></td>
-                <td><span class="image-text">{{agent.policyNumber}}</span></td>
-                <td><span class="image-text">{{agent.policyTypeName}}</span></td>
-                <td><span class="image-text">{{agent.insuranceTypeName}}</span></td>
-                <td><span class="image-text">{{agent.companyName}}</span></td>
                 <td class="d-flex">
                     <button pButton pRipple type="button" icon="bx bx-show"
                         class="p-button-rounded p-button-primary p-button-text"
@@ -97,8 +72,63 @@
                 <td colspan="5">No agents found.</td>
             </tr>
         </ng-template>
-    </p-table>
-
+        </p-table>
+    </div>
+    <div class="col-lg-6">
+        <div class="section-heading">
+            <h6 style="margin-bottom: 0;">This Month Expiry Policy</h6>
+        </div>
+        <p-table #dt2 [value]="nowMonthExpiryPolicy" dataKey="id"
+        [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10,20,30,50]"
+        [paginator]="true" currentPageReportTemplate="Showing {first} to
+        {last} of {totalRecords} entries"
+        [globalFilterFields]="['customerName', 'registrationNumber']">
+        <ng-template pTemplate="caption">
+            <div class="row" style="justify-content: space-between;
+                align-items: center;">
+                <div class="col-lg-12">
+                    <span class="p-input-icon-left d-flex align-items-center">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" style="height: 35px;"
+                            (input)="dt2.filterGlobal($event.target.value,'contains')"
+                            placeholder="Global Search" [(ngModel)]="filterval2"
+                            />
+                        <p-button type="button" style="margin-left: 5px;"
+                            (click)="reset(dt2 , 'dt2')"
+                            icon="bx bx-reset"></p-button>
+                    </span>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>S.No.</th>
+                <th>Registration No.</th>
+                <th>Customer Name</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-agent let-i="rowIndex">
+            <tr>
+                <td>{{i+1}}</td>
+                <td><span class="image-text">{{agent.registrationNumber}}</span></td>
+                <td><span class="image-text">{{agent.customerName}}</span></td>
+                <td class="d-flex">
+                    <button pButton pRipple type="button" icon="bx bx-show"
+                        class="p-button-rounded p-button-primary p-button-text"
+                        (click)="getData(agent)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5">No agents found.</td>
+            </tr>
+        </ng-template>
+        </p-table>
+    </div>
+   </div>
     <div class="flex-grow-1"></div>
 
     <app-copyrights></app-copyrights>

@@ -10,10 +10,12 @@ import { CommonFunction } from 'src/app/Utility/commonFunction';
   styleUrls: ['./policy-dashboard.component.scss']
 })
 export class PolicyDashboardComponent implements OnInit {
-  filterval: string = '';
-  dateFilterVal: Date[] |  any;
-  @ViewChild('calendar') private calendar: any;
-  constructor(private _apiService : ApiService , private utility : CommonFunction) { }
+  filterval1: string = '';
+  filterval2: string = '';
+  dateFilterVal: Date[] | any;
+  dateFilterVal1: Date[] | any;
+  filterval5: string;
+  constructor(private _apiService: ApiService, private utility: CommonFunction) { }
 
   ngOnInit(): void {
     this.getAllPolicy()
@@ -27,49 +29,58 @@ export class PolicyDashboardComponent implements OnInit {
   ]
 
 
-  policyData : any = [];
-  @ViewChild ('dt') FilteredData:Table;
+  policyData: any = [];
+  @ViewChild('dt1') FilteredData: Table;
+  @ViewChild('dt2') FilteredData1: Table;
 
-
-  dropdown = [
-    {id : 1  , value : 'Date wise Policy'},
-    {id : 2  , value : 'Date wise Expiry Policy'},
-    {id : 3  , value : 'Today Expiry Policy'},
-    {id : 4  , value : 'This Month Expiry Policy'},
-    {id : 5  , value : 'Next Month Expiry Policy'}
-  ]
-  getAllPolicy(){
+  todayExpiryPolicy: any = [];
+  nowMonthExpiryPolicy: any = [];
+  getAllPolicy() {
     let id = this.utility.getLocalStorageDetails();
-    this._apiService.getPolicyByIdMaster(id.agentId).then((res:any)=>{
+    this._apiService.getNowMonthlyExpiryPolicyMaster().then((res: any) => {
       console.log(res);
-      if(res.success){
-        this.policyData = res.returnValue;
+      if (res.success) {
+        this.nowMonthExpiryPolicy = res.returnValue;
+      }
+    })
+
+    this._apiService.getTodayExpiryPolicyMaster().then((res: any) => {
+      if (res.success) {
+        this.todayExpiryPolicy = res.returnValue;
       }
     })
   }
 
-  CustomerData : any = {};
-  displayPolicy : boolean = false;
-  getData(data){
+  CustomerData: any = {};
+  displayPolicy: boolean = false;
+  getData(data) {
     console.log(data);
     this.CustomerData = data;
     this.displayPolicy = true;
   }
-
-
-  searchFilter(event?: any) {
-    console.log(this.dateFilterVal);
-    // let date = moment(event).format('DD-MM-YYYY');
-    if(this.dateFilterVal[0] != null && this.dateFilterVal[1] != null){
-      this.calendar.overlayVisible = false;
+  reset(dt, string: any) {
+    dt.reset();
+    console.log(dt);
+    if (string == 'dt1') {
+      this.filterval1 = '';
     }
-    // this.FilteredData.filter(date, 'billDate', 'contains');
+    else if (string == 'dt2') {
+      this.filterval2 = '';
+    }
+    this.dateFilterVal = ''
   }
 
-  reset(dt) {
-    dt.reset();
-    this.filterval = '';
-    // this.dateFilterVal = ''
+
+
+  getDropdownValue(event) {
+    console.log(event.target.value);
+
+    if (event.target.value == 1) {
+      let object: any = {};
+      this._apiService.getDashboardMaster().then((res: any) => {
+        console.log(res);
+      })
+    }
   }
 
 }

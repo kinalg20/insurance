@@ -18,6 +18,7 @@ export class AppUtility {
     dateTimeChange(date : any){
         return moment(date).format('YYYY-MM-DDT18:30:00')
     }
+    
 
     dateChange(date : any){
       return moment(date).format('YYYY')

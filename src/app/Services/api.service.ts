@@ -188,8 +188,39 @@ export class ApiService {
   
   
   //dashboard  datewise
-  getDashboardMaster(object): Promise<any> {
-    return this.http.get(this._baseUrl + 'Dashboard/dateWisePolicy?agentId='+object.agentId).toPromise()
+  getDashboardMaster(object?:any): Promise<any> {
+    let endpoint = 'Dashboard/dateWisePolicy'
+    if (object) {
+      var queryStrings = new HttpParams({ fromObject: object }).toString();
+      endpoint = `${endpoint}?${queryStrings}`;
+    }
+    return this.http.get(this._baseUrl + endpoint).toPromise()
+  }
+
+
+  getTodayExpiryPolicyMaster(): Promise<any> {
+    let endpoint = 'Dashboard/TodayExpiryPolicy'
+    return this.http.get(this._baseUrl + endpoint).toPromise();
+  }
+
+  getAllPolicies(object): Promise<any> {
+    let endpoint = 'Dashboard/dateWisePolicy'
+    return this.http.get(this._baseUrl + endpoint+ '?FromDate='+ object.fromDate + '&ToDate='+ object.toDate).toPromise()
+  }
+
+  getDateWiseExpiryPolicyMaster(object:any): Promise<any> {
+    let endpoint = 'Dashboard/dateWiseExpiryPolicy'
+    return this.http.get(this._baseUrl + endpoint + '?FromDate='+ object.fromDate + '&ToDate='+ object.toDate).toPromise();
+  }
+
+  getNowMonthlyExpiryPolicyMaster(): Promise<any> {
+    let endpoint = 'Dashboard/NowMontlyExpiryPolicy'
+    return this.http.get(this._baseUrl + endpoint).toPromise()
+  }
+
+  getNextMonthlyExpiryPolicyMaster(): Promise<any> {
+    let endpoint = 'Dashboard/NextMontlyExpiryPolicy'
+    return this.http.get(this._baseUrl + endpoint).toPromise()
   }
 
 }

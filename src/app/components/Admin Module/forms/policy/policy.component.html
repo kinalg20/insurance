@@ -84,7 +84,7 @@
                             <div class="invalid-feedback"> Village is Required </div>
                         </div>
                         <div class="col-lg-4 col-md-12 form-group">
-                            <label for="doc">pinCode<span class="star_class">*</span></label>
+                            <label for="doc">Pincode<span class="star_class">*</span></label>
                             <input type="text" class="form-control"
                                 formControlName="pinCode" pKeyFilter="int"
                                 maxlength="6" placeholder="Enter pinCode"
@@ -142,11 +142,29 @@
                                 policyMaster.get('policyExpiryDate')?.touched" required></p-calendar>
                                 <div class="invalid-feedback"> Policy Expiry Date is Required </div>
                             </div>
-                            <div class="col-lg-4 col-md-12 form-group">
+                            <div class="col-lg-4 col-md-12 form-group"
+                                    *ngIf="policyMaster.get('policyUpload').value && !displayPolicyDoc">
+                                    <label for="">Policy Document</label>
+                                    <label><a [href]="policyMaster.get('policyUpload').value"
+                                            target="_blank"
+                                            [download]="policyMaster.get('policyUpload').value">Preview</a><span
+                                            (click)="displayPolicyDoc =! displayPolicyDoc" style="cursor:
+                                            pointer;">&nbsp; x</span></label>
+                                </div>
+                                <div class="col-lg-4 col-md-12 form-group"
+                                    *ngIf="displayPolicyDoc || policyMaster.get('policyUpload').value == ''">
+                                    <label for="">Policy Document</label>
+                                    <input class="form-control" type="file"
+                                        #policyDoc [class.is-invalid]="(policy.submitted && policyMaster.get('policyUpload')?.invalid) || (policyMaster.get('policyUpload').touched && policyMaster.get('policyUpload')?.invalid)"
+                                        (change)="uploadedFile($event , 'policy')"
+                                        accept="image/jpeg,image/gif,image/png,application/pdf"
+                                        autocomplete="off" required />
+                                    <div class="invalid-feedback"> document is Required </div>
+                                </div>
+                            <!-- <div class="col-lg-4 col-md-12 form-group">
                                 <label for="status">Policy Document<span class="star_class">*</span></label>
                                 <input type="file" class="form-control" (change)="uploadedFile($event , 'policy')" [class.is-invalid]="(policy.submitted && policyMaster.get('policyUpload')?.invalid) || (policyMaster.get('policyUpload').touched && policyMaster.get('policyUpload')?.invalid)" required>
-                                <div class="invalid-feedback"> document is Required </div>
-                            </div>
+                            </div> -->
                             <div class="col-lg-4 col-md-12 form-group">
                                 <label for="status">Old Policy Document<span class="star_class">*</span></label>
                                 <input type="file" class="form-control" (change)="uploadedFile($event , 'oldpolicy')" [class.is-invalid]="(policy.submitted && policyMaster.get('oldpolicyUpload')?.invalid) || (policyMaster.get('oldpolicyUpload').touched && policyMaster.get('oldpolicyUpload')?.invalid)" required>
@@ -301,7 +319,7 @@
                     <th style="min-width: 180px;">Customer Name</th>
                     <th style="min-width: 180px;">Customer Father Name</th>
                     <th style="min-width: 180px;">Address</th>
-                    <th style="min-width: 180px;">pinCode</th>
+                    <th style="min-width: 180px;">pincode</th>
                     <th style="min-width: 180px;">Village</th>
                     <th style="min-width: 180px;">Insurance Type</th>
                     <th style="min-width: 180px;">Vehicle Type</th>

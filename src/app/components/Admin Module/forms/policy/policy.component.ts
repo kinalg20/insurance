@@ -22,6 +22,7 @@ export class PolicyComponent implements OnInit {
 
   policyMasterTable: any = [];
   myDate: any;
+  displayPolicyDoc : boolean = false;
   msgs: Message[] = [];
   submitButton: string = 'Submit'
   displayPolicy: boolean = false;

@@ -47,6 +47,7 @@ import { CommisionComponent } from './components/Admin Module/forms/commision/co
 import { HomeComponent } from './components/website/home/home.component';
 import { PolicyDashboardComponent } from './components/Admin Module/forms/policy-dashboard/policy-dashboard.component';
 import { StatsComponent } from './components/commonModule/dashboard/stats/stats.component';
+import { PolicyDetailTableComponent } from './components/Admin Module/forms/policy-detail-table/policy-detail-table.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { StatsComponent } from './components/commonModule/dashboard/stats/stats.
     CommisionComponent,
     HomeComponent,
     PolicyDashboardComponent,
-    StatsComponent
+    StatsComponent,
+    PolicyDetailTableComponent
   ],
   imports: [
     BrowserModule,
