@@ -50,13 +50,6 @@ export class PolicyDetailTableComponent implements OnInit {
       }
     })
 
-    this._apiService.getDateWiseExpiryPolicyMaster(id.agentId).then((res: any) => {
-      console.log(res);
-      if (res.success) {
-        this.dateWiseFilterPolicy = res.returnValue;
-      }
-    })
-
     this._apiService.getNextMonthlyExpiryPolicyMaster().then((res: any) => {
       if (res.success) {
         this.nextMonthExpiryPolicy = res.returnValue;

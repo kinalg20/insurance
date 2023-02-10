@@ -45,8 +45,7 @@
                         <label for="status">Customer Name<span
                                 class="star_class">*</span></label>
                         <input type="text" class="form-control"
-                            formControlName="customerName" placeholder="Enter
-                            Customer Name" [class.is-invalid]="(policy.submitted
+                            formControlName="customerName" placeholder="Enter Customer Name" [class.is-invalid]="(policy.submitted
                             && policyMaster.get('customerName')?.invalid) ||
                             (policyMaster.get('customerName').touched &&
                             policyMaster.get('customerName')?.invalid)"
@@ -58,8 +57,7 @@
                         <label for="status">Customer Father Name<span
                                 class="star_class">*</span></label>
                         <input type="text" class="form-control"
-                            formControlName="customerFName" placeholder="Enter
-                            Customer Father Name"
+                            formControlName="customerFName" placeholder="Enter Customer Father Name"
                             [class.is-invalid]="(policy.submitted &&
                             policyMaster.get('customerFName')?.invalid) ||
                             (policyMaster.get('customerFName').touched &&
@@ -281,7 +279,7 @@
                         this.policyDocument['oldpolicyUpload'] == ''">
                         <label for="">Old Policy Document</label>
                         <input class="form-control" type="file"
-                            #policyDoc [class.is-invalid]="(policy.submitted &&
+                            #oldpolicyDoc [class.is-invalid]="(policy.submitted &&
                             policyMaster.get('oldpolicyUpload')?.invalid) ||
                             (policyMaster.get('oldpolicyUpload').touched &&
                             policyMaster.get('oldpolicyUpload')?.invalid)"

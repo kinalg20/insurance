@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ConfirmationService, Message, PrimeNGConfig } from 'primeng/api';
 import { AppUtility } from 'src/app/interceptor/apputitlity';
@@ -12,7 +12,11 @@ import { ApiService } from 'src/app/Services/api.service';
 })
 
 export class PolicyComponent implements OnInit {
-  @ViewChild('policy') PolicyForm : any;
+  @ViewChild('policy') PolicyForm : NgForm;
+  @ViewChild('policyDoc') PolicyDoc : ElementRef;
+  @ViewChild('oldpolicyDoc') OldPolicyDoc : ElementRef;
+  @ViewChild('rcUpload') rcUpload : ElementRef;
+  @ViewChild('documentUpload') documentUpload : ElementRef;
   tax_dropdown: any = [];
   agent_dropdown: any = [];
   city_dropdown: any = [];
@@ -108,6 +112,10 @@ export class PolicyComponent implements OnInit {
             this._apiservice.showMessage(res.message, 'success');
             this.getAllTableData();
             this.policyMaster.reset();
+            this.PolicyDoc.nativeElement.value = null;
+            this.OldPolicyDoc.nativeElement.value = null;
+            this.rcUpload.nativeElement.value = null;
+            this.documentUpload.nativeElement.value = null;
             Object.keys(this.policyMaster.controls).forEach(key => {
               this.policyMaster.controls[key].setErrors(null)
             });
@@ -134,6 +142,10 @@ export class PolicyComponent implements OnInit {
             Object.keys(this.policyMaster.controls).forEach(key => {
               this.policyMaster.controls[key].setErrors(null)
             });
+            this.PolicyDoc.nativeElement.value = null;
+            this.OldPolicyDoc.nativeElement.value = null;
+            this.rcUpload.nativeElement.value = null;
+            this.documentUpload.nativeElement.value = null;
             policyMaster.resetForm();
             this.submitButton = 'Submit'
           }
@@ -354,6 +366,15 @@ export class PolicyComponent implements OnInit {
     Object.keys(this.policyMaster.controls).forEach(key => {
       this.policyMaster.controls[key].setValue('');
     });
+    // this.PolicyDoc.nativeElement.value = null;
+    // this.OldPolicyDoc.nativeElement.value = null;
+    // this.rcUpload.nativeElement.value = null;
+    // this.documentUpload.nativeElement.value = null;
+    this.policyDocument = {};
+    this.displayDoc = false;
+    this.displayOldPolicyDoc = false;
+    this.displayRcUploadDoc = false;
+    this.displayRcUploadDoc = false;
     this.header = 'Add Policy';
     this.submitButton = 'Submit';
     this.displayPolicy = true;

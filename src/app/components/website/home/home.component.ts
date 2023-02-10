@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
   buttonvalue: string = 'Get OTP'
 
   products: any = [
-    { image: 'assets/img/images/img1.jpeg' },
+    { image: 'assets/img/images/banner.jpg' },
     { image: 'assets/img/images/img2.jpeg' },
     { image: 'assets/img/images/img3.jpeg' },
     { image: 'assets/img/images/img4.jpeg' },
