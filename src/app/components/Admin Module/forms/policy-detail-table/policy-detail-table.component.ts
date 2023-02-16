@@ -14,9 +14,9 @@ export class PolicyDetailTableComponent implements OnInit {
   filterval4: string = '';
   filterval3: string = '';
   dateFilterVal: Date[] | any;
-  dateFilterVal1: Date[] | any;
+  // dateFilterVal1: Date[] | any;
   @ViewChild('calendar1') private calendar1: any;
-  @ViewChild('calendar2') private calendar2: any;
+  typeOfFilter : any = 1;
   filterval5: string;
   constructor(private _apiService: ApiService, private utility: AppUtility) { }
 
@@ -34,10 +34,7 @@ export class PolicyDetailTableComponent implements OnInit {
 
   policyData: any = [];
   @ViewChild('dt3') FilteredData2: Table;
-  @ViewChild('dt4') FilteredData3: Table;
   @ViewChild('dt5') FilteredData4: Table;
-  todayExpiryPolicy: any = [];
-  nowMonthExpiryPolicy: any = [];
   nextMonthExpiryPolicy: any = [];
   dateWiseFilterPolicy : any = [];
   totalPolicy : any = [];
@@ -75,33 +72,23 @@ export class PolicyDetailTableComponent implements OnInit {
           fromDate : this.utility.dateFormat(this.dateFilterVal[0]),
           toDate :this.utility.dateFormat( this.dateFilterVal[1])
         }
-        this._apiService.getDateWiseExpiryPolicyMaster(object).then((res:any)=>{
-          this.dateWiseFilterPolicy = [];
-          console.log(res);
-          if(res.success){
-            this.dateWiseFilterPolicy = res.returnValue;
-          }
-        })
-      }
-    }
 
-    else if (string == 'calendar2') {
-      if (this.dateFilterVal1[0] != null && this.dateFilterVal1[1] != null) {
-        this.calendar2.overlayVisible = false;
-        let object = {
-          fromDate : this.utility.dateFormat(this.dateFilterVal1[0]),
-          toDate : this.utility.dateFormat(this.dateFilterVal1[1])
+        if(this.typeOfFilter == '2'){
+          this._apiService.getDateWiseExpiryPolicyMaster(object).then((res:any)=>{
+            if(res.success){
+              this.dateWiseFilterPolicy = res.returnValue;
+            }
+          })
         }
-  
-        this._apiService.getAllPolicies(object).then((res:any)=>{
-          this.dateWiseFilterPolicy = [];
-          console.log(res);
-          if(res.success){
-            this.totalPolicy = res.returnValue;
-          }
-        })
+        
+        else{
+          this._apiService.getDateWisePolicy(object).then((res:any)=>{
+            if(res.success){
+              this.dateWiseFilterPolicy = res.returnValue;
+            }
+          })
+        }
       }
-
     }
   }
 
@@ -110,9 +97,6 @@ export class PolicyDetailTableComponent implements OnInit {
     console.log(dt);
     if (string == 'dt3') {
       this.filterval3 = '';
-    }
-    else if (string == 'dt4') {
-      this.filterval4 = '';
     }
     else if (string == 'dt5') {
       this.filterval5 = '';
@@ -124,13 +108,7 @@ export class PolicyDetailTableComponent implements OnInit {
 
   getDropdownValue(event) {
     console.log(event.target.value);
-
-    if (event.target.value == 1) {
-      let object: any = {};
-      this._apiService.getDashboardMaster().then((res: any) => {
-        console.log(res);
-      })
-    }
+    this.dateFilterVal = [];
   }
 
 }

@@ -43,7 +43,7 @@
                                 (input)="dt3.filterGlobal($event.target.value,'contains')"
                                 placeholder="Global Search" [(ngModel)]="filterval3"
                                 />
-                            <p-button type="button" style="margin-left: 5px;"
+                            <p-button type="button"
                                 (click)="reset(dt3 , 'dt3')"
                                 icon="bx bx-reset"></p-button>
                         </span>
@@ -93,21 +93,27 @@
         <ng-template pTemplate="caption">
             <div class="row" style="align-items: center;">
                 <div class="col-lg-4">
+                    <select name="" id=""  [(ngModel)]="typeOfFilter" (change)="getDropdownValue($event)" class="form-control form-select">
+                        <option value="1">Date Wise Policy</option>
+                        <option value="2">Date Wise Expiry Policy</option>
+                    </select>
+                </div>
+                <div class="col-lg-4 col-md-6">
                     <p-calendar appendTo="body" class="ml-2"
                         dateFormat="dd-mm-yy" selectionMode="range"
-                        placeholder="Bill Date" #calendar2  [showIcon]="true"
-                        [(ngModel)]="dateFilterVal1"
-                        (onSelect)="searchFilter($event , 'calendar2')">
+                        placeholder="Bill Date" #calendar1  [showIcon]="true"
+                        [(ngModel)]="dateFilterVal" [readonlyInput]="true"
+                        (onSelect)="searchFilter($event , 'calendar1')">
                     </p-calendar>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-6">
                     <span class="p-input-icon-left d-flex align-items-center">
                         <i class="pi pi-search"></i>
                         <input pInputText type="text" style="height: 35px;"
                             (input)="dt5.filterGlobal($event.target.value,'contains')"
                             placeholder="Global Search" [(ngModel)]="filterval4"
                             />
-                        <p-button type="button" style="margin-left: 5px;"
+                        <p-button type="button"
                             (click)="reset(dt5 , 'dt5')"
                             icon="bx bx-reset"></p-button>
                     </span>

@@ -206,7 +206,7 @@ export class ApiService {
     return this.http.get(this._baseUrl + endpoint).toPromise();
   }
 
-  getAllPolicies(object): Promise<any> {
+  getDateWisePolicy(object): Promise<any> {
     let endpoint = 'Dashboard/dateWisePolicy'
     return this.http.get(this._baseUrl + endpoint+ '?FromDate='+ object.fromDate + '&ToDate='+ object.toDate).toPromise()
   }

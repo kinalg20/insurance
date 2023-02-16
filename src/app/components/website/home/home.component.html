@@ -15,10 +15,20 @@
                 <li><a class="nav-link scrollto" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#loginRegisterModal">Login</a></li>
             </ul>
             <!-- <div clas></div> -->
-            <i (click)="openMenu()" class="bi bi-list mobile-nav-toggle"></i>
+            <i (click)="openMenu()" class="bx bx-menu mobile-nav-toggle"></i>
         </nav>
     </div>
 </header>
+
+<div class="menu-list" *ngIf="displayMenu">
+  <ul class="menu-card">
+    <li><a class="nav-link scrollto" style="cursor: pointer; font-weight: 600; font-size: 16px; padding: 3px 1.5rem;" (click)="scroll(insurance)">Insurance</a></li>
+    <li><a class="nav-link scrollto" style="cursor: pointer; font-weight: 600; font-size: 16px; padding: 3px 1.5rem;" (click)="scroll(Specifications)">Specifications</a></li>
+    <li><a class="nav-link scrollto" style="cursor: pointer; font-weight: 600; font-size: 16px; padding: 3px 1.5rem;" (click)="scroll(partners)">Partners</a></li>
+    <li><a class="nav-link scrollto" style="cursor: pointer; font-weight: 600; font-size: 16px; padding: 3px 1.5rem;" (click)="scroll(contact)">Contact</a></li>
+    <li><a class="nav-link scrollto" style="cursor: pointer; font-weight: 600; font-size: 16px; padding: 3px 1.5rem;" data-bs-toggle="modal" data-bs-target="#loginRegisterModal">Login</a></li>
+  </ul>
+</div>
 
 <div class="modal fade loginRegisterModal" id="loginRegisterModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

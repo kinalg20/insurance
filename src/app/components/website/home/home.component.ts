@@ -161,9 +161,11 @@ export class HomeComponent implements OnInit {
 
   scroll(el: HTMLElement) {
     el.scrollIntoView({ behavior: 'smooth' });
+    this.displayMenu = false;
   }
 
+  displayMenu : boolean = false;
   openMenu() {
-    
+    this.displayMenu = !this.displayMenu
   }
 }
