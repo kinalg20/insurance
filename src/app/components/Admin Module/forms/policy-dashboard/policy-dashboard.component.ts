@@ -15,10 +15,12 @@ export class PolicyDashboardComponent implements OnInit {
   dateFilterVal: Date[] | any;
   dateFilterVal1: Date[] | any;
   filterval5: string;
-  constructor(private _apiService: ApiService, private utility: AppUtility) { }
+  constructor(private _apiService: ApiService, private _utility: AppUtility) { }
 
   ngOnInit(): void {
-    this.getAllPolicy()
+    this.getAllPolicy();
+    let userName = this._utility.getLocalStorageDetails().userName;
+    this.breadcrumb[0].title = 'Hello ' + userName;
   }
 
   breadcrumb = [
@@ -36,17 +38,27 @@ export class PolicyDashboardComponent implements OnInit {
   todayExpiryPolicy: any = [];
   nowMonthExpiryPolicy: any = [];
   getAllPolicy() {
-    let id = this.utility.getLocalStorageDetails();
+    this._utility.loader(true);
+    // let id = this._utility.getLocalStorageDetails();
     this._apiService.getNowMonthlyExpiryPolicyMaster().then((res: any) => {
       console.log(res);
       if (res.success) {
         this.nowMonthExpiryPolicy = res.returnValue;
+        console.log(this.nowMonthExpiryPolicy);     
+        this._utility.loader(false);
+      }
+      else{
+        this._utility.loader(false);
       }
     })
 
     this._apiService.getTodayExpiryPolicyMaster().then((res: any) => {
       if (res.success) {
         this.todayExpiryPolicy = res.returnValue;
+        this._utility.loader(false);
+      }
+      else{
+        this._utility.loader(false);
       }
     })
   }
@@ -60,7 +72,6 @@ export class PolicyDashboardComponent implements OnInit {
   }
   reset(dt, string: any) {
     dt.reset();
-    console.log(dt);
     if (string == 'dt1') {
       this.filterval1 = '';
     }
@@ -73,12 +84,23 @@ export class PolicyDashboardComponent implements OnInit {
 
 
   getDropdownValue(event) {
-    console.log(event.target.value);
-
     if (event.target.value == 1) {
-      let object: any = {};
       this._apiService.getDashboardMaster().then((res: any) => {
         console.log(res);
+      })
+    }
+  }
+
+  exportExcel(string){
+    if(string == 'todayExpiry'){
+      this._apiService.getTodayExpiryPolicyReport().then((res:any)=>{
+        this._utility.downloadFile(res,'TodayExpiry');
+      })
+    }
+    
+    else{
+      this._apiService.getNowMonthlyExpiryPolicyReport().then((res:any)=>{
+        this._utility.downloadFile(res,'MonthlyExpiry');
       })
     }
   }

@@ -29,10 +29,10 @@
                     <span class="p-input-icon-left d-flex align-items-center">
                         <i class="pi pi-search"></i>
                         <input pInputText type="text" style="height: 35px;"
-                            (input)="dt.filterGlobal($event.target.value,'contains')"
+                            (input)="dt2.filterGlobal($event.target.value,'contains')"
                             placeholder="Global Search" [(ngModel)]="filterval"
                             />
-                        <p-button type="button" class="mx-2" (click)="reset(dt)"
+                        <p-button type="button" class="mx-2" (click)="reset(dt2)"
                             icon="bx bx-reset"></p-button>
                     </span>
                     <div class="add-listings-btn">

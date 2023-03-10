@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ConfirmationService, Message, PrimeNGConfig } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { AppUtility } from 'src/app/interceptor/apputitlity';
 import { ApiService } from 'src/app/Services/api.service';
 
@@ -17,6 +18,8 @@ export class PolicyComponent implements OnInit {
   @ViewChild('oldpolicyDoc') OldPolicyDoc : ElementRef;
   @ViewChild('rcUpload') rcUpload : ElementRef;
   @ViewChild('documentUpload') documentUpload : ElementRef;
+  @ViewChild ('dt2') FilteredData:Table;
+  
   tax_dropdown: any = [];
   agent_dropdown: any = [];
   city_dropdown: any = [];
@@ -71,7 +74,6 @@ export class PolicyComponent implements OnInit {
     commissionAmount: new FormControl('', [Validators.required]),
     stateId: new FormControl('', [Validators.required]),
     companyId: new FormControl('', [Validators.required]),
-    // commissionId: new FormControl(''),
     countryId: new FormControl('', [Validators.required]),
     policyUpload: new FormControl('', [Validators.required]),
     oldpolicyUpload: new FormControl('', [Validators.required]),
@@ -162,7 +164,7 @@ export class PolicyComponent implements OnInit {
   getAllTableData() {
     this._apiservice.getPolicyPMaster()
       .then((res: any) => {
-        console.log(res);
+
         this.policyMasterTable = res.returnValue;
       })
       .catch((error: any) => {
@@ -216,7 +218,8 @@ export class PolicyComponent implements OnInit {
     Object.keys(this.policyMaster.controls).forEach(key => {
       if(key != 'policyUpload' && key != 'oldpolicyUpload' && key != 'rcUpload' && key != 'documentUpload'){
         if (key == 'policyIssueDate' || key == 'policyExpiryDate') {
-          this.policyMaster.controls[key].setValue(this._utility.dateTimeChange(customer[key]));
+          console.log(customer[key]);
+          this.policyMaster.controls[key].setValue(this._utility.calendarDateFormat(customer[key]));
         }
   
         else {
@@ -253,26 +256,6 @@ export class PolicyComponent implements OnInit {
   }
 
 
-  // filterval: string;
-  // dateFilterVal: string;
-  // reset(dt2) {
-  //   dt2.reset();
-  //   this.filterval = '';
-  //   this.dateFilterVal = ''
-  // }
-
-
-  // header : string = 'Add Insurance';
-  // display : boolean = false;
-  // openModel(){
-  //   Object.keys(this.insuranceMaster.controls).forEach(key => {
-  //     this.insuranceMaster.controls[key].setValue('');
-  //   });
-  //   this.header = 'Add Insurance';
-  //   this.submitButton = 'Submit';
-  //   this.display = true;
-  // }
-
 
   policyDropdown: any = [];
   agentDropdown: any = [];
@@ -283,56 +266,47 @@ export class PolicyComponent implements OnInit {
   country_dropdown: any = [];
   getDropdowns() {
     this._apiservice.getPolicyMaster().then((res: any) => {
-      console.log(res);
       if (res.success) {
         this.policyDropdown = res.returnValue;
       }
     })
     this._apiservice.dropdowndata('agent').then((res: any) => {
-      console.log(res);
       if (res.success) {
         this.agentDropdown = res.returnValue;
       }
     })
     this._apiservice.getVallageMaster().then((res: any) => {
-      console.log(res);
       if (res.success) {
         this.vallageDropdown = res.returnValue;
       }
     })
     this._apiservice.getInsuranceMaster().then((res: any) => {
-      console.log(res);
       if (res.success) {
         this.insuranceDropdown = res.returnValue;
       }
     })
     this._apiservice.getVehicleTypeMaster().then((res: any) => {
-      console.log(res);
       if (res.success) {
         this.vehicleTypeDropdown = res.returnValue;
       }
     })
     this._apiservice.dropdowndata('state').then((res: any) => {
-      console.log(res);
       if (res.success) {
         this.state_dropdown = res.returnValue;
       }
     })
     this._apiservice.dropdowndata('country').then((res: any) => {
-      console.log(res);
       if (res.success) {
         this.country_dropdown = res.returnValue;
       }
     })
     this._apiservice.getCompanyMaster().then((res: any) => {
-      console.log(res);
       if (res.success) {
         this.companyDropdown = res.returnValue;
       }
     })
 
     this._apiservice.getCommissionMaster().then((res: any) => {
-      console.log(res);
       if (res.success) {
         this.commission_dropdown = res.returnValue;
       }
@@ -366,10 +340,6 @@ export class PolicyComponent implements OnInit {
     Object.keys(this.policyMaster.controls).forEach(key => {
       this.policyMaster.controls[key].setValue('');
     });
-    // this.PolicyDoc.nativeElement.value = null;
-    // this.OldPolicyDoc.nativeElement.value = null;
-    // this.rcUpload.nativeElement.value = null;
-    // this.documentUpload.nativeElement.value = null;
     this.policyDocument = {};
     this.displayDoc = false;
     this.displayOldPolicyDoc = false;
@@ -391,10 +361,6 @@ export class PolicyComponent implements OnInit {
   }
 
 
-  // policyUpload: new FormControl('', [Validators.required]),
-  // oldpolicyUpload: new FormControl('', [Validators.required]),
-  // rcUpload: new FormControl('', [Validators.required]),
-  // documentUpload: new FormControl('', [Validators.required]),
 
   showFile(string:any){
     if(string == 'policy'){
@@ -415,5 +381,35 @@ export class PolicyComponent implements OnInit {
       this.policyMaster.get('documentUpload').setValue('')
     }
   }
+
+  filterval: string;
+  dateFilterVal: string;
+  reset(dt2) {
+    dt2.reset();
+    this.filterval = '';
+    this.dateFilterVal = ''
+  }
+
+  searchFilter(event?: any) {
+    // debugger;
+    let date = this._utility.dateTimeChange(event);
+    this.FilteredData.filter(date, 'policyExpiryDate', 'contains');
+  }
+
+  exportExcel(){
+    this._apiservice.getDateWiseExpiryPolicyReport().then((res)=>{
+      this._utility.downloadFile(res,'expiry_policy');
+    })
+  }
+
+  showExpiryDate(){
+    let date = this.policyMaster.controls['policyIssueDate'].value;
+    const aYearFromNow = new Date(date);
+    aYearFromNow.setFullYear(aYearFromNow.getFullYear() + 1);
+    aYearFromNow.setDate(aYearFromNow.getDate() - 1);
+    this.policyMaster.controls['policyExpiryDate'].setValue(moment(aYearFromNow).format('DD/MM/yyyy'));
+    console.log(moment(aYearFromNow).format('DD/MM/yyyy'))
+  }
+
 
 }

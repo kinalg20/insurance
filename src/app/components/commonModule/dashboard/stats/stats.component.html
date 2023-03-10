@@ -1,41 +1,89 @@
-<div class="row">
-    <div class="col-lg-3 col-md-6 col-sm-6">
+<div class="row" *ngIf="string != 'nextMonth'">
+    <div class="col-lg-4 col-md-6 col-sm-6">
         <div class="stats-card-box">
-            <!-- <div class="icon-box">
-                <i class='bx bx-map-alt'></i>
-            </div> -->
-            <h4>10</h4>
-            <span class="sub-title">Active Listings</span>
+            <h4>{{counters[0]?.todayExpiryPolicy}}</h4>
+            <span class="sub-title">Today Expiry Policy</span>
         </div>
     </div>
 
-    <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="col-lg-4 col-md-6 col-sm-6">
         <div class="stats-card-box">
-            <!-- <div class="icon-box">
-                <i class='bx bx-line-chart'></i>
-            </div> -->
-            <h4>854</h4>
-            <span class="sub-title">Total Views</span>
+            <h4>{{counters[0]?.monthlyExpiryPolicy}}</h4>
+            <span class="sub-title">Monthly Expiry Policy</span>
         </div>
     </div>
 
-    <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="col-lg-4 col-md-6 col-sm-6">
         <div class="stats-card-box">
-            <!-- <div class="icon-box">
-                <i class='bx bx-star'></i>
-            </div> -->
-            <h4>99</h4>
-            <span class="sub-title">Total Reviews</span>
+            <h4>{{counters[0]?.todayPremiumAmount | currency : 'INR'}}</h4>
+            <span class="sub-title">Today Premium Amount</span>
         </div>
     </div>
 
-    <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="col-lg-4 col-md-6 col-sm-6">
         <div class="stats-card-box">
-            <!-- <div class="icon-box">
-                <i class='bx bx-heart'></i>
-            </div> -->
-            <h4>150</h4>
-            <span class="sub-title">Bookmarked</span>
+            <h4>{{counters[0]?.monthlyPremiumAmount | currency : 'INR'}}</h4>
+            <span class="sub-title">Monthly Premium Amount</span>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="stats-card-box">
+            <h4>{{counters[0]?.todayNetPremiumAmount | currency : 'INR'}}</h4>
+            <span class="sub-title">Today Net Premium Amount</span>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="stats-card-box">
+            <h4>{{counters[0]?.monthlyNetPremiumAmount | currency : 'INR'}}</h4>
+            <span class="sub-title">Monthly Net Premium Amount</span>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="stats-card-box">
+            <h4>{{counters[0]?.todayCommissionAmount | currency : 'INR'}}</h4>
+            <span class="sub-title">Today Commission Amount</span>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="stats-card-box">
+            <h4>{{counters[0]?.monthlyCommissionAmount | currency : 'INR'}}</h4>
+            <span class="sub-title">Monthly Commission Amount</span>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="string == 'nextMonth'">
+    
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="stats-card-box">
+            <h4>{{counters[0]?.yearlyCommissionAmount | currency : 'INR'}}</h4>
+            <span class="sub-title">Yearly Commission Amount</span>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="stats-card-box">
+            <h4>{{counters[0]?.yearlyExpiryPolicy}}</h4>
+            <span class="sub-title">Yearly Expiry Policy</span>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="stats-card-box">
+            <h4>{{counters[0]?.yearlyNetPremiumAmount | currency : 'INR'}}</h4>
+            <span class="sub-title">Yearly Net Premium Amount</span>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="stats-card-box">
+            <h4>{{counters[0]?.yearlyPolicy}}</h4>
+            <span class="sub-title">Yearly Policy</span>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="stats-card-box">
+            <h4>{{counters[0]?.yearlyPremiumAmount | currency : 'INR'}}</h4>
+            <span class="sub-title">Yearly Premium Amount</span>
         </div>
     </div>
 </div>

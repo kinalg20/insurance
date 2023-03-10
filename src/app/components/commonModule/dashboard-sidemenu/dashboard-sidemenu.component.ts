@@ -10,6 +10,7 @@ import { ApiService } from 'src/app/Services/api.service';
 export class DashboardSidemenuComponent implements OnInit {
 
   menuList : any = [];
+  roleName : string = '';
   constructor(private _apiService : ApiService , private _utility : AppUtility) { }
 
   ngOnInit(): void {
@@ -19,7 +20,8 @@ export class DashboardSidemenuComponent implements OnInit {
 
   getSideMenus(){
     let userObject = this._utility.getLocalStorageDetails();
-    console.log(userObject?.userId);    
+    console.log(userObject?.userId); 
+    this.roleName = userObject?.roleName;
     // this._apiService.getMenuSubMenu(userObject.userId).then((res:any)=>{
     //   console.log(res);  
     //   this.menuList = res.returnValue;    

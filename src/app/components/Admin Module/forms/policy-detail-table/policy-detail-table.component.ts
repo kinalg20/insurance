@@ -11,17 +11,16 @@ import { ApiService } from 'src/app/Services/api.service';
 
 
 export class PolicyDetailTableComponent implements OnInit {
-  filterval4: string = '';
-  filterval3: string = '';
+  filterval2: string = '';
+  filterval1: string = '';
   dateFilterVal: Date[] | any;
   // dateFilterVal1: Date[] | any;
   @ViewChild('calendar1') private calendar1: any;
   typeOfFilter : any = 1;
-  filterval5: string;
   constructor(private _apiService: ApiService, private utility: AppUtility) { }
 
   ngOnInit(): void {
-    this.getAllPolicy()
+    this.getAllPolicy();
   }
 
   breadcrumb = [
@@ -36,22 +35,37 @@ export class PolicyDetailTableComponent implements OnInit {
   @ViewChild('dt3') FilteredData2: Table;
   @ViewChild('dt5') FilteredData4: Table;
   nextMonthExpiryPolicy: any = [];
-  dateWiseFilterPolicy : any = [];
   totalPolicy : any = [];
-  getAllPolicy() {
+  getAllPolicy(string?:any) {
+    // debugger;
     let id = this.utility.getLocalStorageDetails();
-    this._apiService.getPolicyByIdMaster(id.agentId).then((res: any) => {
-      console.log(res);
-      if (res.success) {
-        this.policyData = res.returnValue;
-      }
-    })
+    if(!string){
+      string = '';
+    }
 
-    this._apiService.getNextMonthlyExpiryPolicyMaster().then((res: any) => {
-      if (res.success) {
-        this.nextMonthExpiryPolicy = res.returnValue;
-      }
-    })
+    if(string == '' || string == 'dt5'){
+      this._apiService.getPolicyByIdMaster(id.agentId).then((res: any) => {
+        console.log(res);
+        if (res.success) {
+          this.policyData = res.returnValue;
+        }
+        else{
+          this.policyData = [];
+        }
+      })
+    }
+    if(string == '' || string == 'dt3'){
+      this._apiService.getNextMonthlyExpiryPolicyMaster().then((res: any) => {
+        if (res.success) {
+          this.nextMonthExpiryPolicy = res.returnValue;
+        }
+        else{
+          this.nextMonthExpiryPolicy = [];
+        }
+      })
+    }
+
+    
   }
 
   CustomerData: any = {};
@@ -65,18 +79,22 @@ export class PolicyDetailTableComponent implements OnInit {
 
   searchFilter(event: any, string?: any) {
     console.log(this.dateFilterVal);
+    // debugger;
     if (string == 'calendar1') {
       if (this.dateFilterVal[0] != null && this.dateFilterVal[1] != null) {
         this.calendar1.overlayVisible = false;
         let object = {
-          fromDate : this.utility.dateFormat(this.dateFilterVal[0]),
-          toDate :this.utility.dateFormat( this.dateFilterVal[1])
+          fromDate : this.utility.dateTimeChange(this.dateFilterVal[0]),
+          toDate :this.utility.dateTimeChange( this.dateFilterVal[1])
         }
 
         if(this.typeOfFilter == '2'){
           this._apiService.getDateWiseExpiryPolicyMaster(object).then((res:any)=>{
             if(res.success){
-              this.dateWiseFilterPolicy = res.returnValue;
+              this.policyData = res.returnValue;
+            }
+            else{
+              this.policyData = [];
             }
           })
         }
@@ -84,7 +102,10 @@ export class PolicyDetailTableComponent implements OnInit {
         else{
           this._apiService.getDateWisePolicy(object).then((res:any)=>{
             if(res.success){
-              this.dateWiseFilterPolicy = res.returnValue;
+              this.policyData = res.returnValue;
+            }
+            else{
+              this.policyData = [];
             }
           })
         }
@@ -96,19 +117,19 @@ export class PolicyDetailTableComponent implements OnInit {
     dt.reset();
     console.log(dt);
     if (string == 'dt3') {
-      this.filterval3 = '';
+      this.filterval1 = '';
+      this.getAllPolicy('dt3');
     }
     else if (string == 'dt5') {
-      this.filterval5 = '';
+      this.filterval2 = '';
+      this.getAllPolicy('dt5');
     }
     this.dateFilterVal = ''
   }
-
-
-
-  getDropdownValue(event) {
-    console.log(event.target.value);
-    this.dateFilterVal = [];
+  exportExcel(){
+    this._apiService.getNextMonthlyExpiryPolicyReport().then((res:any)=>{
+      this.utility.downloadFile(res, 'NextMonthExpiryReport');
+    })
   }
 
 }

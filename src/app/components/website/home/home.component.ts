@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { AppUtility } from 'src/app/interceptor/apputitlity';
 import { ApiService } from 'src/app/Services/api.service';
 
 @Component({
@@ -12,7 +13,7 @@ import { ApiService } from 'src/app/Services/api.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private _apiService: ApiService, private fb: FormBuilder, private router: Router, private messageService: MessageService) { }
+  constructor(private _apiService: ApiService, private fb: FormBuilder, private router: Router, private messageService: MessageService , private _utility : AppUtility) { }
 
   loginForm = this.fb.group({
     loginName: new FormControl('', [Validators.required]),
@@ -80,13 +81,16 @@ export class HomeComponent implements OnInit {
       }
       this._apiService.userAgentLogin(object).then((res: any) => {
         console.log(res);
-        if (res?.returnValue) {
+        if (res?.success) {
           localStorage.setItem('UserObject', JSON.stringify(res.returnValue));
           this.loginForm.reset();
           Object.keys(this.loginForm.controls).forEach(key => {
             this.loginForm.controls[key].setErrors(null)
           });
-          this.router.navigateByUrl('/dashboard-my-profile');
+          // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          // this.router.onSameUrlNavigation = 'reload';
+          // this.router.navigate(['/dashboard-my-profile']);
+          window.location.href = '/dashboard';
         }
         else {
           // this._apiService.showMessage('error', 'Please Fill Correct Value!')
@@ -98,16 +102,18 @@ export class HomeComponent implements OnInit {
       this.messageService.add({ severity: 'error', summary: 'error', detail: 'Please Fill All the Details!' });
     }
   }
-  loginForAgent() {
+
+  async loginForAgent() {
     if (this.buttonvalue == "Get OTP") {
       if (this.userFormControl.valid) {
+        this._utility.loader(true);
         let signInObject = {
           loginName: this.userFormControl.value.emailAddress
         }
         this._apiService.GetOTP(signInObject)
           .then((res: any) => {
             console.log(res);
-            // this._utility.loader(false);
+            this._utility.loader(false);
             if (res.success == false) {
               window.scroll(0, 0);
               this.errorMessage = res.message
@@ -124,13 +130,15 @@ export class HomeComponent implements OnInit {
     }
     else {
       if (this.userFormControl.valid) {
+        this._utility.loader(true);
         let signInObject = {
           loginName: this.userFormControl.value.emailAddress,
           OTP: this.userFormControl.value.OTP
         }
-        this._apiService.userLogin(signInObject)
+        await this._apiService.userLogin(signInObject)
           .then((res: any) => {
             console.log(res);
+            this._utility.loader(false);
             if (res.success == false) {
               window.scroll(0, 0);
               this.errorMessage = res.message
@@ -151,7 +159,11 @@ export class HomeComponent implements OnInit {
               Object.keys(this.userFormControl.controls).forEach(key => {
                 this.userFormControl.controls[key].setErrors(null)
               });
-              this.router.navigateByUrl('/dashboard-my-profile');
+              // debugger;
+              // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+              // this.router.onSameUrlNavigation = 'reload';
+              // this.router.navigate(['/dashboard-my-profile']);
+              window.location.href = '/dashboard'; 
             }
           })
       }

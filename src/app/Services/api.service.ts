@@ -206,14 +206,35 @@ export class ApiService {
     return this.http.get(this._baseUrl + endpoint).toPromise();
   }
 
+  getTodayExpiryPolicyReport(object?:any): Promise<any> {
+    let endpoint = 'Report/TodayExpiryPolicy'
+    return this.http.get(this._baseUrl + endpoint , {responseType : 'blob'}).toPromise();
+  }
+
   getDateWisePolicy(object): Promise<any> {
     let endpoint = 'Dashboard/dateWisePolicy'
     return this.http.get(this._baseUrl + endpoint+ '?FromDate='+ object.fromDate + '&ToDate='+ object.toDate).toPromise()
+  }
+  getDateWisePolicyReport(object): Promise<any> {
+    let endpoint = 'Report/dateWisePolicy'
+    if (object) {
+      var queryStrings = new HttpParams({ fromObject: object }).toString();
+      endpoint = `${endpoint}?${queryStrings}`;
+    }
+    return this.http.get(this._baseUrl + endpoint, {responseType : 'blob'}).toPromise()
   }
 
   getDateWiseExpiryPolicyMaster(object:any): Promise<any> {
     let endpoint = 'Dashboard/dateWiseExpiryPolicy'
     return this.http.get(this._baseUrl + endpoint + '?FromDate='+ object.fromDate + '&ToDate='+ object.toDate).toPromise();
+  }
+  getDateWiseExpiryPolicyReport(object?:any): Promise<any> {
+    let endpoint = 'Report/dateWiseExpiryPolicy'
+    if (object) {
+      var queryStrings = new HttpParams({ fromObject: object }).toString();
+      endpoint = `${endpoint}?${queryStrings}`;
+    }
+    return this.http.get(this._baseUrl + endpoint, {responseType : 'blob'}).toPromise()
   }
 
   getNowMonthlyExpiryPolicyMaster(): Promise<any> {
@@ -221,9 +242,31 @@ export class ApiService {
     return this.http.get(this._baseUrl + endpoint).toPromise()
   }
 
+  getNowMonthlyExpiryPolicyReport(object?:any): Promise<any> {
+    let endpoint = 'Report/NowMontlyExpiryPolicy'
+    if (object) {
+      var queryStrings = new HttpParams({ fromObject: object }).toString();
+      endpoint = `${endpoint}?${queryStrings}`;
+    }
+    return this.http.get(this._baseUrl + endpoint, {responseType : 'blob'}).toPromise();
+  }
+
   getNextMonthlyExpiryPolicyMaster(): Promise<any> {
     let endpoint = 'Dashboard/NextMontlyExpiryPolicy'
     return this.http.get(this._baseUrl + endpoint).toPromise()
+  }
+
+  getNextMonthlyExpiryPolicyReport(object?:any): Promise<any> {
+    let endpoint = 'Report/NextMontlyExpiryPolicy'
+    if (object) {
+      var queryStrings = new HttpParams({ fromObject: object }).toString();
+      endpoint = `${endpoint}?${queryStrings}`;
+    }
+    return this.http.get(this._baseUrl + endpoint, {responseType : 'blob'}).toPromise()
+  }
+
+  counters():Promise<any>{
+    return this.http.get(this._baseUrl + 'Counter/Insurance').toPromise();
   }
 
 }

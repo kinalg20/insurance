@@ -11,7 +11,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/Auth/login/login.component';
 // import { AuthGuardGuard } from './AuthGuards/auth-guard.guard';
 import {InputNumberModule} from 'primeng/inputnumber';
 import { ApiService } from './Services/api.service';
@@ -49,6 +48,7 @@ import { HomeComponent } from './components/website/home/home.component';
 import { PolicyDashboardComponent } from './components/Admin Module/forms/policy-dashboard/policy-dashboard.component';
 import { StatsComponent } from './components/commonModule/dashboard/stats/stats.component';
 import { PolicyDetailTableComponent } from './components/Admin Module/forms/policy-detail-table/policy-detail-table.component';
+import { ReportsComponent } from './components/Admin Module/reports/reports.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +59,6 @@ import { PolicyDetailTableComponent } from './components/Admin Module/forms/poli
     FooterStyleTwoComponent,
     DashboardSidemenuComponent,
     DashboardNavbarComponent,
-    LoginComponent,
     CopyrightsComponent,
     DashboardMyProfileComponent,
     AgentComponent,
@@ -73,7 +72,8 @@ import { PolicyDetailTableComponent } from './components/Admin Module/forms/poli
     HomeComponent,
     PolicyDashboardComponent,
     StatsComponent,
-    PolicyDetailTableComponent
+    PolicyDetailTableComponent,
+    ReportsComponent
   ],
   imports: [
     BrowserModule,

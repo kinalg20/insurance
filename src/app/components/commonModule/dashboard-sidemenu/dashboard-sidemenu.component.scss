@@ -423,15 +423,11 @@
     }
 
 }
-/* Min width 1200px to Max width 1355px */
-@media only screen and (min-width: 1200px) and (max-width: 1355px) {
 
 
 
-}
-/* Min width 1550px */
-@media only screen and (min-width: 1550px) {
-
-    
-
+.sidemenu-header{
+    img{
+        width: 40%;
+    }
 }

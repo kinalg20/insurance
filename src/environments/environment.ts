@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  // api_baseUrl : 'http://103.71.99.30:8130/api/',
   api_baseUrl : 'http://103.155.84.143:9091/api/',
   production: false
 };
@@ -15,4 +16,3 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
-  

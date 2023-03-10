@@ -18,9 +18,11 @@ export class AuthGuardGuard implements CanActivate {
     let roles = route.data.route as Array<string>;
     if(this.loginAuth){  
       this.authorizedflag = false;
-      console.log(roles)
+      if(this.loginAuth.roleName == ""){
+        this.loginAuth.roleName = "Agent"
+      }
       for(var i = 0; i< roles?.length; i++){
-        if( roles[i].toString() == this.loginAuth.userId){
+        if( roles[i].toString() == this.loginAuth.roleName){
           this.authorizedflag = true;
         }    
       }
@@ -36,7 +38,5 @@ export class AuthGuardGuard implements CanActivate {
       localStorage.removeItem('UserObject');  
       this.router.navigateByUrl('');
     }
-    // return false;
-  }
-  
+  }  
 }

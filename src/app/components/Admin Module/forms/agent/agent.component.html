@@ -17,13 +17,13 @@
     <!-- End Breadcrumb Area -->
 
     <div class="card item-master">
-        <p-table #dt2 [value]="itemMasterTable" [scrollable]="true" dataKey="id"
-            [rows]="10" [scrollable]="true" [showCurrentPageReport]="true"
+        <p-table #dt2 [value]="itemMasterTable" dataKey="id"
+            [rows]="10" [showCurrentPageReport]="true"
             [rowsPerPageOptions]="[10,20,30,50]"
             [paginator]="true" currentPageReportTemplate="Showing {first} to
             {last} of {totalRecords} entries"
             [globalFilterFields]="['agentName','agentFName' , 'agentMobileNo' ,
-            'agentAddress' , 'agentType', 'stateId', 'aadharcard', 'panCard',
+            'agentAddress' , 'agentType', 'stateId', 'aadharcard', 'panCard','agentPinCode','emailAddress',
             'qualification']">
             <ng-template pTemplate="caption">
                 <div class="d-flex" style="justify-content: space-between;
@@ -46,6 +46,7 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th style="min-width: 20px;">S.No.</th>
+                    <th>Action</th>
                     <th style="min-width: 180px;">Agent Name</th>
                     <th style="min-width: 180px;">Father Name</th>
                     <th style="min-width: 180px;">Mobile Number</th>
@@ -57,12 +58,18 @@
                     <th style="min-width: 180px;">Aadhar Number</th>
                     <th>PAN</th>
                     <th>Qualification</th>
-                    <th>Action</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-agent let-i="rowIndex">
                 <tr>
                     <td>{{i+1}}</td>
+                    <td class="d-flex">
+                        <button pButton pRipple type="button" icon="bx bx-pencil" class="p-button-rounded p-button-primary
+                            p-button-text" (click)="EditItem(agent)"></button>
+                        <button pButton pRipple type="button" icon="bx bx-trash"
+                            class="p-button-rounded p-button-danger
+                            p-button-text" (click)="confirm1(agent.id)"></button>
+                    </td>
                     <td><span class="image-text">{{agent.agentName}}</span></td>
                     <td><span class="image-text">{{agent.agentFName}}</span></td>
                     <td><span class="image-text">{{agent.agentMobileNo}}</span></td>
@@ -74,14 +81,6 @@
                     <td><span class="image-text">{{agent.aadharcard}}</span></td>
                     <td><span class="image-text">{{agent.panCard}}</span></td>
                     <td><span class="image-text">{{agent.qualification}}</span></td>
-                    <td class="d-flex">
-                        <button pButton pRipple type="button" icon="bx
-                            bx-pencil" class="p-button-rounded p-button-primary
-                            p-button-text" (click)="EditItem(agent)"></button>
-                        <button pButton pRipple type="button" icon="bx bx-trash"
-                            class="p-button-rounded p-button-danger
-                            p-button-text" (click)="confirm1(agent.id)"></button>
-                    </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="emptymessage">
@@ -106,8 +105,7 @@
                 <div class="col-lg-6 col-md-12 form-group">
                     <label for="status">Agent Name<span class="star_class">*</span></label>
                     <input type="text" class="form-control"
-                        formControlName="agentName" placeholder="Enter Agent
-                        Name" [class.is-invalid]="(itemForm.submitted &&
+                        formControlName="agentName" placeholder="Enter Agent Name" [class.is-invalid]="(itemForm.submitted &&
                         itemMaster.get('agentName')?.invalid) ||
                         (itemMaster.get('agentName').touched &&
                         itemMaster.get('agentName')?.invalid)" required>
@@ -116,8 +114,7 @@
                 <div class="col-lg-6 col-md-12 form-group">
                     <label for="status">Father Name<span class="star_class">*</span></label>
                     <input type="text" class="form-control"
-                        formControlName="agentFName" placeholder="Enter Agent
-                        Father Name" [class.is-invalid]="(itemForm.submitted &&
+                        formControlName="agentFName" placeholder="Enter Agent Father Name" [class.is-invalid]="(itemForm.submitted &&
                         itemMaster.get('agentFName')?.invalid) ||
                         (itemMaster.get('agentFName').touched &&
                         itemMaster.get('agentFName')?.invalid)" required>
@@ -140,8 +137,7 @@
                 <div class="col-lg-6 col-md-12 form-group">
                     <label for="status">Address<span class="star_class">*</span></label>
                     <textarea name="" id="" class="form-control"
-                        formControlName="agentAddress" placeholder="Enter
-                        Address" [class.is-invalid]="(itemForm.submitted &&
+                        formControlName="agentAddress" placeholder="Enter Address" [class.is-invalid]="(itemForm.submitted &&
                         itemMaster.get('agentAddress')?.invalid) ||
                         (itemMaster.get('agentAddress').touched &&
                         itemMaster.get('agentAddress')?.invalid)" cols="30"
@@ -212,8 +208,7 @@
                 <div class="col-lg-6 col-md-12 form-group">
                     <label for="status">Qualification<span class="star_class">*</span></label>
                     <textarea name="" id="" cols="30" rows="10"
-                        formControlName="qualification" placeholder="Enter
-                        Qualification" class="form-control"
+                        formControlName="qualification" placeholder="Enter Qualification" class="form-control"
                         [class.is-invalid]="(itemForm.submitted &&
                         itemMaster.get('qualification')?.invalid) ||
                         (itemMaster.get('qualification').touched &&

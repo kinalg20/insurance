@@ -15,12 +15,12 @@ export class DashboardNavbarComponent implements OnInit {
 
   ngOnInit(): void {
     let userData  = this._utility.getLocalStorageDetails();
-   this.userProfile = userData;
+    this.userProfile = userData;
   }
 
   logout(){
     localStorage.removeItem('UserObject');
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/');
   }
 
 }

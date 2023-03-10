@@ -15,14 +15,14 @@
             <li class="nav-item-title">
                 Main
             </li>
-            <li class="nav-item" routerLinkActive="active mm-active">
+            <li class="nav-item" routerLinkActive="active mm-active" *ngIf="roleName == 'Admin' || roleName == 'Agent' || roleName == ''">
                 <a routerLink="/dashboard" class="nav-link">
                     <span class="icon"><i class='bx bx-home-circle'></i></span>
                     <span class="menu-title">Dashboard</span>
                 </a>
             </li>
 
-            <li class="nav-item" routerLinkActive="active mm-active">
+            <li class="nav-item" routerLinkActive="active mm-active" *ngIf="roleName == 'Admin'">
                 <a href="javascript:void(0)" class="collapsed-nav-link nav-link" aria-expanded="false">
                     <span class="icon"><i class='bx bx-layer'></i></span>
                     <span class="menu-title">Masters</span>
@@ -52,33 +52,27 @@
                             <span class="menu-title">Vehicle Type</span>
                         </a>
                     </li>
-                    <li class="nav-item" routerLinkActive="active mm-active">
-                        <a routerLink="/commisionMaster" class="nav-link">
-                            <span class="icon"><i class='bx bx-home-circle'></i></span>
-                            <span class="menu-title">Commission</span>
-                        </a>
-                    </li>
                 </ul>
             </li>
-            <li class="nav-item" routerLinkActive="active mm-active">
+            <li class="nav-item" routerLinkActive="active mm-active" *ngIf="roleName == 'Admin' || roleName == 'Agent'">
                 <a href="javascript:void(0)" class="collapsed-nav-link nav-link" aria-expanded="false">
                     <span class="icon"><i class='bx bx-layer'></i></span>
                     <span class="menu-title">Policy</span>
                 </a>
                 <ul class="sidemenu-nav-second-level">
                     <li class="nav-item" routerLinkActive="active mm-active">
-                        <a routerLink="/totalPolicies" class="nav-link">
+                        <a routerLink="/nextMonthPolicies" class="nav-link">
                             <span class="icon"><i class='bx bx-home-circle'></i></span>
-                            <span class="menu-title">Total Policies</span>
+                            <span class="menu-title">Next Month Expiry Policies</span>
                         </a>
                     </li>
-                    <li class="nav-item" routerLinkActive="active mm-active">
+                    <li class="nav-item" routerLinkActive="active mm-active" *ngIf="roleName == 'Admin'">
                         <a routerLink="/policyTypeMaster" class="nav-link">
                             <span class="icon"><i class='bx bx-home-circle'></i></span>
                             <span class="menu-title">Policy Type</span>
                         </a>
                     </li>
-                    <li class="nav-item" routerLinkActive="active mm-active">
+                    <li class="nav-item" routerLinkActive="active mm-active" *ngIf="roleName == 'Admin'">
                         <a routerLink="/policyMaster" class="nav-link">
                             <span class="icon"><i class='bx bx-home-circle'></i></span>
                             <span class="menu-title">Policy Form</span>
@@ -86,7 +80,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item" routerLinkActive="active mm-active">
+            <li class="nav-item" routerLinkActive="active mm-active" *ngIf="roleName == 'Admin'">
                 <a href="javascript:void(0)" class="collapsed-nav-link nav-link" aria-expanded="false">
                     <span class="icon"><i class='bx bx-layer'></i></span>
                     <span class="menu-title">Agent</span>
@@ -100,113 +94,20 @@
                     </li>
                 </ul>
             </li>
-
-            <!-- <ng-container *ngFor="let menu of menuList">
-                <li class="nav-item" routerLinkActive="active mm-active">
-                    <a href="javascript:void(0)" [ngClass]="{'collapsed-nav-link' : menu.menuDetails[0].isParent}" class="nav-link" aria-expanded="false">
-                        <span class="icon"><i class='bx bx-layer'></i></span>
-                        <span class="menu-title">{{menu.menuName}}</span>
-                    </a>
-                    <ul class="sidemenu-nav-second-level" *ngIf="menu.menuDetails.length>0">
-                        <ng-container *ngFor="let subMenu of menu.menuDetails">
-                           <ng-container *ngIf="subMenu.isParent == true">
-                            <li class="nav-item" routerLinkActive="active">
-                                <a routerLink="/dashboard-my-listings" class="nav-link">
-                                    <span class="menu-title">{{subMenu.subMenuName}}</span>
-                                </a>
-                            </li>
-                           </ng-container>
-                        </ng-container>
-                    </ul>
-                </li>
-            </ng-container> -->
-            <!-- <li class="nav-item" routerLinkActive="active mm-active">
-                <a routerLink="/dashboard-messages" class="nav-link">
-                    <span class="icon"><i class='bx bx-envelope-open'></i></span>
-                    <span class="menu-title">Messages</span>
-                    <span class="badge">3</span>
-                </a>
-            </li>
-            <li class="nav-item" routerLinkActive="active mm-active">
-                <a routerLink="/dashboard-bookings" class="nav-link">
-                    <span class="icon"><i class='bx bx-copy'></i></span>
-                    <span class="menu-title">Bookings</span>
-                </a>
-            </li>
-            <li class="nav-item" routerLinkActive="active mm-active">
-                <a routerLink="/dashboard-wallet" class="nav-link">
-                    <span class="icon"><i class='bx bx-wallet'></i></span>
-                    <span class="menu-title">Wallet</span>
-                </a>
-            </li>
-            <li class="nav-item-title">
-                Listings
-            </li>
-            <li class="nav-item" routerLinkActive="active mm-active">
+            <li class="nav-item" routerLinkActive="active mm-active" *ngIf="roleName == 'Admin'">
                 <a href="javascript:void(0)" class="collapsed-nav-link nav-link" aria-expanded="false">
                     <span class="icon"><i class='bx bx-layer'></i></span>
-                    <span class="menu-title">My Listings</span>
+                    <span class="menu-title">Reports</span>
                 </a>
                 <ul class="sidemenu-nav-second-level">
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/dashboard-my-listings" class="nav-link">
-                            <span class="menu-title">Active</span>
-                            <span class="badge">5</span>
-                        </a>
-                    </li>
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/dashboard-my-listings" class="nav-link">
-                            <span class="menu-title">Pending</span>
-                            <span class="badge yellow">1</span>
-                        </a>
-                    </li>
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/dashboard-my-listings" class="nav-link">
-                            <span class="menu-title">Expired</span>
-                            <span class="badge red">2</span>
+                    <li class="nav-item" routerLinkActive="active mm-active">
+                        <a routerLink="/reports" class="nav-link">
+                            <span class="icon"><i class='bx bx-home-circle'></i></span>
+                            <span class="menu-title">Reports</span>
                         </a>
                     </li>
                 </ul>
             </li>
-            <li class="nav-item" routerLinkActive="active mm-active">
-                <a routerLink="/dashboard-reviews" class="nav-link">
-                    <span class="icon"><i class='bx bx-star'></i></span>
-                    <span class="menu-title">Reviews</span>
-                </a>
-            </li>
-            <li class="nav-item" routerLinkActive="active mm-active">
-                <a routerLink="/dashboard-bookmarks" class="nav-link">
-                    <span class="icon"><i class='bx bx-heart'></i></span>
-                    <span class="menu-title">Bookmarks</span>
-                </a>
-            </li>
-            <li class="nav-item" routerLinkActive="active mm-active">
-                <a routerLink="/dashboard-add-listings" class="nav-link">
-                    <span class="icon"><i class='bx bx-plus-circle'></i></span>
-                    <span class="menu-title">Add Listings</span>
-                </a>
-            </li>
-            <li class="nav-item" routerLinkActive="active mm-active">
-                <a routerLink="/dashboard-invoice" class="nav-link">
-                    <span class="icon"><i class='bx bx-certification'></i></span>
-                    <span class="menu-title">Invoice</span>
-                </a>
-            </li>
-            <li class="nav-item-title">
-                Account
-            </li>
-            <li class="nav-item" routerLinkActive="active mm-active">
-                <a routerLink="/dashboard-my-profile" class="nav-link">
-                    <span class="icon"><i class='bx bxs-user-circle'></i></span>
-                    <span class="menu-title">Profile</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a routerLink="/" class="nav-link">
-                    <span class="icon"><i class='bx bx-log-out'></i></span>
-                    <span class="menu-title">Logout</span>
-                </a>
-            </li> -->
         </ul>
     </div>
 </div>

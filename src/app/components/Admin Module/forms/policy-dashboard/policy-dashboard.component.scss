@@ -328,4 +328,15 @@ label{
     .p-paginator .p-paginator-last , .p-paginator .p-paginator-first{
         display: none;
     }
+
+    .p-datatable .p-datatable-thead > tr > th{
+        white-space: nowrap;
+    }
+}
+
+
+@media(max-width : 600px){
+    .button-css-resp{
+        margin-top: 10px;
+    }
 }

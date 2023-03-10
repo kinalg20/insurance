@@ -96,7 +96,7 @@ export class AgentComponent implements OnInit {
       })
      }
      else {  
-      object['agentId'] = this.editagentId;   
+      object['id'] = this.editagentId;   
       console.log(object);      
       this._apiservice.editAgentMaster(object).then((res:any)=>{
         this._utility.loader(false);

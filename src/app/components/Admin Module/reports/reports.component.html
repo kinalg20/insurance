@@ -1,0 +1,177 @@
+<app-dashboard-sidemenu></app-dashboard-sidemenu>
+
+<!-- Start Main Content Wrapper Area -->
+<div class="main-content d-flex flex-column">
+
+    <app-dashboard-navbar></app-dashboard-navbar>
+
+    <!-- Breadcrumb Area -->
+    <div class="breadcrumb-area" *ngFor="let Content of breadcrumb;">
+        <h1>{{Content.title}}</h1>
+        <ol class="breadcrumb">
+            <li class="item"><a routerLink="/">Home</a></li>
+            <li class="item"><a routerLink="dashboard">{{Content.subTitle}}</a></li>
+            <li class="item">{{Content.title}}</li>
+        </ol>
+    </div>
+    <!-- End Breadcrumb Area -->
+
+    <!-- Start -->
+    <div class="add-listings-box-report">
+        <h3>Policy Report</h3>
+        <form [formGroup]="reportMaster"
+            (ngSubmit)="reportSubmit(report)" #report="ngForm">
+            <div class="row">
+                <div class="col-lg-4 col-md-12 form-group">
+                    <label for="status">Select Date</label>
+                    <p-calendar appendTo="body" [ngModelOptions]="{standalone:
+                        true}"
+                        dateFormat="dd-mm-yy" selectionMode="range"
+                        (onSelect)="searchFilter()"
+                        placeholder="Select Date" #calendar1 [showIcon]="true"
+                        [(ngModel)]="dateFilterVal" [readonlyInput]="true">
+                    </p-calendar>
+                </div>
+                <div class="col-lg-4 col-md-12 form-group">
+                    <label for="status">Agent List</label>
+                    <select class="form-select form-control select-dropdown"
+                        [class.is-invalid]="(report.submitted &&
+                        reportMaster.get('agentId')?.invalid) ||
+                        (reportMaster.get('agentId').touched &&
+                        reportMaster.get('agentId')?.invalid)"
+                        formControlName="agentId" required>
+                        <option value="0">Select Agent</option>
+                        <ng-container *ngFor="let agent of AgentDropdown">
+                            <option [value]="agent.id">{{agent.agentName}}</option>
+                        </ng-container>
+                    </select>
+                    <div class="invalid-feedback">Please Select Agent</div>
+                </div>
+                <div class="col-lg-4 col-md-12 form-group">
+                    <label for="status">Village List</label>
+                    <select class="form-select form-control select-dropdown"
+                        [class.is-invalid]="(report.submitted &&
+                        reportMaster.get('vallageId')?.invalid) ||
+                        (reportMaster.get('vallageId').touched &&
+                        reportMaster.get('vallageId')?.invalid)"
+                        formControlName="vallageId">
+                        <option value="0">Select Village</option>
+                        <ng-container *ngFor="let agent of vallageDropdown">
+                            <option [value]="agent.vallageId">{{agent.vallageName}}</option>
+                        </ng-container>
+                    </select>
+                    <div class="invalid-feedback">Please Select Village</div>
+                </div>
+                <div class="col-lg-4 col-md-12 form-group">
+                    <label for="status">Insurance Type List</label>
+                    <select class="form-select form-control select-dropdown"
+                        [class.is-invalid]="(report.submitted &&
+                        reportMaster.get('insuranceTypeId')?.invalid) ||
+                        (reportMaster.get('insuranceTypeId').touched &&
+                        reportMaster.get('insuranceTypeId')?.invalid)"
+                        formControlName="insuranceTypeId">
+                        <option value="0">Select Insurance</option>
+                        <ng-container *ngFor="let insurance of
+                            InsuranceTypeDropdown">
+                            <option [value]="insurance.insuranceTypeId">{{insurance.insuranceTypeName}}</option>
+                        </ng-container>
+                    </select>
+                    <div class="invalid-feedback">Please Select Insurance Type</div>
+                </div>
+                <div class="col-lg-4 col-md-12 form-group">
+                    <label for="status">Vechile Type List</label>
+                    <select class="form-select form-control select-dropdown"
+                        [class.is-invalid]="(report.submitted &&
+                        reportMaster.get('vechileTypeId')?.invalid) ||
+                        (reportMaster.get('vechileTypeId').touched &&
+                        reportMaster.get('vechileTypeId')?.invalid)"
+                        formControlName="vechileTypeId">
+                        <option value="0">Select Insurance</option>
+                        <ng-container *ngFor="let insurance of
+                            VechileTypeDropdown">
+                            <option [value]="insurance.vechileTypeId">{{insurance.vechileTypeName}}</option>
+                        </ng-container>
+                    </select>
+                    <div class="invalid-feedback">Please Select Vehicle</div>
+                </div>
+                <div class="col-lg-4 col-md-12 form-group">
+                    <label for="status">Company List</label>
+                    <select class="form-select form-control select-dropdown"
+                        [class.is-invalid]="(report.submitted &&
+                        reportMaster.get('companyId')?.invalid) ||
+                        (reportMaster.get('companyId').touched &&
+                        reportMaster.get('companyId')?.invalid)"
+                        formControlName="companyId">
+                        <option value="0">Select Company</option>
+                        <ng-container *ngFor="let company of CompanyDropdown">
+                            <option [value]="company.companyId">{{company.companyName}}</option>
+                        </ng-container>
+                    </select>
+                    <div class="invalid-feedback">Please Select Company</div>
+                </div>
+                <!-- <div class="col-lg-4 col-md-12 form-group">
+                    <label for="status">Commission</label>
+                    <select class="form-select form-control select-dropdown"
+                        [class.is-invalid]="(report.submitted &&
+                        reportMaster.get('commissionId')?.invalid) ||
+                        (reportMaster.get('commissionId').touched &&
+                        reportMaster.get('commissionId')?.invalid)"
+                        formControlName="commissionId">
+                        <option value="0">Select Commission</option>
+                        <ng-container *ngFor="let company of
+                            CommissionDropdown">
+                            <option [value]="company.commissionId">{{company.commissionName}}</option>
+                        </ng-container>
+                    </select>
+                    <div class="invalid-feedback">Please Select Commission</div>
+                </div> -->
+                <div class="col-lg-4 col-md-12 form-group">
+                    <label for="status">Policy Type List</label>
+                    <select class="form-select form-control select-dropdown"
+                        [class.is-invalid]="(report.submitted &&
+                        reportMaster.get('policyTypeId')?.invalid) ||
+                        (reportMaster.get('policyTypeId').touched &&
+                        reportMaster.get('policyTypeId')?.invalid)"
+                        formControlName="policyTypeId">
+                        <option value="0">Select Policy Type</option>
+                        <ng-container *ngFor="let company of
+                            policyTypeDropdown">
+                            <option [value]="company.policyTypeId">{{company.policyTypeName}}</option>
+                        </ng-container>
+                    </select>
+                    <div class="invalid-feedback">Please Select Policy Type</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2 col-md-6 form-group">
+                    <div class="add-listings-btn d-flex">
+                        <button type="submit" class="submit_btn" (click)="typeOfFilter= 'Policy Report'">Policy Report</button>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 form-group">
+                    <div class="add-listings-btn d-flex">
+                        <button type="submit" class="submit_btn" (click)="typeOfFilter= 'Expiry Policy Report'">Expiry Policy Report</button>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 form-group">
+                    <div class="add-listings-btn d-flex">
+                        <button type="submit" class="submit_btn" (click)="typeOfFilter= 'Today Expiry Policy Report'">Today Expiry Policy Report</button>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 form-group">
+                    <div class="add-listings-btn d-flex">
+                        <button type="submit" class="submit_btn" (click)="typeOfFilter= 'Now Month Expiry Policy Report'">Now Month Expiry Policy Report</button>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 form-group">
+                    <div class="add-listings-btn d-flex">
+                        <button type="submit" class="submit_btn" (click)="typeOfFilter= 'Next Month Expiry Policy Report'">Next Month Expiry Policy Report</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- End -->
+</div>

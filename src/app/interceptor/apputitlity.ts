@@ -23,9 +23,15 @@ export class AppUtility {
     dateChange(date : any){
       return moment(date).format('YYYY')
     }
+    
     dateFormat(date : any){
       return moment(date).format('YYYY-MM-DD')
     }
+
+    calendarDateFormat(date: any) {
+      return moment(date).format('DD/MM/YYYY')
+    }
+  
 
     getLocalStorageDetails(){
       let local_id = localStorage.getItem('UserObject');

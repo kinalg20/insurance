@@ -12,7 +12,7 @@ import { PolicyTypeComponent } from './components/Admin Module/forms/policy-type
 import { PolicyComponent } from './components/Admin Module/forms/policy/policy.component';
 import { VallageComponent } from './components/Admin Module/forms/vallage/vallage.component';
 import { VehicleTypeComponent } from './components/Admin Module/forms/vehicle-type/vehicle-type.component';
-import { LoginComponent } from './components/Auth/login/login.component';
+import { ReportsComponent } from './components/Admin Module/reports/reports.component';
 import { DashboardMyProfileComponent } from './components/commonModule/dashboard-my-profile/dashboard-my-profile.component';
 import { HomeComponent } from './components/website/home/home.component';
 // import { AboutUsComponent } from './components/pages/about-us/about-us.component';
@@ -55,18 +55,19 @@ import { HomeComponent } from './components/website/home/home.component';
 // import { VerticalListingsRightSidebarComponent } from './components/pages/vertical-listings-right-sidebar/vertical-listings-right-sidebar.component';
 
 const routes: Routes = [
-    {path: 'dashboard-my-profile', component: DashboardMyProfileComponent, data:{route:['7','14']}, canActivate:[AuthGuardGuard], pathMatch: 'full' },
+    {path: 'dashboard-my-profile', component: DashboardMyProfileComponent, data:{route:['Admin','Agent']}, canActivate:[AuthGuardGuard], pathMatch: 'full' },
     // {path: '', component: LoginComponent, data:{route:['Admin']}, pathMatch: 'full'},
-    {path: 'agentMaster', component: AgentComponent, data:{route:['7']},canActivate:[AuthGuardGuard], pathMatch: 'full'},
-    {path: 'companyMaster', component: CompanyComponent, data:{route:['7']}, canActivate:[AuthGuardGuard], pathMatch: 'full'},
-    {path: 'commisionMaster', component: CommisionComponent, data:{route:['7']}, canActivate:[AuthGuardGuard], pathMatch: 'full'},
-    {path: 'insuranceMaster', component: InsuranceComponent, data:{route:['7']}, canActivate:[AuthGuardGuard], pathMatch: 'full'},
-    {path: 'policyTypeMaster', component: PolicyTypeComponent, data:{route:['7']}, canActivate:[AuthGuardGuard], pathMatch: 'full'},
-    {path: 'totalPolicies', component: PolicyDetailTableComponent, data:{route:['7']}, canActivate:[AuthGuardGuard], pathMatch: 'full'},
-    {path: 'dashboard', component: PolicyDashboardComponent, data:{route:['7','14']}, canActivate:[AuthGuardGuard], pathMatch: 'full'},
-    {path: 'policyMaster', component: PolicyComponent, data:{route:['7']}, canActivate:[AuthGuardGuard], pathMatch: 'full'},
-    {path: 'vehicleTypeMaster', component: VehicleTypeComponent, data:{route:['7']}, canActivate:[AuthGuardGuard], pathMatch: 'full'},
-    {path: 'vallageMaster', component: VallageComponent, data:{route:['7']}, canActivate:[AuthGuardGuard], pathMatch: 'full'},
+    {path: 'agentMaster', component: AgentComponent, data:{route:['Admin']},canActivate:[AuthGuardGuard], pathMatch: 'full'},
+    {path: 'companyMaster', component: CompanyComponent, data:{route:['Admin']}, canActivate:[AuthGuardGuard], pathMatch: 'full'},
+    {path: 'commisionMaster', component: CommisionComponent, data:{route:['Admin']}, canActivate:[AuthGuardGuard], pathMatch: 'full'},
+    {path: 'insuranceMaster', component: InsuranceComponent, data:{route:['Admin']}, canActivate:[AuthGuardGuard], pathMatch: 'full'},
+    {path: 'policyTypeMaster', component: PolicyTypeComponent, data:{route:['Admin']}, canActivate:[AuthGuardGuard], pathMatch: 'full'},
+    {path: 'nextMonthPolicies', component: PolicyDetailTableComponent, data:{route:['Admin','Agent']}, canActivate:[AuthGuardGuard], pathMatch: 'full'},
+    {path: 'dashboard', component: PolicyDashboardComponent, data:{route:['Admin','Agent']}, canActivate:[AuthGuardGuard], pathMatch: 'full'},
+    {path: 'policyMaster', component: PolicyComponent, data:{route:['Admin']}, canActivate:[AuthGuardGuard], pathMatch: 'full'},
+    {path: 'vehicleTypeMaster', component: VehicleTypeComponent, data:{route:['Admin']}, canActivate:[AuthGuardGuard], pathMatch: 'full'},
+    {path: 'vallageMaster', component: VallageComponent, data:{route:['Admin']}, canActivate:[AuthGuardGuard], pathMatch: 'full'},
+    {path: 'reports', component: ReportsComponent, data:{route:['Admin']}, canActivate:[AuthGuardGuard], pathMatch: 'full'},
     {path: '', component: HomeComponent, pathMatch: 'full'},
 
 

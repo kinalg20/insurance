@@ -30,7 +30,7 @@
                     <div class="col-lg-4 col-md-12 form-group">
                         <label for="status">Registration Number<span
                                 class="star_class">*</span></label>
-                        <input type="text" class="form-control" pKeyFilter="int"
+                        <input type="text" class="form-control"
                             formControlName="registrationNumber"
                             placeholder="Enter registration Number"
                             [class.is-invalid]="(policy.submitted &&
@@ -183,7 +183,7 @@
                     <div class="col-lg-4 col-md-12 form-group">
                         <label for="status">Policy Number<span
                                 class="star_class">*</span></label>
-                        <input type="text" class="form-control" pKeyFilter="int"
+                        <input type="text" class="form-control"
                             formControlName="policyNumber" placeholder="Enter policy Number" [class.is-invalid]="(policy.submitted
                             && policyMaster.get('policyNumber')?.invalid) ||
                             (policyMaster.get('policyNumber').touched &&
@@ -205,12 +205,11 @@
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 form-group">
-                        <label for="status">Policy Issue Date<span
-                                class="star_class">*</span></label>
+                        <label for="status">Policy Issue Date<span class="star_class">*</span></label>
                         <p-calendar formControlName="policyIssueDate"
                             placeholder="Select Policy Issue Date"
-                            [readonlyInput]="true"
-                            [showIcon]="true"
+                            [readonlyInput]="true" dateFormat="dd/mm/yy"
+                            [showIcon]="true" (onSelect)="showExpiryDate()"
                             [class.is-invalid]="policy.submitted &&
                             policyMaster.get('policyIssueDate')?.invalid ||
                             policyMaster.get('policyIssueDate')?.invalid &&
@@ -224,8 +223,8 @@
                                 class="star_class">*</span></label>
                         <p-calendar formControlName="policyExpiryDate"
                             placeholder="Select Policy Expiry Date"
-                            [readonlyInput]="true"
-                            [showIcon]="true"
+                            [readonlyInput]="true" [disabled]="true"
+                            [showIcon]="true" dateFormat="dd/mm/yy"
                             [class.is-invalid]="policy.submitted &&
                             policyMaster.get('policyExpiryDate')?.invalid ||
                             policyMaster.get('policyExpiryDate')?.invalid &&
@@ -522,23 +521,29 @@
     <!-- End -->
 
     <div class="card item-master">
-        <p-table #dt2 [value]="policyMasterTable" [scrollable]="true"
-            dataKey="id" [rows]="10" [scrollable]="true"
+        <p-table #dt2 [value]="policyMasterTable"
+            dataKey="id" [rows]="10"
             [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,20,30,50]"
             [paginator]="true" currentPageReportTemplate="Showing {first} to
             {last} of {totalRecords} entries"
-            [globalFilterFields]="['Agent Name','Agent Type']">
+            [globalFilterFields]="['registrationNumber','policyNumber', 'customerName','customerFName','policyTypeName','address','pinCode']">
             <ng-template pTemplate="caption">
                 <div class="d-flex" style="justify-content: space-between;
                     align-items: center;">
                     <span class="p-input-icon-left d-flex align-items-center">
                         <i class="pi pi-search"></i>
                         <input pInputText type="text" style="height: 35px;"
-                            (input)="dt.filterGlobal($event.target.value,'contains')"
+                            (input)="dt2.filterGlobal($event.target.value,'contains')"
                             placeholder="Global Search" [(ngModel)]="filterval"
                             />
-                        <p-button type="button" class="mx-2" (click)="reset(dt)"
-                            icon="bx bx-reset"></p-button>
+                        <div class="col-lg-12 col-md-12 mr-2  d-flex">
+                            <p-calendar appendTo="body" [showIcon]="true" dateFormat="dd-mm-yy" placeholder="Date"
+                                        [(ngModel)]="dateFilterVal"
+                                    (onSelect)="searchFilter($event)">
+                                </p-calendar>
+                            <p-button type="button" [style]="{height: '2rem'}" class="ml-2" (click)="reset(dt2)" icon="bx bx-reset"></p-button>
+                            <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success ml-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+                        </div>
                     </span>
                     <div class="add-listings-btn">
                         <button class="submit_btn mt-0" (click)="openModel()">+Add</button>
@@ -548,13 +553,15 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th style="min-width: 20px;">S.No.</th>
-                    <th style="min-width: 180px;">Policy Type</th>
-                    <th style="min-width: 180px;">Policy Number</th>
-                    <th style="min-width: 180px;">Policy Issue Date</th>
-                    <th style="min-width: 180px;">Policy Expiry Date</th>
+                    <th style="min-width: 180px;">Action</th>
                     <th style="min-width: 180px;">Registration Number</th>
+                    <th style="min-width: 180px;">Policy Number</th>
                     <th style="min-width: 180px;">Customer Name</th>
-                    <th style="min-width: 180px;">Customer Father Name</th>
+                    <th style="min-width: 180px;">Policy Expiry Date</th>
+                    <th style="min-width: 180px;">Policy Issue Date</th>
+                    <th style="min-width: 180px;">Policy Document</th>
+                    <!-- <th style="min-width: 180px;">Customer Father Name</th>
+                    <th style="min-width: 180px;">Policy Type</th>
                     <th style="min-width: 180px;">Address</th>
                     <th style="min-width: 180px;">pincode</th>
                     <th style="min-width: 180px;">Village</th>
@@ -570,26 +577,33 @@
                     <th style="min-width: 180px;">State</th>
                     <th style="min-width: 180px;">Company</th>
                     <th style="min-width: 180px;">RC Number</th>
-                    <th style="min-width: 180px;">Policy Document</th>
+                    <th style="min-width: 180px;">Old Policy Upload</th>
                     <th style="min-width: 180px;">RC Upload</th>
-                    <th style="min-width: 180px;">RC Upload</th>
-                    <th style="min-width: 180px;">Document Upload</th>
-                    <th style="min-width: 180px;">Action</th>
+                    <th style="min-width: 180px;">Document Upload</th> -->
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-agent let-i="rowIndex">
                 <tr>
                     <td>{{i+1}}</td>
-                    <td><span class="image-text">{{agent.policyTypeName}}</span></td>
+                    <td class="d-flex">
+                        <button pButton pRipple type="button" icon="bx bx-pencil" class="p-button-rounded p-button-primary
+                            p-button-text" (click)="EditItem(agent)"></button>
+                        <button pButton pRipple type="button" icon="bx bx-trash"
+                            class="p-button-rounded p-button-danger
+                            p-button-text" (click)="confirm1(agent)"></button>
+                    </td>
+                    <td><span class="image-text">{{agent.registrationNumber}}</span></td>
                     <td><span class="image-text">{{agent.policyNumber}}</span></td>
-                    <td><span class="image-text">{{agent.policyIssueDate |
-                            date}}</span></td>
+                    <td><span class="image-text">{{agent.customerName}}</span></td>
                     <td><span class="image-text">{{agent.policyExpiryDate |
                             date}}</span></td>
-                    <td><span class="image-text">{{agent.registrationNumber}}</span></td>
-                    <!-- <td><span class="image-text">{{agent.insuranceTypeName}}</span></td> -->
-                    <td><span class="image-text">{{agent.customerName}}</span></td>
-                    <td><span class="image-text">{{agent.customerFName}}</span></td>
+                    <td><span class="image-text">{{agent.policyIssueDate |
+                            date}}</span></td>
+                    <td><span class="image-text"><a target="_blank"
+                        href="{{agent.policyUpload}}"
+                        download="{{agent.policyUpload}}"><i class="pi pi-cloud-download"></i></a></span></td>
+                    <!-- <td><span class="image-text">{{agent.customerFName}}</span></td>
+                    <td><span class="image-text">{{agent.policyTypeName}}</span></td>
                     <td><span class="image-text">{{agent.address}}</span></td>
                     <td><span class="image-text">{{agent.pinCode}}</span></td>
                     <td><span class="image-text">{{agent.vallageName}}</span></td>
@@ -616,14 +630,7 @@
                                 download="{{agent.rcUpload}}"><i class="pi pi-cloud-download"></i></a></span></td>
                     <td><span class="image-text"><a target="_blank"
                                 href="{{agent.documentUpload}}"
-                                download="{{agent.documentUpload}}"><i class="pi pi-cloud-download"></i></a></span></td>
-                    <td class="d-flex">
-                        <button pButton pRipple type="button" icon="bx bx-pencil" class="p-button-rounded p-button-primary
-                            p-button-text" (click)="EditItem(agent)"></button>
-                        <button pButton pRipple type="button" icon="bx bx-trash"
-                            class="p-button-rounded p-button-danger
-                            p-button-text" (click)="confirm1(agent)"></button>
-                    </td>
+                                download="{{agent.documentUpload}}"><i class="pi pi-cloud-download"></i></a></span></td> -->
                 </tr>
             </ng-template>
             <ng-template pTemplate="emptymessage">
