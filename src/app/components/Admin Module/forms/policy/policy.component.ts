@@ -59,7 +59,7 @@ export class PolicyComponent implements OnInit {
     rcNumber : new FormControl('', [Validators.required]),
     policyNumber: new FormControl('', [Validators.required]),
     policyIssueDate: new FormControl('', [Validators.required]),
-    policyExpiryDate: new FormControl('', [Validators.required]),
+    policyExpiryDate: new FormControl(null, [Validators.required]),
     customerName: new FormControl('', [Validators.required]),
     customerFName: new FormControl('', [Validators.required]),
     vallageId: new FormControl('', [Validators.required]),
@@ -84,11 +84,17 @@ export class PolicyComponent implements OnInit {
   policyMasterSubmit(policyMaster: FormGroupDirective) {
     console.log(this.policyMaster.value, this.policyMaster.valid);
     if (this.policyMaster.valid) {
+      debugger;
       let object = this.policyMaster.value;
       let formData = new FormData();
       Object.keys(object).forEach((key: any) => {
         if (key == 'policyIssueDate' || key == 'policyExpiryDate') {
           formData.append(key, this._utility.dateTimeChange(object[key]))
+          // if(this.submitButton == 'Update'){
+          //   formData.append(key, object[key])
+          // }
+          // else{
+          // }
         } else {
           if(!(['policyUpload' ,'oldpolicyUpload' , 'rcUpload' , 'documentUpload'].includes(key))){
             formData.append(key, object[key])
@@ -218,7 +224,6 @@ export class PolicyComponent implements OnInit {
     Object.keys(this.policyMaster.controls).forEach(key => {
       if(key != 'policyUpload' && key != 'oldpolicyUpload' && key != 'rcUpload' && key != 'documentUpload'){
         if (key == 'policyIssueDate' || key == 'policyExpiryDate') {
-          console.log(customer[key]);
           this.policyMaster.controls[key].setValue(this._utility.calendarDateFormat(customer[key]));
         }
   
@@ -392,7 +397,7 @@ export class PolicyComponent implements OnInit {
 
   searchFilter(event?: any) {
     // debugger;
-    let date = this._utility.dateTimeChange(event);
+    let date = this._utility.dateTimeChangeWithDate(event);
     this.FilteredData.filter(date, 'policyExpiryDate', 'contains');
   }
 
@@ -404,11 +409,11 @@ export class PolicyComponent implements OnInit {
 
   showExpiryDate(){
     let date = this.policyMaster.controls['policyIssueDate'].value;
+    // this.policyMaster.controls['policyIssueDate'].setValue(moment(date).format('DD/MM/yyyy'));
     const aYearFromNow = new Date(date);
     aYearFromNow.setFullYear(aYearFromNow.getFullYear() + 1);
     aYearFromNow.setDate(aYearFromNow.getDate() - 1);
-    this.policyMaster.controls['policyExpiryDate'].setValue(moment(aYearFromNow).format('DD/MM/yyyy'));
-    console.log(moment(aYearFromNow).format('DD/MM/yyyy'))
+    this.policyMaster.controls['policyExpiryDate'].setValue(aYearFromNow);
   }
 
 
